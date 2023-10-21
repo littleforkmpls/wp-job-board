@@ -1,0 +1,35 @@
+# Dev Files / Folders #
+.env
+NOTES.md
+*~
+/.idea
+/.nova
+.env
+.htaccess
+.well-known
+
+# Common Files #
+.DS_Store*
+._*
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.log
+*.sql
+*.sqlite
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.swp
+*.swo
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
