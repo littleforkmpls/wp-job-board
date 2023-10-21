@@ -1,1 +1,1 @@
-# WP-Job-Board
+# WP Job Board
