@@ -1,15 +1,24 @@
 <?xml version="1.0"?>
 <ruleset name="PHPCS Rules">
-    <description>PHP CS Rules for NSC Custom WordPress Theme</description>
+    <description>PHP CS Rules for WP Job Board Plugin</description>
 
-    <file>app/wp-content/themes/nsc</file>
+    <arg name="extensions" value="php" />
+    <file>.</file>
+
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
 
     <arg name="colors"/>
     <arg value="p"/>
     <arg value="s"/>
 
-    <rule ref="PSR1"/>
-    <rule ref="PSR2"/>
-    <rule ref="PSR12"/>
-
+    <!-- Rules: Check PHP version compatibility -->
+    <!-- https://github.com/PHPCompatibility/PHPCompatibility#sniffing-your-code-for-compatibility-with-specific-php-versions -->
+    <config name="testVersion" value="8.0-"/>
+    <!-- https://github.com/PHPCompatibility/PHPCompatibilityWP -->
+    <rule ref="PHPCompatibilityWP"/>
+    <rule ref="WordPress" />
+    <rule ref="Squiz.Commenting.FileComment.WrongStyle">
+        <exclude-pattern>index.php</exclude-pattern>
+    </rule>
 </ruleset>
