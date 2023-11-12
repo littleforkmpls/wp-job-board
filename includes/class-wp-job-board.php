@@ -119,6 +119,7 @@ class WP_Job_Board {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'public/class-wp-job-board-public.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wp-job-board-bullhorn-manager.php';
 
 		$this->loader = new WP_Job_Board_Loader();
 	}
@@ -152,6 +153,8 @@ class WP_Job_Board {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action('admin_menu', $plugin_admin, 'add_submenu');
+		$this->loader->add_action('admin_post_trigger_sync', $plugin_admin, 'trigger_sync');
 	}
 
 	/**

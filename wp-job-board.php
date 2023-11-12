@@ -23,7 +23,6 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-
 /**
  * Currently plugin version.
  */
