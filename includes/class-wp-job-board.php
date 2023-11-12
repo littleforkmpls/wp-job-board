@@ -170,6 +170,7 @@ class WP_Job_Board {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action('init', $plugin_public, 'register_job_order_post_type');
 	}
 
 	/**

@@ -53,11 +53,48 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
 			// TODO what to do here?
 		}
 
-		foreach ($jobs as $jobOrder) {
-			// Todo change this to inserting custom post types.
-			// echo "{$jobOrder['title']} - {$jobOrder['id']}: Posted {$jobOrder['dateAdded']}<br />";
+		global $wpdb;
+
+		$existing_job_orders_result = $wpdb->get_results("SELECT post_id, meta_value FROM wp_postmeta WHERE meta_key = 'wp_job_board_bh_id' AND meta_value IS NOT NULL");
+		$existing_job_orders = array();
+
+		foreach ($existing_job_orders_result as $item) {
+			$existing_job_orders[$item->meta_value] = $item->post_id;
 		}
 
+		foreach ($jobs as $job_order) {
+			// Todo change this to inserting custom post types.
+			// echo "{$job_order['title']} - {$job_order['id']}: Posted {$job_order['dateAdded']}<br />";
+			$postData = array(
+				'post_title' => $job_order['title'],
+				'post_type' => 'wjb_bh_job_order',
+				'post_content' => '',
+				'post_status' => 'publish',
+				'comment_status' => 'closed',
+				'meta_input' => array(
+					'wp_job_board_bh_data' => json_encode($job_order),
+					'wp_job_board_bh_updated' => 1,
+					'wp_job_board_bh_id' => $job_order['id'],
+				)
+			);
+
+			if (isset($existing_job_orders[$job_order['id']])) {
+				$postData['ID'] = $existing_job_orders[$job_order['id']];
+			}
+
+			$result = wp_insert_post($postData, true);
+
+			if (!$result || $result instanceof WP_Error) {
+				$this->throw_error('Could not insert Job Order ' . $job_order['id'] . ($result ? ' - ' . $result->get_error_message() : ''));
+			}
+
+		}
+
+		// Trash our un-updated items
+		$result = $wpdb->get_results("UPDATE wp_posts SET post_status = 'trash' WHERE ID IN(SELECT post_id FROM wp_postmeta WHERE meta_key = 'wp_job_board_bh_updated' AND meta_value = 0);");
+
+		// mark everything as unupdated since we're done processing
+		$result = $wpdb->get_results("UPDATE wp_postmeta SET meta_value = 0 WHERE meta_key = 'wp_job_board_bh_updated'");
 
 		if($redirect) {
 			wp_redirect($redirect);
