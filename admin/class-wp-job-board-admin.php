@@ -19,29 +19,29 @@
  * @subpackage WP_Job_Board/admin
  * @author     Your Name <email@example.com>
  */
-class WP_Job_Board_Admin
-{
+class WP_Job_Board_Admin {
+
 	/**
 	 * The following are handled through the Settings API and are
-     * client facing on the admin site.
+	 * client facing on the admin site.
 	 */
-	const SETTINGS_GROUP = 'wp_job_board_settings_group';
-	const SETTINGS_SECTION = 'wp_job_board_settings_section';
-    const SETTING_CLIENT_ID = 'wp_job_board_client_id';
-    const SETTING_CLIENT_SECRET = 'wp_job_board_client_secret';
-    const SETTING_API_USERNAME = 'wp_job_board_api_username';
-    const SETTING_API_PASSWORD = 'wp_job_board_api_password';
+	const SETTINGS_GROUP        = 'wp_job_board_settings_group';
+	const SETTINGS_SECTION      = 'wp_job_board_settings_section';
+	const SETTING_CLIENT_ID     = 'wp_job_board_client_id';
+	const SETTING_CLIENT_SECRET = 'wp_job_board_client_secret';
+	const SETTING_API_USERNAME  = 'wp_job_board_api_username';
+	const SETTING_API_PASSWORD  = 'wp_job_board_api_password';
 
 	/**
 	 * The following are handled in an Options Object(the first const)
-     * and are handled by the plugin alone.
+	 * and are handled by the plugin alone.
 	 */
-    const OPTION_ARRAY_KEY = 'wp_job_board_options';
-    const OPTION_API_PASSWORD = 'wp_job_board_api_password';
-    const OPTION_ACCESS_CODE_ENDPOINT = 'wp_job_board_access_code_url';
-    const OPTION_ACCESS_TOKEN_ENDPOINT = 'wp_job_board_access_token_url';
-    const OPTION_ACCESS_TOKEN_REFRESH_ENDPOINT = '';
-    const OPTION_OAUTH_URL = 'wp_job_board_oauth_url';
+	const OPTION_ARRAY_KEY                     = 'wp_job_board_options';
+	const OPTION_API_PASSWORD                  = 'wp_job_board_api_password';
+	const OPTION_ACCESS_CODE_ENDPOINT          = 'wp_job_board_access_code_url';
+	const OPTION_ACCESS_TOKEN_ENDPOINT         = 'wp_job_board_access_token_url';
+	const OPTION_ACCESS_TOKEN_REFRESH_ENDPOINT = '';
+	const OPTION_OAUTH_URL                     = 'wp_job_board_oauth_url';
 
 	const PAGE_SLUG = 'wp_job_board';
 
@@ -69,7 +69,6 @@ class WP_Job_Board_Admin
 	 * @since 1.0.0
 	 * @access private
 	 * @var WP_Job_Board_Bullhorn_Manager $bullhorn Bullhorn Manager Inst5ance
-	 *
 	 */
 	private $bullhorn;
 
@@ -81,10 +80,9 @@ class WP_Job_Board_Admin
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct($wp_job_board, $version)
-	{
+	public function __construct( $wp_job_board, $version ) {
 		$this->wp_job_board = $wp_job_board;
-		$this->version = $version;
+		$this->version      = $version;
 	}
 
 	/**
@@ -92,8 +90,7 @@ class WP_Job_Board_Admin
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles()
-	{
+	public function enqueue_styles() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -107,7 +104,7 @@ class WP_Job_Board_Admin
 		 * class.
 		 */
 
-		wp_enqueue_style($this->wp_job_board, plugin_dir_url(__FILE__) . 'css/wp-job-board-admin.css', array(), $this->version, 'all');
+		wp_enqueue_style( $this->wp_job_board, plugin_dir_url( __FILE__ ) . 'css/wp-job-board-admin.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -115,8 +112,7 @@ class WP_Job_Board_Admin
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts()
-	{
+	public function enqueue_scripts() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -130,11 +126,10 @@ class WP_Job_Board_Admin
 		 * class.
 		 */
 
-		wp_enqueue_script($this->wp_job_board, plugin_dir_url(__FILE__) . 'js/wp-job-board-admin.js', array('jquery'), $this->version, false);
+		wp_enqueue_script( $this->wp_job_board, plugin_dir_url( __FILE__ ) . 'js/wp-job-board-admin.js', array( 'jquery' ), $this->version, false );
 	}
 
-	public function add_submenu()
-	{
+	public function add_submenu() {
 		register_setting(
 			self::SETTINGS_GROUP,
 			self::SETTING_CLIENT_ID,
@@ -169,23 +164,21 @@ class WP_Job_Board_Admin
 			'WP Job Board',
 			'manage_options',
 			'wp_job_board',
-			array($this, 'render_options_page')
+			array( $this, 'render_options_page' )
 		);
 	}
 
-	public function render_options_page()
-	{
-		require_once plugin_dir_path(__FILE__) . 'partials/wp-job-board-admin-display.php';
+	public function render_options_page() {
+		require_once plugin_dir_path( __FILE__ ) . 'partials/wp-job-board-admin-display.php';
 	}
 
-	public function trigger_sync()
-	{
-		if (!$this->bullhorn) {
+	public function trigger_sync() {
+		if ( ! $this->bullhorn ) {
 			$this->bullhorn = new WP_Job_Board_Bullhorn_Manager();
 		}
 		try {
-			$this->bullhorn->trigger_sync(admin_url('options-general.php?page=wp_job_board'));
-		} catch (Exception $exception) {
+			$this->bullhorn->trigger_sync( admin_url( 'options-general.php?page=wp_job_board' ) );
+		} catch ( Exception $exception ) {
 			echo $exception;
 		}
 	}

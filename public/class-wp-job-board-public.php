@@ -96,17 +96,19 @@ class WP_Job_Board_Public {
 		wp_enqueue_script( $this->wp_job_board, plugin_dir_url( __FILE__ ) . 'js/wp-job-board-public.js', array( 'jquery' ), $this->version, false );
 	}
 
-	public function register_job_order_post_type()
-	{
-		register_post_type('wjb_bh_job_order', array(
-			'labels' => array(
-				'name' => __('BH Job Orders', 'wp_job_board'),
-				'singular_name' => __('BH Job Order', 'wp_job_board'),
-			),
-			'description' => 'Job Order pulled from Bullhorn\'s REST API',
-			'public' => false,
-			'has_archive' => true,
-			'rewrite' => array('slug' => 'bh-job-orders'),
-		));
+	public function register_job_order_post_type() {
+		register_post_type(
+			'wjb_bh_job_order',
+			array(
+				'labels'      => array(
+					'name'          => __( 'BH Job Orders', 'wp_job_board' ),
+					'singular_name' => __( 'BH Job Order', 'wp_job_board' ),
+				),
+				'description' => 'Job Order pulled from Bullhorn\'s REST API',
+				'public'      => false,
+				'has_archive' => true,
+				'rewrite'     => array( 'slug' => 'bh-job-orders' ),
+			)
+		);
 	}
 }
