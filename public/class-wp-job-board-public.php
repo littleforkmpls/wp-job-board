@@ -38,8 +38,9 @@ class WP_Job_Board_Public {
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
+    private WP_Job_Board_Bullhorn_Manager|null $bullhorn = null;
 
-	/**
+    /**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -111,4 +112,29 @@ class WP_Job_Board_Public {
 			)
 		);
 	}
+
+    public function register_resume_endpoint() {
+        register_rest_route(
+            'wp-job-board/v1',
+            '/submit-resume',
+            array(
+                'methods' => \WP_REST_Server::CREATABLE,
+                'permission_callback' => '__return_true',
+                'callback' => array($this, 'submit_resume'),
+            )
+        );
+    }
+
+    public function submit_resume()
+    {
+        try {
+            if (!$this->bullhorn) {
+                $this->bullhorn = new WP_Job_Board_Bullhorn_Manager();
+            }
+            $this->bullhorn->submit_resume();
+            wp_send_json_success(array('message' => 'Listings synced!',));
+        } catch (\Throwable $exception) {
+            wp_send_json_error(array('message' => $exception->getMessage()));
+        }
+    }
 }

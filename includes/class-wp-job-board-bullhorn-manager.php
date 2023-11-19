@@ -461,4 +461,25 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
 		update_option( WP_Job_Board_Admin::OPTION_ARRAY_KEY, $this->options );
 		return $this->options[ self::CORP_TOKEN ];
 	}
+
+    public function submit_resume() {
+        $first_name = $this->get_posted_data('first_name');
+        $last_name = $this->get_posted_data('last_name');
+        $phone = $this->get_posted_data('phone');
+        $email = $this->get_posted_data('email');
+        $resume = $_FILES['resume'];
+
+        if (empty($first_name) || empty($last_name) || empty($phone) || empty($email) || empty($resume)) {
+            $this->throw_error('Must submit all data (First name, Last name, Phone number, Email address, and Resume');
+        }
+
+    }
+
+    private function get_posted_data( $key, $default = null ) {
+        if (!isset($_POST[$key])) {
+            return $default;
+        }
+
+        return $_POST[$key];
+    }
 }

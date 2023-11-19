@@ -100,4 +100,12 @@ WHERE bh_title LIKE '%{$search}%' OR bh_id LIKE '%{$search}%'
         // Send final sort direction to usort
         return ($order === 'asc') ? $result : -$result;
     }
+
+    protected function get_table_classes() {
+        $classes =  parent::get_table_classes();
+        if ($key = array_search('fixed', $classes) !== false) {
+            unset($classes[$key]);
+        }
+        return $classes;
+    }
 }
