@@ -122,9 +122,9 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
 			$existing_job_orders[ $item->meta_value ] = $item->post_id;
 		}
 
+        $count = 0;
+
 		foreach ( $jobs as $job_order ) {
-			// Todo change this to inserting custom post types.
-			// echo "{$job_order['title']} - {$job_order['id']}: Posted {$job_order['dateAdded']}<br />";
 			$bh_data   = json_encode( $job_order );
 			$post_data = array(
 				'post_title'     => $job_order['title'],
@@ -165,6 +165,13 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
 
 			$result = wp_insert_post( $post_data, true );
 
+            $count++;
+
+            if ($count && $count % 20 === 0) {
+                $this->save_logs($log_data);
+                $log_data = array();
+            }
+
 			if ( ! $result || $result instanceof WP_Error ) {
 				$this->throw_error( 'Could not insert Job Order ' . $job_order['id'] . ( $result ? ' - ' . $result->get_error_message() : '' ) );
 			}
@@ -187,33 +194,39 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
 		// mark everything as unupdated since we're done processing
 		$result = $wpdb->get_results( "UPDATE wp_postmeta SET meta_value = 0 WHERE meta_key = 'wp_job_board_bh_updated'" );
 
-		$sql_start   = 'INSERT INTO wp_job_board_log (bh_id, bh_title, action, timestamp) values';
-		$insert_data = '';
-		$sql_end     = ';';
-
-		foreach ( $log_data as $index => $log_datum ) {
-			if ( $index > 0 ) {
-				$insert_data .= ',';
-			}
-			$insert_data .= $wpdb->prepare( '(%d,%s,%s,%d)', array( $log_datum['bh_id'], $log_datum['title'], $log_datum['action'], $log_datum['time'] ) );
-
-			if ( $index > 0 && $index % 20 === 0 ) {
-				$wpdb->query( $sql_start . $insert_data . $sql_end );
-				$insert_data = '';
-			}
-		}
-		if ( strlen( $insert_data ) ) {
-			$wpdb->query( $sql_start . $insert_data . $sql_end );
-		}
-
-		$one_week_ago = ( new DateTime() )->sub( new DateInterval( 'P7D' ) )->getTimestamp();
-
-		$wpdb->query( $wpdb->prepare( 'DELETE FROM wp_job_board_log WHERE timestamp < %d', $one_week_ago ) );
+        $this->save_logs($log_data);
 
 		if ( $redirect ) {
 			wp_redirect( $redirect );
 		}
 	}
+
+    private function save_logs( $log_data ) {
+        global $wpdb;
+        $sql_start   = 'INSERT INTO wp_job_board_log (bh_id, bh_title, action, timestamp) values';
+        $insert_data = '';
+        $sql_end     = ';';
+
+        foreach ( $log_data as $index => $log_datum ) {
+            if ( $index > 0 ) {
+                $insert_data .= ',';
+            }
+            $insert_data .= $wpdb->prepare( '(%d,%s,%s,%d)', array( $log_datum['bh_id'], $log_datum['title'], $log_datum['action'], $log_datum['time'] ) );
+
+            if ( $index > 0 && $index % 20 === 0 ) {
+                $wpdb->query( $sql_start . $insert_data . $sql_end );
+                $insert_data = '';
+            }
+        }
+        if ( strlen( $insert_data ) ) {
+            $wpdb->query( $sql_start . $insert_data . $sql_end );
+        }
+
+        $one_week_ago = ( new DateTime() )->sub( new DateInterval( 'P7D' ) )->getTimestamp();
+
+        $wpdb->query( $wpdb->prepare( 'DELETE FROM wp_job_board_log WHERE timestamp < %d', $one_week_ago ) );
+
+    }
 
 	/**
 	 * @return string
@@ -350,34 +363,66 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
 	 * @return mixed|void
 	 */
 	private function get_jobs() {
+        $fields = [
+            'id', 'title', 'publicDescription','address', 'publishedCategory', 'dateLastPublished', 'dateLastModified',
+        ];
+
 		$baseUrl = '{corpToken}query/JobOrder?fields=id,title,dateAdded&BhRestToken={rest_token}';
+        $baseUrl = '{corpToken}search/{entity}?fields={fields}&sort={fields}&count={count}&start={start}&BhRestToken={rest_token}';
+        $baseUrl = '{corpToken}search/{entity}?fields={fields}&sort={sort}&count={count}&start={start}&BhRestToken={rest_token}';
 
-		$url = $this->get_url(
-			$baseUrl,
-			array(
-				'{corpToken}'  => $this->get_corp_token(),
-				'{rest_token}' => $this->options[ self::REST_TOKEN ],
-			)
-		);
+        $tokens = array(
+            '{corpToken}'  => $this->get_corp_token(),
+            '{entity}' => 'JobOrder',
+            '{fields}' => implode(',', $fields),
+            '{start}' => 0,
+            '{count}' => 500,
+            '{sort}' => $fields[0],
+            '{rest_token}' => $this->options[ self::REST_TOKEN ],
+        );
 
-		$result = $this->call_api( $url, array( 'body' => array( 'where' => 'id IS NOT NULL' ) ) );
+        $callAgain = true;
+        $results = [];
 
-		if ( isset( $result['errorMessageKey'] ) ) {
-			$this->throw_error( "{$result['errorMessageKey']} - {$result['errorMessage']}" );
-		}
+        while ($callAgain) {
+            $url = $this->get_url(
+                $baseUrl,
+                $tokens,
+            );
+            $result = $this->call_api( $url, array( 'body' => array( 'query' => 'isOpen:true and isPublic:true' ) ) );
 
-		if ( isset( $result['message'] ) && $result['message'] === "Bad 'BhRestToken' or timed-out." ) {
-			unset( $this->options[ self::CORP_TOKEN ] );
-			unset( $this->options[ self::REST_TOKEN ] );
-			$this->trigger_sync();
-			return;
-		}
+            if ( isset( $result['errorMessageKey'] ) ) {
+                $callAgain = false;
+                $this->throw_error( "{$result['errorMessageKey']} - {$result['errorMessage']}" );
+            }
 
-		if ( ! isset( $result['data'] ) ) {
-			$this->throw_error( 'Could not sync any jobs.' );
-		}
+            if ( isset( $result['errorMessage']) && isset($result['errorCode'])) {
+                $callAgain = false;
+                $this->throw_error( "{$result['errorCode']} - {$result['errorMessage']}" );
+            }
 
-		return $result['data'];
+            if ( isset( $result['message'] ) && $result['message'] === "Bad 'BhRestToken' or timed-out." ) {
+                $callAgain = false;
+                unset( $this->options[ self::CORP_TOKEN ] );
+                unset( $this->options[ self::REST_TOKEN ] );
+                $this->trigger_sync();
+                return;
+            }
+
+            if ( ! isset( $result['data'] ) ) {
+                $callAgain = false;
+                $this->throw_error( 'Could not sync any jobs.' );
+            }
+
+            if (isset($result['total']) && isset($result['start']) && isset($result['count'])) {
+                $callAgain = !($result['start'] + $result['count'] >= $result['total']);
+                $tokens['{start}'] = $result['start'] + $result['count'];
+            }
+
+            $results = array_merge($results, $result['data']);
+        }
+
+        return $results;
 	}
 
 	/**

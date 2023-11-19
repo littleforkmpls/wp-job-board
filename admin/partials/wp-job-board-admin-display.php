@@ -99,6 +99,7 @@ endif;
 			<button type="button" id="wp_job_board_trigger_sync" class="button button-secondary">Trigger Sync</button>
 			<span class="spinner"></span>
 		</div>
+        <h3>Bullhorn Sync Log</h3>
 		<div id="wp_job_board_activity_log">
 			<?php require_once plugin_dir_path(__FILE__) . 'wp-job-board-activity-log.php' ?>
 		</div>
