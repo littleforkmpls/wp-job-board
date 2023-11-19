@@ -125,6 +125,7 @@ class WP_Job_Board {
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wp-job-board-api-manager-base.php';
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wp-job-board-bullhorn-manager.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wp-job-board-log-table.php';
 
 		$this->loader = new WP_Job_Board_Loader();
 	}
