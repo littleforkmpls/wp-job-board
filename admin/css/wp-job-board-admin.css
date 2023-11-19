@@ -2,3 +2,16 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+#wp_job_board_admin .spinner {
+    float: none;
+}
+
+#wp_job_board_activity_log {
+    margin: 2em auto;
+    border: black 2px solid;
+    background-color: white;
+    min-height: 100px;
+    max-height: 500px;
+    max-width: 800px;
+}

@@ -17,7 +17,7 @@
  * @since      1.0.0
  * @package    WP_Job_Board
  * @subpackage WP_Job_Board/includes
- * @author     Your Name <email@example.com>
+ * @author     Drew Brown <dbrown78@gmail.com>
  */
 class WP_Job_Board_Deactivator {
 

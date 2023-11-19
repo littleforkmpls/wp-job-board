@@ -24,7 +24,7 @@
  * @since      1.0.0
  * @package    WP_Job_Board
  * @subpackage WP_Job_Board/includes
- * @author     Your Name <email@example.com>
+ * @author     Drew Brown <dbrown78@gmail.com>
  */
 class WP_Job_Board {
 
@@ -119,6 +119,11 @@ class WP_Job_Board {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'public/class-wp-job-board-public.php';
+
+		/**
+		 * API Managers
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wp-job-board-api-manager-base.php';
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wp-job-board-bullhorn-manager.php';
 
 		$this->loader = new WP_Job_Board_Loader();
@@ -155,6 +160,8 @@ class WP_Job_Board {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_submenu' );
 		$this->loader->add_action( 'admin_post_trigger_sync', $plugin_admin, 'trigger_sync' );
+		$this->loader->add_action('wp_ajax_trigger_sync', $plugin_admin, 'trigger_sync');
+		$this->loader->add_action('wp_ajax_refresh_log', $plugin_admin, 'refresh_log');
 	}
 
 	/**

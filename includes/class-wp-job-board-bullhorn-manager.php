@@ -11,8 +11,6 @@
  * @subpackage WP_Job_Board/includes
  */
 
-require_once plugin_dir_path( __DIR__ ) . 'includes/class-wp-job-board-api-manager-base.php';
-
 /**
  * Class to handle interactions with the Bullhorn REST API.
  *

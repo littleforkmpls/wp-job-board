@@ -17,7 +17,7 @@
  *
  * @package    WP_Job_Board
  * @subpackage WP_Job_Board/public
- * @author     Your Name <email@example.com>
+ * @author     Drew Brown <dbrown78@gmail.com>
  */
 class WP_Job_Board_Public {
 
