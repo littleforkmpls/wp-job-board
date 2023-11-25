@@ -132,9 +132,9 @@ class WP_Job_Board_Public {
                 $this->bullhorn = new WP_Job_Board_Bullhorn_Manager();
             }
             $result = $this->bullhorn->submit_resume();
-            wp_send_json_success(array('message' => 'Listings synced!',));
+            wp_send_json_success(array('message' => 'Application submitted!',));
         } catch (\Throwable $exception) {
-            wp_send_json_error(array('message' => $exception->getMessage()));
+            wp_send_json_error(array('message' => $exception->getMessage(), 'trace' => $exception->getTrace()));
         }
     }
 }

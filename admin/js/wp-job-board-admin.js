@@ -5,6 +5,8 @@
         $('#wp_job_board_trigger_sync').click((event)=>{
             event.preventDefault();
 
+            $('.wp_job_board_sync_error').remove();
+
             let $_spinner = $('.spinner').addClass('is-active');
 
             $.post(
@@ -17,7 +19,7 @@
                         alert('Something went wrong!');
                     }
                     if (response.data?.message) {
-                        $_spinner.after('<span>'+response.data.message+'</span>');
+                        $_spinner.after('<span class="wp_job_board_sync_error">'+response.data.message+'</span>');
                     }
                 }
             ).fail((response)=>{

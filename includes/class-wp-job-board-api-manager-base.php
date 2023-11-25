@@ -43,6 +43,15 @@ class WP_Job_Board_API_Manager_Base {
 		if ( ! function_exists( $func ) ) {
 			$this->throw_error( "Could not call {$method}" );
 		}
+        if (!empty($args['body']) && is_array($args['body']) && empty($args['skip_json'])) {
+            $args['body'] = json_encode($args['body']);
+            if (empty($args['headers'])) {
+                $args['headers'] = [];
+            }
+            if (empty($args['headers']['Content-Type'])) {
+                $args['headers']['Content-Type'] = 'application/json';
+            }
+        }
 		$response = $func( $endpoint_url, $args );
 		$code     = wp_remote_retrieve_response_code( $response );
 		$message  = wp_remote_retrieve_response_message( $response );

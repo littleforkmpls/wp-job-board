@@ -77,6 +77,7 @@ class WP_Job_Board {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+        $this->start_session();
 	}
 
 	/**
@@ -223,4 +224,10 @@ class WP_Job_Board {
 	public function get_version() {
 		return $this->version;
 	}
+
+    private function start_session() {
+        if ( ! session_id() ) {
+            session_start();
+        }
+    }
 }
