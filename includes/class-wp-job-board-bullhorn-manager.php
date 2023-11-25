@@ -462,17 +462,27 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
 		return $this->options[ self::CORP_TOKEN ];
 	}
 
-    public function submit_resume() {
+    public function submit_resume(): array {
         $first_name = $this->get_posted_data('first_name');
         $last_name = $this->get_posted_data('last_name');
         $phone = $this->get_posted_data('phone');
         $email = $this->get_posted_data('email');
+        $job_order_id = $this->get_posted_data('job_order_id');
         $resume = $_FILES['resume'];
 
-        if (empty($first_name) || empty($last_name) || empty($phone) || empty($email) || empty($resume)) {
+        if (empty($first_name) || empty($last_name) || empty($phone) || empty($email) || empty($resume) || empty($job_order_id)) {
             $this->throw_error('Must submit all data (First name, Last name, Phone number, Email address, and Resume');
         }
 
+        $job_order = $this->get_job_order($job_order_id);
+        $candidate = $this->get_candidate($email, $job_order_id);
+        $submission = $this->create_submission($job_order, $candidate);
+        $file = $this->add_file($candidate, $resume);
+        $resume_data = $this->get_data_from_resume($resume);
+        $updated = $this->update_candidate_from_resume($candidate, $resume_data);
+
+
+        return array();
     }
 
     private function get_posted_data( $key, $default = null ) {
@@ -481,5 +491,22 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         }
 
         return $_POST[$key];
+    }
+
+    private function get_job_order( string|int $job_order_id ) {
+        $tokens = array(
+            '{corpToken}' => $this->get_corp_token(),
+            '{job_order_id}' => $job_order_id,
+            '{fields}' => 'publishedCategory',
+            '{rest_token}' => $this->options[self::REST_TOKEN],
+        );
+        $url = $this->get_url('{corpToken}search/JobOrder?query=id:{job_order_id}&fields={fields}&BhRestToken={rest_token}', $tokens);
+        $result = $this->call_api($url);
+
+        if(isset($result['errorMessage'])) {
+            $this->throw_error('Could not find Job Order');
+        }
+
+        return $result;
     }
 }
