@@ -18,6 +18,8 @@ Upload provided zip to WP Admin Plugins, Add Plugins. Then activate plugin.
 
 
 == Changelog ==
+= 0.1.1 =
+* Version Bump
 
 = 0.1.0 =
 * Initial version of plugin

@@ -11,7 +11,7 @@
  * Plugin Name:       WP Job Board
  * Plugin URI:        https://little-fork.com/
  * Description:       A plugin to pull and list jobs from Bullhorn(and other sites in the future).
- * Version:           0.1.0
+ * Version:           0.1.1
  * Requires at least: 6.0
  * Requires PHP:      8
  * Author:            Little Fork
