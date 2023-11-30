@@ -1,8 +1,8 @@
-(( $ ) => {
+(($) => {
     'use strict';
 
     $(() => {
-        $('#wp_job_board_trigger_sync').click((event)=>{
+        $('#wp_job_board_trigger_sync').click((event) => {
             event.preventDefault();
 
             $('.wp_job_board_sync_error').remove();
@@ -16,16 +16,15 @@
                 },
                 (response) => {
                     if (!response.success) {
-                        alert('Something went wrong!');
+                        //TODO do we want to do something other than just message here?
                     }
                     if (response.data?.message) {
-                        $_spinner.after('<span class="wp_job_board_sync_error">'+response.data.message+'</span>');
+                        $_spinner.after('<span class="wp_job_board_sync_error">' + response.data.message + '</span>');
                     }
                 }
-            ).fail((response)=>{
-                console.log('FAILED', response);
-            }).always((response)=>{
-                console.log('ALWAYS', response);
+            ).fail((response) => {
+                //TODO do something if we fail?
+            }).always((response) => {
                 $_spinner.removeClass('is-active');
                 $.get(
                     ajaxurl,
@@ -35,8 +34,8 @@
                     (response) => {
                         $('#wp_job_board_activity_log').html(response);
                     }
-                    )
+                )
             })
         });
     })
-})( jQuery );
+})(jQuery);

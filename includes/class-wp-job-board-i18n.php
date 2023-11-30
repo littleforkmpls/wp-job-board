@@ -26,17 +26,17 @@
 class WP_Job_Board_I18n {
 
 
-	/**
-	 * Load the plugin text domain for translation.
-	 *
-	 * @since    0.1.0
-	 */
-	public function load_plugin_textdomain() {
+    /**
+     * Load the plugin text domain for translation.
+     *
+     * @since    0.1.0
+     */
+    public function load_plugin_textdomain() {
 
-		load_plugin_textdomain(
-			'wp-job-board',
-			false,
-			dirname( plugin_basename( __FILE__ ), 2 ) . '/languages/'
-		);
-	}
+        load_plugin_textdomain(
+            'wp-job-board',
+            false,
+            dirname(plugin_basename(__FILE__), 2) . '/languages/'
+        );
+    }
 }

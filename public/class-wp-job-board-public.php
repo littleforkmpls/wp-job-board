@@ -21,119 +21,124 @@
  */
 class WP_Job_Board_Public {
 
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    0.1.0
-	 * @access   private
-	 * @var      string    $wp_job_board    The ID of this plugin.
-	 */
-	private $wp_job_board;
+    /**
+     * The ID of this plugin.
+     *
+     * @since    0.1.0
+     * @access   private
+     * @var      string $wp_job_board The ID of this plugin.
+     */
+    private $wp_job_board;
 
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    0.1.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
+    /**
+     * The version of this plugin.
+     *
+     * @since    0.1.0
+     * @access   private
+     * @var      string $version The current version of this plugin.
+     */
+    private $version;
     private WP_Job_Board_Bullhorn_Manager|null $bullhorn = null;
 
     /**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    0.1.0
-	 * @param      string $wp_job_board       The name of the plugin.
-	 * @param      string $version    The version of this plugin.
-	 */
-	public function __construct( $wp_job_board, $version ) {
+     * Initialize the class and set its properties.
+     *
+     * @param string $wp_job_board The name of the plugin.
+     * @param string $version The version of this plugin.
+     *
+     * @since    0.1.0
+     */
+    public function __construct($wp_job_board, $version) {
 
-		$this->wp_job_board = $wp_job_board;
-		$this->version      = $version;
-	}
+        $this->wp_job_board = $wp_job_board;
+        $this->version      = $version;
+    }
 
-	/**
-	 * Register the stylesheets for the public-facing side of the site.
-	 *
-	 * @since    0.1.0
-	 */
-	public function enqueue_styles() {
+    /**
+     * Register the stylesheets for the public-facing side of the site.
+     *
+     * @since    0.1.0
+     */
+    public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in WP_Job_Board_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The WP_Job_Board_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
+        /**
+         * This function is provided for demonstration purposes only.
+         *
+         * An instance of this class should be passed to the run() function
+         * defined in WP_Job_Board_Loader as all of the hooks are defined
+         * in that particular class.
+         *
+         * The WP_Job_Board_Loader will then create the relationship
+         * between the defined hooks and the functions defined in this
+         * class.
+         */
 
-		wp_enqueue_style( $this->wp_job_board, plugin_dir_url( __FILE__ ) . 'css/wp-job-board-public.css', array(), $this->version, 'all' );
-	}
+        wp_enqueue_style($this->wp_job_board, plugin_dir_url(__FILE__) . 'css/wp-job-board-public.css', array(), $this->version, 'all');
+    }
 
-	/**
-	 * Register the JavaScript for the public-facing side of the site.
-	 *
-	 * @since    0.1.0
-	 */
-	public function enqueue_scripts() {
+    /**
+     * Register the JavaScript for the public-facing side of the site.
+     *
+     * @since    0.1.0
+     */
+    public function enqueue_scripts() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in WP_Job_Board_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The WP_Job_Board_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
+        /**
+         * This function is provided for demonstration purposes only.
+         *
+         * An instance of this class should be passed to the run() function
+         * defined in WP_Job_Board_Loader as all of the hooks are defined
+         * in that particular class.
+         *
+         * The WP_Job_Board_Loader will then create the relationship
+         * between the defined hooks and the functions defined in this
+         * class.
+         */
 
-		wp_enqueue_script( $this->wp_job_board, plugin_dir_url( __FILE__ ) . 'js/wp-job-board-public.js', array( 'jquery' ), $this->version, false );
-	}
+        wp_enqueue_script($this->wp_job_board, plugin_dir_url(__FILE__) . 'js/wp-job-board-public.js', array('jquery'), $this->version, false);
+    }
 
-	public function register_job_order_post_type() {
-		register_post_type(
-			'wjb_bh_job_order',
-			array(
-				'labels'      => array(
-					'name'          => __( 'BH Job Orders', 'wp_job_board' ),
-					'singular_name' => __( 'BH Job Order', 'wp_job_board' ),
-				),
-				'description' => 'Job Order pulled from Bullhorn\'s REST API',
-				'public'      => false,
-				'has_archive' => true,
-				'rewrite'     => array( 'slug' => 'bh-job-orders' ),
-			)
-		);
-	}
+    public function register_job_order_post_type() {
+        register_post_type(
+            'wjb_bh_job_order',
+            array(
+                'labels'      => array(
+                    'name'          => __('BH Job Orders', 'wp_job_board'),
+                    'singular_name' => __('BH Job Order', 'wp_job_board'),
+                ),
+                'description' => 'Job Order pulled from Bullhorn\'s REST API',
+                'public'      => false,
+                'has_archive' => true,
+                'rewrite'     => array('slug' => 'bh-job-orders'),
+            )
+        );
+    }
 
     public function register_resume_endpoint() {
         register_rest_route(
             'wp-job-board/v1',
             '/submit-resume',
             array(
-                'methods' => \WP_REST_Server::CREATABLE,
+                'methods'             => WP_REST_Server::CREATABLE,
                 'permission_callback' => '__return_true',
-                'callback' => array($this, 'submit_resume'),
+                'callback'            => array($this, 'submit_resume'),
             )
         );
     }
 
-    public function submit_resume()
-    {
+    /**
+     * Handler for our submit resume endpoint
+     *
+     * @return void
+     */
+    public function submit_resume() {
         try {
-            if (!$this->bullhorn) {
+            if ( ! $this->bullhorn) {
                 $this->bullhorn = new WP_Job_Board_Bullhorn_Manager();
             }
             $result = $this->bullhorn->submit_resume();
             wp_send_json_success(array('message' => 'Application submitted!',));
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             wp_send_json_error(array('message' => $exception->getMessage(), 'trace' => $exception->getTrace()));
         }
     }

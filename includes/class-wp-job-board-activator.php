@@ -22,22 +22,22 @@
 class WP_Job_Board_Activator {
 
 
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    0.1.0
-	 */
-	public static function activate() {
-		$sql = 'CREATE TABLE IF NOT EXISTS wp_job_board_log(
+    /**
+     * Short Description. (use period)
+     *
+     * Long Description.
+     *
+     * @since    0.1.0
+     */
+    public static function activate() {
+        $sql = 'CREATE TABLE IF NOT EXISTS wp_job_board_log(
     id    bigint unsigned auto_increment primary key,
     bh_id    bigint unsigned not null,
     bh_title varchar(255) not null,
     action   varchar(255) not null,
     timestamp bigint unsigned not null
 );';
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-		dbDelta( $sql );
-	}
+        require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+        dbDelta($sql);
+    }
 }
