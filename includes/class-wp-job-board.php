@@ -126,7 +126,12 @@ class WP_Job_Board {
          */
         require_once plugin_dir_path(__DIR__) . 'includes/class-wp-job-board-api-manager-base.php';
         require_once plugin_dir_path(__DIR__) . 'includes/class-wp-job-board-bullhorn-manager.php';
+
+        /**
+         * Other Helpers
+         */
         require_once plugin_dir_path(__DIR__) . 'includes/class-wp-job-board-log-table.php';
+        require_once plugin_dir_path(__DIR__) . 'includes/class-wp-job-board-updater.php';
 
         $this->loader = new WP_Job_Board_Loader();
     }
@@ -155,6 +160,8 @@ class WP_Job_Board {
      * @access   private
      */
     private function define_admin_hooks() {
+
+        $updater = new WP_Job_Board_Updater();
 
         $plugin_admin = new WP_Job_Board_Admin($this->get_wp_job_board(), $this->get_version());
 
