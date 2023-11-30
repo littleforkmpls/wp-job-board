@@ -6,7 +6,7 @@
  * public-facing side of the site and the admin area.
  *
  * @link       http://example.com
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    WP_Job_Board
  * @subpackage WP_Job_Board/includes
@@ -21,10 +21,10 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    WP_Job_Board
  * @subpackage WP_Job_Board/includes
- * @author     Drew Brown <dbrown78@gmail.com>
+ * @author     Little Fork
  */
 class WP_Job_Board {
 
@@ -32,7 +32,7 @@ class WP_Job_Board {
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   protected
 	 * @var      WP_Job_Board_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
@@ -41,7 +41,7 @@ class WP_Job_Board {
 	/**
 	 * The unique identifier of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   protected
 	 * @var      string    $wp_job_board    The string used to uniquely identify this plugin.
 	 */
@@ -50,7 +50,7 @@ class WP_Job_Board {
 	/**
 	 * The current version of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
@@ -63,13 +63,13 @@ class WP_Job_Board {
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the public-facing side of the site.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function __construct() {
 		if ( defined( 'WP_JOB_BOARD_VERSION' ) ) {
 			$this->version = WP_JOB_BOARD_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '0.1.0';
 		}
 		$this->wp_job_board = 'wp-job-board';
 
@@ -93,7 +93,7 @@ class WP_Job_Board {
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 */
 	private function load_dependencies() {
@@ -137,7 +137,7 @@ class WP_Job_Board {
 	 * Uses the WP_Job_Board_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 */
 	private function set_locale() {
@@ -151,7 +151,7 @@ class WP_Job_Board {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
@@ -170,7 +170,7 @@ class WP_Job_Board {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 */
 	private function define_public_hooks() {
@@ -188,7 +188,7 @@ class WP_Job_Board {
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function run() {
 		$this->loader->run();
@@ -198,7 +198,7 @@ class WP_Job_Board {
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1.0
 	 * @return    string    The name of the plugin.
 	 */
 	public function get_wp_job_board() {
@@ -208,7 +208,7 @@ class WP_Job_Board {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1.0
 	 * @return    WP_Job_Board_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
@@ -218,7 +218,7 @@ class WP_Job_Board {
 	/**
 	 * Retrieve the version number of the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1.0
 	 * @return    string    The version number of the plugin.
 	 */
 	public function get_version() {

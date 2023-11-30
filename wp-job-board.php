@@ -3,7 +3,7 @@
  * WP Job Board
  *
  * @package   LittleFork/WPJobBoard
- * @author    Anthony Ticknor, Drew Brown
+ * @author    Little Fork
  * @copyright 2023 Little Fork
  * @license   GPL v2 or later
  *
@@ -11,10 +11,10 @@
  * Plugin Name:       WP Job Board
  * Plugin URI:        https://little-fork.com/
  * Description:       A plugin to pull and list jobs from Bullhorn(and other sites in the future).
- * Version:           1.0.0
+ * Version:           0.1.0
  * Requires at least: 6.0
  * Requires PHP:      8
- * Author:            Anthony Ticknor, Drew Brown
+ * Author:            Little Fork
  * Author             URI: https://little-fork.com/
  * License:           GPL v2 or later
  */
@@ -26,7 +26,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'WP_JOB_BOARD_VERSION', '1.0.0' );
+define( 'WP_JOB_BOARD_VERSION', '0.1.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -62,7 +62,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wp-job-board.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since    0.1.0
  */
 function run_wp_job_board() {
 

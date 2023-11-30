@@ -3,7 +3,7 @@
  * Base class for (hopefully) future api managers
  *
  * @link       http://example.com
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    WP_Job_Board
  * @subpackage WP_Job_Board/includes
@@ -12,10 +12,10 @@
 /**
  * Class holds some common helper methods.
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    WP_Job_Board
  * @subpackage WP_Job_Board/includes
- * @author     Drew Brown <dbrown78@gmail.com>
+ * @author     Little Fork
  */
 class WP_Job_Board_API_Manager_Base {
 

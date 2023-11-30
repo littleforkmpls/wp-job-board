@@ -3,7 +3,7 @@
  * The admin-specific functionality of the plugin.
  *
  * @link       http://example.com
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    WP_Job_Board
  * @subpackage WP_Job_Board/admin
@@ -17,7 +17,7 @@
  *
  * @package    WP_Job_Board
  * @subpackage WP_Job_Board/admin
- * @author     Drew Brown <dbrown78@gmail.com>
+ * @author     Little Fork
  */
 class WP_Job_Board_Admin
 {
@@ -49,7 +49,7 @@ class WP_Job_Board_Admin
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 * @var      string $wp_job_board The ID of this plugin.
 	 */
@@ -58,7 +58,7 @@ class WP_Job_Board_Admin
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 * @var      string $version The current version of this plugin.
 	 */
@@ -67,7 +67,7 @@ class WP_Job_Board_Admin
 	/**
 	 * Bullhorn Manager Instance
 	 *
-	 * @since  1.0.0
+	 * @since  0.1.0
 	 * @access private
 	 * @var WP_Job_Board_Bullhorn_Manager $bullhorn Bullhorn Manager Inst5ance
 	 */
@@ -79,7 +79,7 @@ class WP_Job_Board_Admin
 	 * @param string $wp_job_board The name of this plugin.
 	 * @param string $version      The version of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function __construct($wp_job_board, $version)
 	{
@@ -90,7 +90,7 @@ class WP_Job_Board_Admin
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function enqueue_styles()
 	{
@@ -113,7 +113,7 @@ class WP_Job_Board_Admin
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function enqueue_scripts()
 	{
