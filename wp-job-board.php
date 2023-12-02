@@ -26,7 +26,7 @@ if ( ! defined('WPINC')) {
 /**
  * Currently plugin version.
  */
-define('WP_JOB_BOARD_VERSION', '0.1.0');
+define('WP_JOB_BOARD_VERSION', '0.1.1');
 
 /**
  * The code that runs during plugin activation.
