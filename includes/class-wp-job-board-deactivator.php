@@ -29,5 +29,6 @@ class WP_Job_Board_Deactivator {
      * @since    0.1.0
      */
     public static function deactivate() {
+        wp_clear_scheduled_hook(WP_Job_Board_Admin::CRON_SYNC_JOBS);
     }
 }

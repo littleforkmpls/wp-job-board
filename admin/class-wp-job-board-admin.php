@@ -31,6 +31,7 @@ class WP_Job_Board_Admin {
     const SETTING_CLIENT_SECRET = 'wp_job_board_client_secret';
     const SETTING_API_USERNAME = 'wp_job_board_api_username';
     const SETTING_API_PASSWORD = 'wp_job_board_api_password';
+    const SETTING_ENABLE_CRON = 'wp_job_board_enable_cron';
 
     /**
      * The following are handled in an Options Object(the first const)
@@ -39,6 +40,7 @@ class WP_Job_Board_Admin {
     const OPTION_ARRAY_KEY = 'wp_job_board_options';
 
     const PAGE_SLUG = 'wp_job_board';
+    const CRON_SYNC_JOBS = 'wp_job_board_sync_jobs_cron';
 
     /**
      * The ID of this plugin.
@@ -153,6 +155,11 @@ class WP_Job_Board_Admin {
                 'sanatize_callback' => 'sanitize_text_field',
             )
         );
+        register_setting(
+            self::SETTINGS_GROUP,
+            self::SETTING_ENABLE_CRON,
+            array()
+        );
 
         add_options_page(
             'WP Job Board',
@@ -181,5 +188,28 @@ class WP_Job_Board_Admin {
 
     public function refresh_log() {
         require_once plugin_dir_path(__FILE__) . 'partials/wp-job-board-activity-log.php';
+    }
+
+    public function add_cron() {
+        if (!get_option(WP_Job_Board_Admin::SETTING_ENABLE_CRON)) {
+            $timestamp = wp_next_scheduled( WP_Job_Board_Admin::CRON_SYNC_JOBS );
+            if ($timestamp) {
+                wp_unschedule_event( $timestamp, WP_Job_Board_Admin::CRON_SYNC_JOBS );
+            }
+            return;
+        }
+        $schedules = wp_get_schedules();
+
+        if (($timestamp = wp_next_scheduled(WP_Job_Board_Admin::CRON_SYNC_JOBS)) === false) {
+            $scheduled = wp_schedule_event(time(), '30m', WP_Job_Board_Admin::CRON_SYNC_JOBS);
+        }
+    }
+
+    public function add_30m_interval($schedules) {
+        $schedules['30m'] = array(
+            'interval' => '1800',
+            'display'  => esc_html__( 'Every 30 minutes' ),
+        );
+        return $schedules;
     }
 }

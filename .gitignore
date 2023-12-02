@@ -33,3 +33,4 @@ Thumbs.db
 *.tar
 *.zip
 /vendor
+/dist

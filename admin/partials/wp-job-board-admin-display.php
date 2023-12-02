@@ -62,6 +62,17 @@ add_settings_field(
     )
 );
 
+add_settings_field(
+    WP_Job_Board_Admin::SETTING_ENABLE_CRON,
+    __('Enable Cron', 'wp_job_board'),
+    'render_checkbox_field',
+    WP_Job_Board_Admin::PAGE_SLUG,
+    WP_Job_Board_Admin::SETTINGS_SECTION,
+    array(
+        'name' => WP_Job_Board_Admin::SETTING_ENABLE_CRON,
+    )
+);
+
 function render_input_field($args) {
     $defaults = array(
         'type' => 'text',
@@ -82,6 +93,19 @@ function render_input_field($args) {
         <p class="description"><?php echo wp_kses_post($args['description']); ?></p>
     <?php
     endif;
+}
+
+function render_checkbox_field($args) {
+    $defaults = array(
+        'type' => 'checkbox',
+        'name' => '',
+
+    );
+    $args = array_merge($defaults, $args);
+    if (empty($args['name'])) {
+        return;
+    }
+    echo '<input type="checkbox" name="'.$args['name'].'" value="1" ' . checked( 1, get_option( $args['name'] ), false ) . ' />';
 }
 
 ?>

@@ -171,6 +171,9 @@ class WP_Job_Board {
         $this->loader->add_action('admin_post_trigger_sync', $plugin_admin, 'trigger_sync');
         $this->loader->add_action('wp_ajax_trigger_sync', $plugin_admin, 'trigger_sync');
         $this->loader->add_action('wp_ajax_refresh_log', $plugin_admin, 'refresh_log');
+        $this->loader->add_filter('cron_schedules', $plugin_admin, 'add_30m_interval');
+        $this->loader->add_action(WP_Job_Board_Admin::CRON_SYNC_JOBS, $plugin_admin, 'trigger_sync');
+        $this->loader->add_action('init', $plugin_admin, 'add_cron');
     }
 
     /**
