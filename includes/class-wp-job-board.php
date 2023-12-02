@@ -69,7 +69,7 @@ class WP_Job_Board {
         if (defined('WP_JOB_BOARD_VERSION')) {
             $this->version = WP_JOB_BOARD_VERSION;
         } else {
-            $this->version = '0.1.1';
+            $this->version = '0.1.2';
         }
         $this->wp_job_board = 'wp-job-board';
 
