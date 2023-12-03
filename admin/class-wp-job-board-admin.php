@@ -168,10 +168,23 @@ class WP_Job_Board_Admin {
             'wp_job_board',
             array($this, 'render_options_page')
         );
+        add_options_page(
+            'WP Job Board Log',
+            'WP_Job Board',
+            'read',
+            'wp_job_board_log',
+            array($this, 'render_log_page')
+        );
+
+        remove_submenu_page('options-general.php', 'wp_job_board_log');
     }
 
     public function render_options_page() {
         require_once plugin_dir_path(__FILE__) . 'partials/wp-job-board-admin-display.php';
+    }
+
+    public function render_log_page() {
+        require_once plugin_dir_path(__FILE__).'partials/wp-job-board-activity-log.php';
     }
 
     public function trigger_sync() {
