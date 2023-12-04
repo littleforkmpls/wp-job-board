@@ -5,7 +5,7 @@ $table = new WP_Job_Board_Log_Table();
     <?php
     require_once plugin_dir_path(__FILE__) . 'wp-job-board-settings-menu.php'
     ?>
-    <div id="wp_job_board_activity_log">
+    <div id="wp_job_board_activity_log" class="wp_job_board_tab">
         <form method="post">
             <?php
             $table->prepare_items();

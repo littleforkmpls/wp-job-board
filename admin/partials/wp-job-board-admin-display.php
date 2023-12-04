@@ -17,7 +17,7 @@
         <?php
         require_once plugin_dir_path(__FILE__) . 'wp-job-board-settings-menu.php'
         ?>
-        <div id="wp_job_board_settings">
+        <div id="wp_job_board_settings" class="wp_job_board_tab">
             <?php require_once plugin_dir_path(__FILE__) . 'wp-job-board-settings.php' ?>
         </div>
     </div>

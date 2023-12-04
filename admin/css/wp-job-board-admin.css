@@ -10,3 +10,7 @@
 #wp_job_board_activity_log {
 
 }
+
+#wp_job_board_admin .wp_job_board_tab {
+    margin: 1rem 0;
+}
