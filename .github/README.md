@@ -1,5 +1,11 @@
 # WP Job Board
 
 ### Releases
-To create a release run `./bin/build-zip.sh` from a shell.  Then use the archive created in dist
-(`dist/wp-job-board.{VER}.zip`) to attache to the release in github.
+
+Create a release
+
+1. Find all references to the version in the codebase and update to the new version number.
+1. Run `./bin/build-zip.sh` from the root of the project.
+1. Create a new release on GitHub.
+1. Attach the generated zip file to the release - `dist/wp-job-board.{VER}.zip`
+1. Update `https://little-fork.com/plugins/wp-job-board/plugin-wp-job-board.json` with new version number and download link.
