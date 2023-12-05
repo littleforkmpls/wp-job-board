@@ -32,7 +32,7 @@ class WP_Job_Board_Updater {
 
         if( false === $remote || ! $this->cache_allowed ) {
 
-            $remote = wp_remote_get( 'https://little-fork.com/plugins/wp-job-board/plugin-wp-job-board.json', [
+            $remote = wp_remote_get( 'https://plugins.little-fork.com/wp-job-board/plugin-wp-job-board.json', [
                     'timeout' => 10,
                     'headers' => [
                         'Accept' => 'application/json'
