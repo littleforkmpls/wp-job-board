@@ -5,7 +5,7 @@
  * @package   LittleFork/WPJobBoard
  * @author    Little Fork
  * @copyright 2023 Little Fork
- * @license   GPL v2 or later
+ * @license   Commercial
  *
  * @wordpress-plugin
  * Plugin Name:       WP Job Board
@@ -16,7 +16,7 @@
  * Requires PHP:      8
  * Author:            Little Fork
  * Author             URI: https://little-fork.com/
- * License:           GPL v2 or later
+ * License:           Commercial
  */
 
 // If this file is called directly, abort.
