@@ -173,22 +173,20 @@ class WP_Job_Board_Admin {
 
         add_submenu_page(
             'wp-job-board',
-            'WP Job Board Settings',
-            'Settings',
-            'manage_options',
-            'wp-job-board-settings',
-            array($this, 'render_options_page'),
-            50
-        );
-
-        add_submenu_page(
-            'wp-job-board',
             'WP Job Board Activity Log',
             'Activity Log',
             'manage_options',
             'wp-job-board-log',
-            array($this, 'render_log_page'),
-            60
+            array($this, 'render_log_page')
+        );
+
+        add_submenu_page(
+            'wp-job-board',
+            'WP Job Board Settings',
+            'Settings',
+            'manage_options',
+            'wp-job-board-settings',
+            array($this, 'render_options_page')
         );
 
         remove_submenu_page(
