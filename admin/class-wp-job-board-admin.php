@@ -161,18 +161,8 @@ class WP_Job_Board_Admin {
             array()
         );
 
-        add_menu_page(
-            'WP Job Board',
-            'WP Job Board',
-            'manage_options',
-            'wp-job-board',
-            '',
-            'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgdmlld0JveD0iMCAwIDI0IDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZS8+PHBhdGggZD0iTTE4Ljg3LDEyLjA3bC02LDkuNDdBMSwxLDAsMCwxLDEyLDIyYS45LjksMCwwLDEtLjI4LDBBMSwxLDAsMCwxLDExLDIxVjE1SDYuODJhMiwyLDAsMCwxLTEuNjktMy4wN2w2LTkuNDdBMSwxLDAsMCwxLDEyLjI4LDIsMSwxLDAsMCwxLDEzLDNWOWg0LjE4YTIsMiwwLDAsMSwxLjY5LDMuMDdaIiBmaWxsPSIjNDY0NjQ2Ii8+PC9zdmc+',
-            85
-        );
-
         add_submenu_page(
-            'wp-job-board',
+            'edit.php?post_type=wjb_bh_job_order',
             'WP Job Board Activity Log',
             'Activity Log',
             'manage_options',
@@ -181,7 +171,7 @@ class WP_Job_Board_Admin {
         );
 
         add_submenu_page(
-            'wp-job-board',
+            'edit.php?post_type=wjb_bh_job_order',
             'WP Job Board Settings',
             'Settings',
             'manage_options',
@@ -190,8 +180,8 @@ class WP_Job_Board_Admin {
         );
 
         remove_submenu_page(
-            'wp-job-board',
-            'wp-job-board'
+            'edit.php?post_type=wjb_bh_job_order',
+            'post-new.php?post_type=wjb_bh_job_order'
         );
     }
 
