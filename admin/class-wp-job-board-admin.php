@@ -126,7 +126,7 @@ class WP_Job_Board_Admin {
         wp_enqueue_script($this->wp_job_board, plugin_dir_url(__FILE__) . 'js/wp-job-board-admin.js', array('jquery'), $this->version, false);
     }
 
-    public function add_submenu() {
+    public function add_menu() {
         register_setting(
             self::SETTINGS_GROUP,
             self::SETTING_CLIENT_ID,
@@ -161,22 +161,40 @@ class WP_Job_Board_Admin {
             array()
         );
 
-        add_options_page(
+        add_menu_page(
             'WP Job Board',
             'WP Job Board',
             'manage_options',
-            'wp_job_board',
-            array($this, 'render_options_page')
-        );
-        add_options_page(
-            'WP Job Board Log',
-            'WP_Job Board',
-            'read',
-            'wp_job_board_log',
-            array($this, 'render_log_page')
+            'wp-job-board',
+            '',
+            'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgdmlld0JveD0iMCAwIDI0IDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZS8+PHBhdGggZD0iTTE4Ljg3LDEyLjA3bC02LDkuNDdBMSwxLDAsMCwxLDEyLDIyYS45LjksMCwwLDEtLjI4LDBBMSwxLDAsMCwxLDExLDIxVjE1SDYuODJhMiwyLDAsMCwxLTEuNjktMy4wN2w2LTkuNDdBMSwxLDAsMCwxLDEyLjI4LDIsMSwxLDAsMCwxLDEzLDNWOWg0LjE4YTIsMiwwLDAsMSwxLjY5LDMuMDdaIiBmaWxsPSIjNDY0NjQ2Ii8+PC9zdmc+',
+            85
         );
 
-        remove_submenu_page('options-general.php', 'wp_job_board_log');
+        add_submenu_page(
+            'wp-job-board',
+            'WP Job Board Settings',
+            'Settings',
+            'manage_options',
+            'wp-job-board-settings',
+            array($this, 'render_options_page'),
+            50
+        );
+
+        add_submenu_page(
+            'wp-job-board',
+            'WP Job Board Activity Log',
+            'Activity Log',
+            'manage_options',
+            'wp-job-board-log',
+            array($this, 'render_log_page'),
+            60
+        );
+
+        remove_submenu_page(
+            'wp-job-board',
+            'wp-job-board'
+        );
     }
 
     public function render_options_page() {
