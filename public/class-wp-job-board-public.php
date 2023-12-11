@@ -60,19 +60,6 @@ class WP_Job_Board_Public {
      * @since    0.1.0
      */
     public function enqueue_styles() {
-
-        /**
-         * This function is provided for demonstration purposes only.
-         *
-         * An instance of this class should be passed to the run() function
-         * defined in WP_Job_Board_Loader as all of the hooks are defined
-         * in that particular class.
-         *
-         * The WP_Job_Board_Loader will then create the relationship
-         * between the defined hooks and the functions defined in this
-         * class.
-         */
-
         wp_enqueue_style($this->wp_job_board, plugin_dir_url(__FILE__) . 'css/wp-job-board-public.css', array(), $this->version, 'all');
     }
 
@@ -82,22 +69,15 @@ class WP_Job_Board_Public {
      * @since    0.1.0
      */
     public function enqueue_scripts() {
-
-        /**
-         * This function is provided for demonstration purposes only.
-         *
-         * An instance of this class should be passed to the run() function
-         * defined in WP_Job_Board_Loader as all of the hooks are defined
-         * in that particular class.
-         *
-         * The WP_Job_Board_Loader will then create the relationship
-         * between the defined hooks and the functions defined in this
-         * class.
-         */
-
         wp_enqueue_script($this->wp_job_board, plugin_dir_url(__FILE__) . 'js/wp-job-board-public.js', array('jquery'), $this->version, false);
     }
 
+    /**
+     * Register custom post type to store job order data
+     *
+     * @since    0.1.0
+     * @return void
+     */
     public function register_job_order_post_type() {
         register_post_type(
             'wjb_bh_job_order',
@@ -151,6 +131,12 @@ class WP_Job_Board_Public {
         );
     }
 
+    /**
+     * Register REST API endpoint for resume submission
+     *
+     * @since    0.1.0
+     * @return void
+     */
     public function register_resume_endpoint() {
         register_rest_route(
             'wp-job-board/v1',
@@ -166,6 +152,7 @@ class WP_Job_Board_Public {
     /**
      * Handler for our submit resume endpoint
      *
+     * @since    0.1.0
      * @return void
      */
     public function submit_resume() {
