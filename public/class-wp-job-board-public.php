@@ -132,6 +132,58 @@ class WP_Job_Board_Public {
     }
 
     /**
+     * Load the Job archive template
+     *
+     * @since    0.1.6
+     * @param string $template
+     * @return string
+     */
+    public function load_template_job_archive($template) {
+        global $post;
+
+        if ($post->post_type === 'wjb_bh_job_order') {
+
+            $template = locate_template(
+                array(
+                    "wpjb/job-archive.php",
+                )
+            );
+
+            if (!$template) {
+                $template = plugin_dir_path(__FILE__) . 'partials/wp-job-board-archive.php';
+            }
+        }
+
+        return $template;
+    }
+
+    /**
+     * Load the Job single template
+     *
+     * @since    0.1.6
+     * @param string $template
+     * @return string
+     */
+    public function load_template_job_single($template) {
+        global $post;
+
+        if ($post->post_type === 'wjb_bh_job_order') {
+
+            $template = locate_template(
+                array(
+                    "wpjb/job-single.php",
+                )
+            );
+
+            if (!$template) {
+                $template = plugin_dir_path(__FILE__) . 'partials/wp-job-board-single.php';
+            }
+        }
+
+        return $template;
+    }
+
+    /**
      * Register REST API endpoint for resume submission
      *
      * @since    0.1.0
@@ -157,7 +209,7 @@ class WP_Job_Board_Public {
      */
     public function submit_resume() {
         try {
-            if ( ! $this->bullhorn) {
+            if (!$this->bullhorn) {
                 $this->bullhorn = new WP_Job_Board_Bullhorn_Manager();
             }
             $result = $this->bullhorn->submit_resume();

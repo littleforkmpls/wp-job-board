@@ -211,13 +211,14 @@ class WP_Job_Board {
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
         $this->loader->add_action('init', $plugin_public, 'register_job_order_post_type');
-
+        $this->loader->add_filter('archive_template', $plugin_public, 'load_template_job_archive');
+        $this->loader->add_filter('single_template', $plugin_public, 'load_template_job_single');
         $this->loader->add_action('rest_api_init', $plugin_public, 'register_resume_endpoint');
 
     }
 
     private function start_session() {
-        if ( ! session_id()) {
+        if (!session_id()) {
             session_start();
         }
     }
