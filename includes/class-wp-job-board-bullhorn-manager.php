@@ -147,6 +147,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
             $bh_data   = json_encode($job_order, JSON_HEX_APOS | JSON_HEX_QUOT);
             $post_data = array(
                 'post_title'     => $job_order['title'],
+                'post_name'      => sanitize_title($job_order['title'] . '-' . $job_order['id']),
                 'post_type'      => 'wjb_bh_job_order',
                 'post_content'   => '',
                 'post_status'    => 'publish',
