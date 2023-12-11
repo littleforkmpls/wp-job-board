@@ -143,7 +143,7 @@ class WP_Job_Board_Public {
                 'public'            => true,
                 'show_in_admin_bar' => false,
                 'show_in_rest'      => false,
-                'rewrite'           => array('slug' => 'bh-job-orders'),
+                'rewrite'           => array('slug' => 'jobs'),
                 'hierarchical'      => false,
                 'has_archive'       => true,
                 'can_export'        => false
