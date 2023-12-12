@@ -122,6 +122,11 @@ class WP_Job_Board {
         require_once plugin_dir_path(__DIR__) . 'public/class-wp-job-board-public.php';
 
         /**
+         * Utility Files
+         */
+        require_once plugin_dir_path(__DIR__) . 'includes/shortcodes.php';
+
+        /**
          * API Managers
          */
         require_once plugin_dir_path(__DIR__) . 'includes/class-wp-job-board-api-manager-base.php';
