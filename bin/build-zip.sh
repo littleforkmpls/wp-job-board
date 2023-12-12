@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VER=${1-0.1.6}
+VER=${1-0.1.7}
 DIST_DIR=${2-./dist}
 DIR_TO_ZIP=wp-job-board
 ARCHIVE=wp-job-board.$VER.zip
