@@ -141,7 +141,7 @@ class WP_Job_Board_Public {
     public function load_template_job_archive($template) {
         global $post;
 
-        if ($post->post_type === 'wjb_bh_job_order') {
+        if (!empty($post->post_type) && $post->post_type === 'wjb_bh_job_order') {
 
             $template = locate_template(
                 array(
@@ -167,7 +167,7 @@ class WP_Job_Board_Public {
     public function load_template_job_single($template) {
         global $post;
 
-        if ($post->post_type === 'wjb_bh_job_order') {
+        if (!empty($post->post_type) && $post->post_type === 'wjb_bh_job_order') {
 
             $template = locate_template(
                 array(
