@@ -23,7 +23,7 @@
                     if (response.data?.message) {
                         let $messageBlock = $(`<div id="setting-error-settings_updated" class="notice ${messageClass} settings-error is-dismissible">
 <p><strong>${response.data.message}</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>`);
-                        $('#wp_job_board_title').after($messageBlock);
+                        $('#wp_job_board_admin').before($messageBlock);
                         $messageBlock.find('.notice-dismiss').on('click', (event)=> {
                             event.preventDefault();
                             $messageBlock.fadeTo(100, 0, () => {
