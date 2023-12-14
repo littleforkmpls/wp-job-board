@@ -60,7 +60,13 @@ class WP_Job_Board_Public {
      * @since    0.1.0
      */
     public function enqueue_styles() {
-        wp_enqueue_style($this->wp_job_board, plugin_dir_url(__FILE__) . 'css/wp-job-board-public.css', array(), $this->version, 'all');
+        wp_enqueue_style(
+            $this->wp_job_board, 
+            plugin_dir_url(__FILE__) . 'css/wp-job-board-public.css', 
+            array(), 
+            filemtime(plugin_dir_path(__FILE__) . 'css/wp-job-board-public.css'), 
+            'all'
+        );
     }
 
     /**
@@ -69,7 +75,13 @@ class WP_Job_Board_Public {
      * @since    0.1.0
      */
     public function enqueue_scripts() {
-        wp_enqueue_script($this->wp_job_board, plugin_dir_url(__FILE__) . 'js/wp-job-board-public.js', array('jquery'), $this->version, false);
+        wp_enqueue_script(
+            $this->wp_job_board, 
+            plugin_dir_url(__FILE__) . 'js/wp-job-board-public.js', 
+            array('jquery'), 
+            filemtime(plugin_dir_path(__FILE__) . 'js/wp-job-board-public.js'), 
+            false
+        );
     }
 
     /**

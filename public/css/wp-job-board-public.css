@@ -4,43 +4,32 @@
  */
 
 /*--------------------------------------------------------------
-    fullCard
+    card
 ---------------------------------------------------------------*/
-body {
-    margin: 1rem;
-    padding: 1rem;
-  }
-  .wpjb-fullCard {
+  .wpjb-card {
+    position: relative;
     border-radius: 5px;
     box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 2px;
-    height: auto;
-    width: 90vw;
-    padding: 1rem;
+    padding: 20px;
   }
-  .wpjb-fullCard__utility-btn {
+
+  .wpjb-card__hd {
+    padding-right: 140px;
+  }
+
+  .wpjb-card__ft{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  .wpjb-utilityNav__btn {
     border: none;
     background-color: transparent;
-    font-size: 1.5rem;
     margin: 0 0.1rem;
   }
 
-  .wpjb-fullCard__utility-btn:hover {
+  .wpjb-utilityNav__btn:hover {
     cursor: pointer;
     opacity: 0.5;
-  }
-
-  .wpjb-fullCard__btn-container {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin: 1rem 0;
-  }
-  .wpjb-fullCard__hd {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .wpjb-fullCard__job-info {
-    font-size: small;
   }
