@@ -152,7 +152,7 @@ class WP_Job_Board_Public {
             $error = json_last_error_msg();
         }
         ?>
-<pre>
+<pre class="wp_job_board_meta_sample">
     <?= json_encode($data, JSON_PRETTY_PRINT); ?>
 </pre>
 <?php

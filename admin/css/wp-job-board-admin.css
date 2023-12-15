@@ -14,3 +14,17 @@
 #wp_job_board_admin .wp_job_board_tab {
     margin: 1rem 0;
 }
+
+pre.wp_job_board_meta_sample {
+    margin: 12px 0 0 0;
+    padding: 1rem;
+    border: none;
+    background-color: #1d2327;
+    color: #f0f0f1;
+    font-family:ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
