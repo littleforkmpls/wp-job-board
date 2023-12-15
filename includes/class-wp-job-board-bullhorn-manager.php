@@ -144,10 +144,15 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         $count = 0;
 
         foreach ($jobs as $job_order) {
+            $job_order['publicDescription'] = addslashes($job_order['publicDescription']);
             $bh_data   = json_encode($job_order, JSON_HEX_APOS | JSON_HEX_QUOT);
+            $clean_title = sanitize_title($job_order['title'] . '-' . $job_order['id']);
+            if (!$bh_data) {
+                error_log('Problem encoding job('.$clean_title.'): ' . json_last_error_msg());
+            }
             $post_data = array(
                 'post_title'     => $job_order['title'],
-                'post_name'      => sanitize_title($job_order['title'] . '-' . $job_order['id']),
+                'post_name'      => $clean_title,
                 'post_type'      => 'wjb_bh_job_order',
                 'post_content'   => '',
                 'post_status'    => 'publish',
@@ -168,11 +173,11 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
                 $post_data['ID'] = $existing_job_orders[$job_order['id']];
                 $post_bh_data    = get_post_meta($existing_job_orders[$job_order['id']], 'wp_job_board_bh_data', true);
 
-                // if our data is the same skip it.
+                // if our data is the same mark as updated and skip it.
                 if (!$force && $post_bh_data === $bh_data) {
+                    update_post_meta($existing_job_orders[$job_order['id']], 'wp_job_board_bh_updated', 1);
                     continue;
                 }
-                update_post_meta($existing_job_orders[$job_order['id']], 'wp_job_board_bh_updated', 1);
                 $log_data[] = array(
                     'bh_id'  => $job_order['id'],
                     'action' => 'Updated' . ($force ? ' (Manually)' : ''),

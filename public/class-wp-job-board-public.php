@@ -118,17 +118,44 @@ class WP_Job_Board_Public {
                     'item_link'                 => __('Job Link', 'wp_job_board'),
                     'item_link_description'     => __('A link to a Job', 'wp_job_board')
                 ),
-                'menu_icon'         => 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgdmlld0JveD0iMCAwIDI0IDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZS8+PHBhdGggZD0iTTE4Ljg3LDEyLjA3bC02LDkuNDdBMSwxLDAsMCwxLDEyLDIyYS45LjksMCwwLDEtLjI4LDBBMSwxLDAsMCwxLDExLDIxVjE1SDYuODJhMiwyLDAsMCwxLTEuNjktMy4wN2w2LTkuNDdBMSwxLDAsMCwxLDEyLjI4LDIsMSwxLDAsMCwxLDEzLDNWOWg0LjE4YTIsMiwwLDAsMSwxLjY5LDMuMDdaIiBmaWxsPSIjNDY0NjQ2Ii8+PC9zdmc+',
-                'menu_position'     => 85,
-                'public'            => true,
-                'show_in_admin_bar' => false,
-                'show_in_rest'      => false,
-                'rewrite'           => array('slug' => 'jobs'),
-                'hierarchical'      => false,
-                'has_archive'       => true,
-                'can_export'        => false
+                'menu_icon'            => 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgdmlld0JveD0iMCAwIDI0IDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZS8+PHBhdGggZD0iTTE4Ljg3LDEyLjA3bC02LDkuNDdBMSwxLDAsMCwxLDEyLDIyYS45LjksMCwwLDEtLjI4LDBBMSwxLDAsMCwxLDExLDIxVjE1SDYuODJhMiwyLDAsMCwxLTEuNjktMy4wN2w2LTkuNDdBMSwxLDAsMCwxLDEyLjI4LDIsMSwxLDAsMCwxLDEzLDNWOWg0LjE4YTIsMiwwLDAsMSwxLjY5LDMuMDdaIiBmaWxsPSIjNDY0NjQ2Ii8+PC9zdmc+',
+                'menu_position'        => 85,
+                'public'               => true,
+                'show_in_admin_bar'    => false,
+                'show_in_rest'         => false,
+                'rewrite'              => array('slug' => 'jobs'),
+                'hierarchical'         => false,
+                'has_archive'          => true,
+                'can_export'           => false,
+                'register_meta_box_cb' => array($this, 'show_meta_data')
             )
         );
+    }
+
+    public function show_meta_data($post) {
+        add_meta_box(
+            'wjb_job_order_data',
+            'Job Order Data',
+            array($this, 'show_meta_boxes'),
+            'wjb_bh_job_order',
+            'normal',
+            'core'
+        );
+    }
+
+    public function show_meta_boxes() {
+        global $post;
+        $bhData = get_post_meta($post->ID, 'wp_job_board_bh_data', true);
+        $data = json_decode($bhData, true);
+        $data['publicDescription'] = htmlspecialchars($data['publicDescription']);
+        if (!$data) {
+            $error = json_last_error_msg();
+        }
+        ?>
+<pre>
+    <?= json_encode($data, JSON_PRETTY_PRINT); ?>
+</pre>
+<?php
     }
 
     public function register_job_order_taxonomies() {
