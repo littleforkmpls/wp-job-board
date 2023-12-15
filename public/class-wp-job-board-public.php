@@ -118,16 +118,17 @@ class WP_Job_Board_Public {
                     'item_link'                 => __('Job Link', 'wp_job_board'),
                     'item_link_description'     => __('A link to a Job', 'wp_job_board')
                 ),
-                'menu_icon'            => 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgdmlld0JveD0iMCAwIDI0IDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZS8+PHBhdGggZD0iTTE4Ljg3LDEyLjA3bC02LDkuNDdBMSwxLDAsMCwxLDEyLDIyYS45LjksMCwwLDEtLjI4LDBBMSwxLDAsMCwxLDExLDIxVjE1SDYuODJhMiwyLDAsMCwxLTEuNjktMy4wN2w2LTkuNDdBMSwxLDAsMCwxLDEyLjI4LDIsMSwxLDAsMCwxLDEzLDNWOWg0LjE4YTIsMiwwLDAsMSwxLjY5LDMuMDdaIiBmaWxsPSIjNDY0NjQ2Ii8+PC9zdmc+',
-                'menu_position'        => 85,
-                'public'               => true,
-                'show_in_admin_bar'    => false,
-                'show_in_rest'         => false,
-                'rewrite'              => array('slug' => 'jobs'),
-                'hierarchical'         => false,
-                'has_archive'          => true,
-                'can_export'           => false,
-                'register_meta_box_cb' => array($this, 'show_meta_data')
+                'menu_icon'             => 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgdmlld0JveD0iMCAwIDI0IDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZS8+PHBhdGggZD0iTTE4Ljg3LDEyLjA3bC02LDkuNDdBMSwxLDAsMCwxLDEyLDIyYS45LjksMCwwLDEtLjI4LDBBMSwxLDAsMCwxLDExLDIxVjE1SDYuODJhMiwyLDAsMCwxLTEuNjktMy4wN2w2LTkuNDdBMSwxLDAsMCwxLDEyLjI4LDIsMSwxLDAsMCwxLDEzLDNWOWg0LjE4YTIsMiwwLDAsMSwxLjY5LDMuMDdaIiBmaWxsPSIjNDY0NjQ2Ii8+PC9zdmc+',
+                'menu_position'         => 85,
+                'public'                => true,
+                'show_in_admin_bar'     => false,
+                'show_in_rest'          => false,
+                'rewrite'               => array('slug' => 'jobs'),
+                'hierarchical'          => false,
+                'has_archive'           => true,
+                'can_export'            => false,
+                'supports'              => array('title'),
+                'register_meta_box_cb'  => array($this, 'show_meta_data')
             )
         );
     }
@@ -171,12 +172,12 @@ class WP_Job_Board_Public {
             'update_item'       => __( 'Update Job Type' ),
             'add_new_item'      => __( 'Add New Job Type' ),
             'new_item_name'     => __( 'New Job Type Name' ),
-            'menu_name'         => __( 'Job Type' ),
+            'menu_name'         => __( 'Job Types' ),
         );
         $args   = array(
             'hierarchical'      => false,
             'labels'            => $labels,
-            'show_ui'           => false,
+            'show_ui'           => true,
             'show_admin_column' => true,
             'query_var'         => true,
             'rewrite'           => [ 'slug' => 'job-type' ],
@@ -195,12 +196,12 @@ class WP_Job_Board_Public {
             'update_item'       => __( 'Update Job Location' ),
             'add_new_item'      => __( 'Add New Job Location' ),
             'new_item_name'     => __( 'New Job Location Name' ),
-            'menu_name'         => __( 'Job Location' ),
+            'menu_name'         => __( 'Job Locations' ),
         );
         $args   = array(
             'hierarchical'      => false,
             'labels'            => $labels,
-            'show_ui'           => false,
+            'show_ui'           => true,
             'show_admin_column' => true,
             'query_var'         => true,
             'rewrite'           => [ 'slug' => 'job-location' ],
@@ -219,12 +220,12 @@ class WP_Job_Board_Public {
             'update_item'       => __( 'Update Job Category' ),
             'add_new_item'      => __( 'Add New Job Category' ),
             'new_item_name'     => __( 'New Job Category Name' ),
-            'menu_name'         => __( 'Job Category' ),
+            'menu_name'         => __( 'Job Categories' ),
         );
         $args   = array(
             'hierarchical'      => false,
             'labels'            => $labels,
-            'show_ui'           => false,
+            'show_ui'           => true,
             'show_admin_column' => true,
             'query_var'         => true,
             'rewrite'           => [ 'slug' => 'job-category' ],
