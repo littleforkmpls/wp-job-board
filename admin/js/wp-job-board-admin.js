@@ -13,6 +13,7 @@
                 ajaxurl,
                 {
                     action: 'trigger_sync',
+                    force: true, // This causes all data to be updated every time the button is pushed.
                 },
                 (response) => {
                     let messageClass = 'notice-success';

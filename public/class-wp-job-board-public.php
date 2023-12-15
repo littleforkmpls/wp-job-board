@@ -131,6 +131,81 @@ class WP_Job_Board_Public {
         );
     }
 
+    public function register_job_order_taxonomies() {
+        // Job type
+        $labels = array(
+            'name'              => _x( 'Job Types', 'taxonomy general name' ),
+            'singular_name'     => _x( 'Job Type', 'taxonomy singular name' ),
+            'search_items'      => __( 'Search Job Types' ),
+            'all_items'         => __( 'All Job Types' ),
+            'parent_item'       => __( 'Parent Job Types' ),
+            'parent_item_colon' => __( 'Parent Job Type:' ),
+            'edit_item'         => __( 'Edit Job Type' ),
+            'update_item'       => __( 'Update Job Type' ),
+            'add_new_item'      => __( 'Add New Job Type' ),
+            'new_item_name'     => __( 'New Job Type Name' ),
+            'menu_name'         => __( 'Job Type' ),
+        );
+        $args   = array(
+            'hierarchical'      => false,
+            'labels'            => $labels,
+            'show_ui'           => false,
+            'show_admin_column' => true,
+            'query_var'         => true,
+            'rewrite'           => [ 'slug' => 'job-type' ],
+        );
+        register_taxonomy( 'wjb_bh_job_type_tax', [ 'wjb_bh_job_order' ], $args );
+        register_taxonomy_for_object_type('wjb_bh_job_type_tax', 'wjb_bh_job_order');
+        // Job Location (State only, do some clean up to match abbrevs to states)
+        $labels = array(
+            'name'              => _x( 'Job Locations', 'taxonomy general name' ),
+            'singular_name'     => _x( 'Job Location', 'taxonomy singular name' ),
+            'search_items'      => __( 'Search Job Locations' ),
+            'all_items'         => __( 'All Job Locations' ),
+            'parent_item'       => __( 'Parent Job Locations' ),
+            'parent_item_colon' => __( 'Parent Job Location:' ),
+            'edit_item'         => __( 'Edit Job Location' ),
+            'update_item'       => __( 'Update Job Location' ),
+            'add_new_item'      => __( 'Add New Job Location' ),
+            'new_item_name'     => __( 'New Job Location Name' ),
+            'menu_name'         => __( 'Job Location' ),
+        );
+        $args   = array(
+            'hierarchical'      => false,
+            'labels'            => $labels,
+            'show_ui'           => false,
+            'show_admin_column' => true,
+            'query_var'         => true,
+            'rewrite'           => [ 'slug' => 'job-location' ],
+        );
+        register_taxonomy( 'wjb_bh_job_location_tax', [ 'wjb_bh_job_order' ], $args );
+        register_taxonomy_for_object_type('wjb_bh_job_location_tax', 'wjb_bh_job_order');
+        // Job Category
+        $labels = array(
+            'name'              => _x( 'Job Categories', 'taxonomy general name' ),
+            'singular_name'     => _x( 'Job Category', 'taxonomy singular name' ),
+            'search_items'      => __( 'Search Job Categories' ),
+            'all_items'         => __( 'All Job Categories' ),
+            'parent_item'       => __( 'Parent Job Categories' ),
+            'parent_item_colon' => __( 'Parent Job Category:' ),
+            'edit_item'         => __( 'Edit Job Category' ),
+            'update_item'       => __( 'Update Job Category' ),
+            'add_new_item'      => __( 'Add New Job Category' ),
+            'new_item_name'     => __( 'New Job Category Name' ),
+            'menu_name'         => __( 'Job Category' ),
+        );
+        $args   = array(
+            'hierarchical'      => false,
+            'labels'            => $labels,
+            'show_ui'           => false,
+            'show_admin_column' => true,
+            'query_var'         => true,
+            'rewrite'           => [ 'slug' => 'job-category' ],
+        );
+        register_taxonomy( 'wjb_bh_job_category_tax', [ 'wjb_bh_job_order' ], $args );
+        register_taxonomy_for_object_type('wjb_bh_job_category_tax', 'wjb_bh_job_order');
+    }
+
     /**
      * Register REST API endpoint for resume submission
      *

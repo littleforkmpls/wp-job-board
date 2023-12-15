@@ -198,7 +198,11 @@ class WP_Job_Board_Admin {
             if ( ! $this->bullhorn) {
                 $this->bullhorn = new WP_Job_Board_Bullhorn_Manager();
             }
-            $this->bullhorn->trigger_sync();
+            $force = false;
+            if (isset($_POST['force']) && $_POST['force'] === 'true') {
+                $force = true;
+            }
+            $this->bullhorn->trigger_sync(null, $force);
             wp_send_json_success(array('message' => 'Listings synced!',));
         } catch (Throwable $exception) {
             wp_send_json_error(array('message' => $exception->getMessage()));
