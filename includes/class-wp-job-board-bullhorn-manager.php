@@ -404,10 +404,14 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         $token = $this->call_api($url, array(), 'post');
 
         if (isset($token['error'])) {
-            if (isset($token['error_description']) && $token['error_description'] === 'Invalid, expired, or revoked authorization code.') {
+            if (isset($token['error_description'])
+                && ($token['error_description'] === 'Invalid, expired, or revoked authorization code.'
+                    || $token['error_description'] === 'Invalid, expired, or revoked refresh token.')
+                ) {
                 update_option(WP_Job_Board_Admin::OPTION_ARRAY_KEY, array());
                 $this->throw_error('Problem getting authorize token.  Please attempt action again.');
             }
+            $this->throw_error('Problem with authorization: ' . json_encode($token));
         }
 
         $expires = (new DateTime())->add(new DateInterval("PT{$token['expires_in']}S"));
