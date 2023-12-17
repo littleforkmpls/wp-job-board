@@ -163,15 +163,6 @@ class WP_Job_Board_Admin {
 
         add_submenu_page(
             'edit.php?post_type=wjb_bh_job_order',
-            'WP Job Board Activity Log',
-            'Activity Log',
-            'manage_options',
-            'wp-job-board-log',
-            array($this, 'render_log_page')
-        );
-
-        add_submenu_page(
-            'edit.php?post_type=wjb_bh_job_order',
             'WP Job Board Tools',
             'Tools',
             'manage_options',
@@ -195,15 +186,11 @@ class WP_Job_Board_Admin {
     }
 
     public function render_settings_page() {
-        require_once plugin_dir_path(__FILE__) . 'partials/wp-job-board-admin-settings.php';
+        require_once plugin_dir_path(__FILE__) . 'pages/wp-job-board-admin-settings.php';
     }
 
     public function render_tools_page() {
-        require_once plugin_dir_path(__FILE__) . 'partials/wp-job-board-admin-tools.php';
-    }
-
-    public function render_log_page() {
-        require_once plugin_dir_path(__FILE__).'partials/wp-job-board-activity-log.php';
+        require_once plugin_dir_path(__FILE__) . 'pages/wp-job-board-admin-tools.php';
     }
 
     public function trigger_sync() {

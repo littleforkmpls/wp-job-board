@@ -1,18 +1,108 @@
-/**
- * All of the CSS for your admin-specific functionality should be
- * included in this file.
- */
+/* ---------------------------------------------------------------------
+ Admin Panel CSS
+------------------------------------------------------------------------ */
+
+/* ---------------------- Variables ---------------------- */
+#wp_job_board_admin {
+    --wpjba-global-insulation-x: 24px;
+    --wpjba-global-insulation-y: 32px;
+
+    --wpjba-color-white: #ffffff;
+    --wpjba-color-light: #edf0f1;
+    --wpjba-color-mid: #808080;
+    --wpjba-color-dark: #0d000d;
+    --wpjba-color-black: #000000;
+    --wpjba-color-accent: #e01b84;
+
+    --wpjba-border-primary: 1px solid #d5d5d5;
+
+    --wpjba-hdg-color-primary: var(--wpjba-color-dark);
+    --wpjba-text-color-primary: var(--wpjba-color-mid);
+}
+
+/* ---------------------- Base ---------------------- */
+#wp_job_board_admin {
+    margin-left: -20px !important;
+}
+
+#wp_job_board_admin h1,
+#wp_job_board_admin h2,
+#wp_job_board_admin h3,
+#wp_job_board_admin h4,
+#wp_job_board_admin h5,
+#wp_job_board_admin h6 {
+    margin: 0;
+    padding: 0;
+    color: var(--wpjba-hdg-color-primary);
+    font-weight: 600;
+}
+
+#wp_job_board_admin ul,
+#wp_job_board_admin li,
+#wp_job_board_admin p {
+    margin: 0;
+    padding: 0;
+    color: var(--wpjba-text-color-primary);
+}
+
+/* ---------------------- Helpers ---------------------- */
+#wp_job_board_admin .wpjba-highlight {
+    color: var(--wpjba-color-accent) !important;
+}
+
+/* ---------------------- Page ---------------------- */
+#wp_job_board_admin .wpjba__hd {
+    padding: var(--wpjba-global-insulation-y) var(--wpjba-global-insulation-x);
+    background-color: var(--wpjba-color-light);
+}
+
+#wp_job_board_admin .wpjba__menu {
+    padding: 0 var(--wpjba-global-insulation-x);
+    border-top: var(--wpjba-border-primary);
+    border-bottom: var(--wpjba-border-primary);
+    background-color: var(--wpjba-color-white);
+}
+
+#wp_job_board_admin .wpjba__bd {
+    padding: var(--wpjba-global-insulation-y) var(--wpjba-global-insulation-x);
+}
+
+/* ---------------------- Tabs ---------------------- */
+#wp_job_board_admin .wpjba-tabs {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+}
+
+#wp_job_board_admin .wpjba-tabs a {
+    display: block;
+    padding: 20px 0 16px 0;
+    border-bottom: 4px solid transparent;
+    color: var(--wpjba-text-color-primary);
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 100ms linear;
+}
+
+#wp_job_board_admin .wpjba-tabs a:hover {
+    border-color: currentcolor;
+}
+
+#wp_job_board_admin .wpjba-tabs a.wpjba-tabs-isActive {
+    color: var(--wpjba-color-black);
+    border-color: var(--wpjba-color-accent);
+}
+
+
+
+
+
+
 
 #wp_job_board_admin .spinner {
     float: none;
-}
-
-#wp_job_board_activity_log {
-
-}
-
-#wp_job_board_admin .wp_job_board_tab {
-    margin: 1rem 0;
 }
 
 pre.wp_job_board_meta_sample {
