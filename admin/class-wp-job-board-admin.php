@@ -101,7 +101,14 @@ class WP_Job_Board_Admin {
          * class.
          */
 
-        wp_enqueue_style($this->wp_job_board, plugin_dir_url(__FILE__) . 'css/wp-job-board-admin.css', array(), $this->version, 'all');
+        wp_enqueue_style(
+            $this->wp_job_board,
+            plugin_dir_url(__FILE__) . 'css/wp-job-board-admin.css',
+            array(),
+            filemtime(plugin_dir_path(__FILE__) . 'css/wp-job-board-admin.css'),
+            $this->version,
+            'all'
+        );
     }
 
     /**
@@ -123,7 +130,13 @@ class WP_Job_Board_Admin {
          * class.
          */
 
-        wp_enqueue_script($this->wp_job_board, plugin_dir_url(__FILE__) . 'js/wp-job-board-admin.js', array('jquery'), $this->version, false);
+        wp_enqueue_script(
+            $this->wp_job_board,
+            plugin_dir_url(__FILE__) . 'js/wp-job-board-admin.js',
+            array('jquery'),
+            filemtime(plugin_dir_path(__FILE__) . 'js/wp-job-board-admin.js'),
+            false
+        );
     }
 
     public function add_menu() {
