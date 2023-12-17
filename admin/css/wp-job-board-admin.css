@@ -9,12 +9,11 @@
 
     --wpjba-color-white: #ffffff;
     --wpjba-color-light: #edf0f1;
+    --wpjba-color-gray: #d5d5d5;
     --wpjba-color-mid: #808080;
     --wpjba-color-dark: #0d000d;
     --wpjba-color-black: #000000;
     --wpjba-color-accent: #e01b84;
-
-    --wpjba-border-primary: 1px solid #d5d5d5;
 
     --wpjba-hdg-color-primary: var(--wpjba-color-dark);
     --wpjba-text-color-primary: var(--wpjba-color-mid);
@@ -58,8 +57,8 @@
 
 #wp_job_board_admin .wpjba__menu {
     padding: 0 var(--wpjba-global-insulation-x);
-    border-top: var(--wpjba-border-primary);
-    border-bottom: var(--wpjba-border-primary);
+    border-top: 1px solid var(--wpjba-color-gray);
+    border-bottom: 1px solid var(--wpjba-color-gray);
     background-color: var(--wpjba-color-white);
 }
 
@@ -78,21 +77,23 @@
 
 #wp_job_board_admin .wpjba-tabs a {
     display: block;
-    padding: 20px 0 16px 0;
-    border-bottom: 4px solid transparent;
+    padding: 20px 2px 16px 2px;
+    border-bottom: 3px solid transparent;
     color: var(--wpjba-text-color-primary);
-    font-weight: bold;
+    font-weight: 400;
     text-decoration: none;
     transition: all 100ms linear;
 }
 
 #wp_job_board_admin .wpjba-tabs a:hover {
-    border-color: currentcolor;
+    color: var(--wpjba-color-accent);
 }
 
 #wp_job_board_admin .wpjba-tabs a.wpjba-tabs-isActive {
     color: var(--wpjba-color-black);
     border-color: var(--wpjba-color-accent);
+    font-weight: 600;
+    cursor: default;
 }
 
 
