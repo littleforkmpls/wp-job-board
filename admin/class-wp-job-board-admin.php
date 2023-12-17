@@ -106,7 +106,6 @@ class WP_Job_Board_Admin {
             plugin_dir_url(__FILE__) . 'css/wp-job-board-admin.css',
             array(),
             filemtime(plugin_dir_path(__FILE__) . 'css/wp-job-board-admin.css'),
-            $this->version,
             'all'
         );
     }
