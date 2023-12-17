@@ -18,12 +18,12 @@
             <ul class="wpjba-tabs">
                 <li>
                     <a href="<?php echo $tools_base_url; ?>&view=connector" class="<?= $view === 'connector' ? 'wpjba-tabs-isActive' : ''?>">
-                        Connector
+                        Data Connector
                     </a>
                 </li>
                 <li>
                     <a href="<?php echo $tools_base_url; ?>&view=cron" class="<?= $view === 'cron' ? 'wpjba-tabs-isActive' : ''?>">
-                        Cron
+                        Cron Schedule
                     </a>
                 </li>
                 <li>
