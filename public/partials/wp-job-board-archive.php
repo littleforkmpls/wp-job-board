@@ -105,13 +105,13 @@
         <h2 class="txt txt--h3"><?php the_title(); ?></h2>
       </div>
       <div class="wpjb-card__meta">
-        <p>⚖ Posted <?php echo date('m.d.y', (int) $post_publish_date); ?></p>
-        <p>⏲ Updated <?php echo $formattedDifference; ?> ago</p>
-        <p>📍 <?php echo $post_city_name; ?>, <?php echo $post_state_name; ?></p>
-        <p>☑️ <?php echo $post_employment_type; ?></p>
+        <p class="txt txt--xs">⚖ Posted <?php echo date('m.d.y', (int) $post_publish_date); ?></p>
+        <p class="txt txt--xs">⏲ Updated <?php echo $formattedDifference; ?> ago</p>
+        <p class="txt txt--xs">📍 <?php echo $post_city_name; ?>, <?php echo $post_state_name; ?></p>
+        <p class="txt txt--xs">☑️ <?php echo $post_employment_type; ?></p>
       </div>
       <div class="wpjb-card__bd">
-        <p class="txt"><?php echo $decoded_job_description; ?></p>
+        <p class="txt txt--balance"><?php echo $decoded_job_description; ?></p>
       </div>
       <div class="wpjb-card__ft">
         <div class="wpjb-utilityNav">
