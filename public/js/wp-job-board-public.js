@@ -1,4 +1,11 @@
-(function( $ ) {
-    'use strict';
+(function ($) {
+    "use strict";
 
-})( jQuery );
+    $(".wpjb-dropdown").click(function () {
+        $(this).toggleClass("is-active");
+    });
+
+    $(".wpjb-dropdown ul").click(function (e) {
+        e.stopPropagation();
+    });
+})(jQuery);

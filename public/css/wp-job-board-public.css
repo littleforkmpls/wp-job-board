@@ -13,6 +13,10 @@
     padding: 20px;
   }
 
+  .wpjb-card div {
+    margin-bottom: 20px;
+  }
+
   .wpjb-card__hd {
     padding-right: 140px;
   }
@@ -25,8 +29,7 @@
 
   .wpjb-utilityNav__btn {
     border: none;
-    background-color: transparent;
-    margin: 0 0.1rem;
+    background-color: transparent;  
   }
 
   .wpjb-utilityNav__btn:hover {

@@ -1,5 +1,5 @@
-<h1>WPJB Plugin Single</h1>
-<h2><?php the_title(); ?></h2>
+<!-- <h1>WPJB Plugin Single</h1>
+<h2><?php the_title(); ?></h2> -->
 
 <?php
     $post_meta_single = get_post_meta(get_the_ID(), 'wp_job_board_bh_data', true);
@@ -41,18 +41,53 @@
     $formattedDifference = ($secondsDifference == 1) ? '1 second' : "$secondsDifference seconds";
   }
   // Decode HTML entities in job description (not working) 
-  $decoded_job_description = html_entity_decode($post_job_description);
+  //$decoded_job_description = html_entity_decode($post_job_description);
 
+  // $post_job_description = htmlentities($post_job_description, null, 'utf-8'); 
+  // $post_job_description = str_replace(" ", "", $post_job_description);
+  // $post_job_description = preg_replace('/[\s]+/mu', '', $post_job_description);
+  // $post_job_description = str_replace('\u00a0','',$post_job_description);
+  //  echo $post_job_description;
+
+  // Replace UTF-8 encoded non-breaking space with a regular space
+  //$cleaned_job_description = preg_replace('/\xc2\xa0/', ' ', $post_job_description);
+
+
+
+  
+
+$cleaned_job_description = str_replace('u00a0', ' ', $post_job_description);
+
+
+
+
+
+// Remove the unwanted "n" characters
+//$cleaned_job_description = str_replace("\n", '', $cleaned_job_description);
+
+// Remove the unwanted "n" characters and "nu" elements with various representations of newline characters
+//$cleaned_job_description = preg_replace('/\b(?:n|nu|\n)\b/', '', $cleaned_job_description);
+
+// $cleaned_job_description = str_replace('nnttt', "\n", $cleaned_job_description);
+
+// $cleaned_job_description = str_replace('ntttt', "\n", $cleaned_job_description);
+
+// $cleaned_job_description = str_replace('nttt', "\n", $cleaned_job_description);
+
+// Remove the unwanted elements
+// $cleaned_job_description = str_replace('ntnttnttntn', '', $cleaned_job_description);
+// $cleaned_job_description = ltrim($cleaned_job_description, 'n');
+// $cleaned_job_description = preg_replace('/^ntnttnttntn/', '', $cleaned_job_description);
+
+// $cleaned_job_description = rtrim($cleaned_job_description, 'n');
+
+// Remove the unwanted elements
+//$cleaned_job_description = preg_replace('/\bntnttnttntn\b/', '', $cleaned_job_description);
+
+ 
+// Decode HTML entities
+$decoded_job_description = html_entity_decode($cleaned_job_description);
 ?>
-
-
-<div>Employment Type: <?php echo $post_employment_type; ?></div>
-<div>Publish Date: <?php echo $post_publish_date; ?></div>
-<div>Modified Date: <?php echo $post_modified_date; ?></div>
-<div>City: <?php echo $post_city_name; ?></div>
-<div>State: <?php echo $post_state_name; ?></div>
-<div>Time since modified:<?php echo $formattedDifference;?></div>
-<div>Job Description:</div>
 
 
 <!-- <div class="wpjb-card__btn-container">
@@ -63,16 +98,13 @@
         <h2 class="txt txt--h3"><?php the_title(); ?></h2>
       </div>
       <div class="wpjb-card__meta">
-        <p>⚖ Posted <?php echo date('m.d.y', (int) $post_publish_date); ?></p>
-        <p>⏲ Updated <?php echo $formattedDifference;?> ago</p>
-        <p>📍 <?php echo $post_city_name; ?>, <?php echo $post_state_name; ?></p>
-        <p>☑️ <?php echo $post_employment_type; ?></p>
+        <p class="txt txt--xs">⚖ Posted <?php echo date('m.d.y', (int) $post_publish_date); ?></p>
+        <p class="txt txt--xs">⏲ Updated <?php echo $formattedDifference;?> ago</p>
+        <p class="txt txt--xs">📍 <?php echo $post_city_name; ?>, <?php echo $post_state_name; ?></p>
+        <p class="txt txt--xs">☑️ <?php echo $post_employment_type; ?></p>
       </div>
-      <!-- <div class="wpjb-card__btn-container">
-        <button class="wpjb-card__apply-btn">Apply</button>
-      </div> -->
       <div class="wpjb-card__bd">
-        <p class="txt"><?php echo $decoded_job_description; ?></p>
+        <p class="txt txt--balance"><?php echo $decoded_job_description; ?></p>
       </div>
       <div class="wpjb-card__ft">
         <div class="wpjb-utilityNav">
