@@ -28,7 +28,7 @@
                 </li>
                 <li>
                     <a href="<?php echo $tools_base_url; ?>&view=theme" class="<?= $view === 'theme' ? 'wpjba-tabs-isActive' : ''?>">
-                        Theme
+                        Display Options
                     </a>
                 </li>
             </ul>
