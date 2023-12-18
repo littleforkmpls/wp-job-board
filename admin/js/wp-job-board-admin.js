@@ -1,45 +1,71 @@
 (($) => {
     'use strict';
 
-    $(() => {
-        $('#wp_job_board_trigger_sync').click((event) => {
-            event.preventDefault();
+    const forceSyncTriggers  = document.documentElement.querySelectorAll('[data-wpjb-sync="true"]');
+    const messageNode   = document.documentElement.querySelector('[data-wpjba-message-node="true"]');
 
-            $('.wp_job_board_sync_error').remove();
+    if (forceSyncTriggers && messageNode) {
+        forceSyncTriggers.forEach((element, index) => {
+            element.addEventListener('click', (event) => {
 
-            let $_spinner = $('.spinner').addClass('is-active');
+                // prevent element from doing any normal click behaviors
+                event.preventDefault();
 
-            $.post(
-                ajaxurl,
-                {
-                    action: 'trigger_sync',
-                    force: true, // This causes all data to be updated every time the button is pushed.
-                },
-                (response) => {
-                    let messageClass = 'notice-success';
-                    if (!response.success) {
-                        //TODO do we want to do something other than just message here?
-                        messageClass = 'notice-error';
-                    }
-                    if (response.data?.message) {
-                        let $messageBlock = $(`<div id="setting-error-settings_updated" class="notice ${messageClass} settings-error is-dismissible">
-<p><strong>${response.data.message}</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>`);
-                        $('#wp_job_board_admin').before($messageBlock);
-                        $messageBlock.find('.notice-dismiss').on('click', (event)=> {
-                            event.preventDefault();
-                            $messageBlock.fadeTo(100, 0, () => {
-                                $messageBlock.slideUp(100, () => {
-                                    $messageBlock.remove();
-                                })
-                            })
-                        });
-                    }
+                // determine if this is a forced reset operation
+                let isForce = (element.getAttribute('data-wpjb-sync-force') == 'true') ? true : false;
+
+                // if the button was pressed and had previously shown a notice then hide it
+                messageNode.innerHTML = '';
+
+                // reveal spinner next to button so the user knows something is happening
+                if (element.nextElementSibling.classList.contains('spinner')) {
+                    element.nextElementSibling.classList.add('is-active');
                 }
-            ).fail((response) => {
-                //TODO do something if we fail?
-            }).always((response) => {
-                $_spinner.removeClass('is-active');
-            })
+
+                // disable the button from being pressed again while the sync is running
+                element.setAttribute('disabled', true);
+
+                // POST an ajax call to fire the sync
+                $.post(
+                    ajaxurl,
+                    {
+                        action: 'trigger_sync',
+                        force: isForce,
+                    },
+                    (response) => {
+                        let messageClass = 'notice-success';
+
+                        if (!response.success) {
+                            messageClass = 'notice-error';
+                        }
+
+                        if (response.data?.message) {
+                            messageNode.innerHTML = `
+                                <div class="notice ${messageClass}">
+                                    <p>${response.data.message}</p>
+                                </div>
+                            `;
+                        }
+                    }
+                ).fail((response) => {
+                    messageNode.innerHTML = `
+                        <div class="notice notice-error">
+                            <p>An error occured. Please try again.</p>
+                        </div>
+                    `;
+                }).always((response) => {
+
+                    // re-enable the button after ajax is complete
+                    element.removeAttribute('disabled');
+
+                    // hide spinner after ajax is complete
+                    if (element.nextElementSibling.classList.contains('spinner')) {
+                        element.nextElementSibling.classList.remove('is-active');
+                    }
+
+                })
+            });
         });
-    })
+    }
+
 })(jQuery);
