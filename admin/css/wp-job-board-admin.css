@@ -1,16 +1,155 @@
-/**
- * All of the CSS for your admin-specific functionality should be
- * included in this file.
- */
+/* ---------------------------------------------------------------------
+ Admin Panel CSS
+------------------------------------------------------------------------ */
 
-#wp_job_board_admin .spinner {
+/* ---------------------- Variables ---------------------- */
+#wp_job_board_admin {
+    --wpjba-page-insulation: 24px;
+
+    --wpjba-color-white: #ffffff;
+    --wpjba-color-light: #edf0f1;
+    --wpjba-color-mid: #808080;
+    --wpjba-color-dark: #0d000d;
+    --wpjba-color-black: #000000;
+    --wpjba-color-accent: #e01b84;
+
+    --wpjba-color-wp-gray: #c3c4c7;
+
+    --wpjba-hdg-color-primary: var(--wpjba-color-dark);
+    --wpjba-text-color-primary: var(--wpjba-color-mid);
+}
+
+/* ---------------------- Base ---------------------- */
+#wp_job_board_admin.wrap {
+    margin: 0;
+    margin-left: -22px !important;
+}
+
+#wp_job_board_admin h1,
+#wp_job_board_admin h2,
+#wp_job_board_admin h3,
+#wp_job_board_admin h4,
+#wp_job_board_admin h5,
+#wp_job_board_admin h6 {
+    color: var(--wpjba-hdg-color-primary);
+    font-weight: 600;
+}
+
+#wp_job_board_admin ul,
+#wp_job_board_admin li,
+#wp_job_board_admin p {
+    color: var(--wpjba-text-color-primary);
+}
+
+/* ---------------------- Helpers ---------------------- */
+#wp_job_board_admin .wpjba-highlight {
+    color: var(--wpjba-color-accent) !important;
+}
+
+#wp_job_board_admin .wpjba-m0 {
+    margin: 0 !important;
+}
+
+#wp_job_board_admin .wpjba-p0 {
+    padding: 0 !important;
+}
+
+/* ---------------------- Page ---------------------- */
+#wp_job_board_admin .wpjba__hd {
+    padding: 32px var(--wpjba-page-insulation);
+    background-color: var(--wpjba-color-light);
+}
+
+#wp_job_board_admin .wpjba__hd h1 {
+    margin: 0;
+    padding: 0;
+}
+
+#wp_job_board_admin .wpjba__menu {
+    padding: 0 var(--wpjba-page-insulation);
+    border-top: 1px solid var(--wpjba-color-wp-gray);
+    border-bottom: 1px solid var(--wpjba-color-wp-gray);
+    background-color: var(--wpjba-color-white);
+}
+
+#wp_job_board_admin .wpjba__bd {
+    padding: var(--wpjba-page-insulation);
+}
+
+/* ---------------------- Tabs ---------------------- */
+#wp_job_board_admin .wpjba-tabs {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+}
+
+#wp_job_board_admin .wpjba-tabs li {
+    margin: 0;
+    padding: 0;
+}
+
+#wp_job_board_admin .wpjba-tabs a {
+    display: block;
+    padding: 20px 0px 17px 0px;
+    border-bottom: 3px solid transparent;
+    color: var(--wpjba-text-color-primary);
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 100ms linear;
+}
+
+#wp_job_board_admin .wpjba-tabs a:hover {
+    color: var(--wpjba-color-accent);
+}
+
+#wp_job_board_admin .wpjba-tabs a.wpjba-tabs-isActive {
+    color: var(--wpjba-color-black);
+    border-color: var(--wpjba-color-accent);
+    font-weight: 600;
+    cursor: default;
+}
+
+/* ---------------------- Cards ---------------------- */
+#wp_job_board_admin .wpjba-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* ---------------------- Cards ---------------------- */
+#wp_job_board_admin .wpjba-card {
+    padding: 24px;
+    border: 1px solid var(--wpjba-color-wp-gray);
+    background: #fff;
+}
+
+#wp_job_board_admin .wpjba-card__bd:not(:first-child) {
+    margin-top: 8px;
+}
+
+#wp_job_board_admin .wpjba-card__ft:not(:first-child) {
+    margin-top: 16px;
+}
+
+/* ---------------------- Spinner ---------------------- */
+#wp_job_board_admin .button + .spinner {
     float: none;
 }
 
-#wp_job_board_activity_log {
-
-}
-
-#wp_job_board_admin .wp_job_board_tab {
-    margin: 1rem 0;
+pre.wp_job_board_meta_sample {
+    margin: 12px 0 0 0;
+    padding: 1rem;
+    border: none;
+    background-color: #1d2327;
+    color: #f0f0f1;
+    font-family:ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-all;
 }

@@ -101,7 +101,13 @@ class WP_Job_Board_Admin {
          * class.
          */
 
-        wp_enqueue_style($this->wp_job_board, plugin_dir_url(__FILE__) . 'css/wp-job-board-admin.css', array(), $this->version, 'all');
+        wp_enqueue_style(
+            $this->wp_job_board,
+            plugin_dir_url(__FILE__) . 'css/wp-job-board-admin.css',
+            array(),
+            filemtime(plugin_dir_path(__FILE__) . 'css/wp-job-board-admin.css'),
+            'all'
+        );
     }
 
     /**
@@ -123,7 +129,13 @@ class WP_Job_Board_Admin {
          * class.
          */
 
-        wp_enqueue_script($this->wp_job_board, plugin_dir_url(__FILE__) . 'js/wp-job-board-admin.js', array('jquery'), $this->version, false);
+        wp_enqueue_script(
+            $this->wp_job_board,
+            plugin_dir_url(__FILE__) . 'js/wp-job-board-admin.js',
+            array('jquery'),
+            filemtime(plugin_dir_path(__FILE__) . 'js/wp-job-board-admin.js'),
+            true
+        );
     }
 
     public function add_menu() {
@@ -163,11 +175,11 @@ class WP_Job_Board_Admin {
 
         add_submenu_page(
             'edit.php?post_type=wjb_bh_job_order',
-            'WP Job Board Activity Log',
-            'Activity Log',
+            'WP Job Board Tools',
+            'Tools',
             'manage_options',
-            'wp-job-board-log',
-            array($this, 'render_log_page')
+            'wp-job-board-tools',
+            array($this, 'render_tools_page')
         );
 
         add_submenu_page(
@@ -176,7 +188,7 @@ class WP_Job_Board_Admin {
             'Settings',
             'manage_options',
             'wp-job-board-settings',
-            array($this, 'render_options_page')
+            array($this, 'render_settings_page')
         );
 
         remove_submenu_page(
@@ -185,12 +197,12 @@ class WP_Job_Board_Admin {
         );
     }
 
-    public function render_options_page() {
-        require_once plugin_dir_path(__FILE__) . 'partials/wp-job-board-admin-display.php';
+    public function render_settings_page() {
+        require_once plugin_dir_path(__FILE__) . 'pages/wp-job-board-admin-settings.php';
     }
 
-    public function render_log_page() {
-        require_once plugin_dir_path(__FILE__).'partials/wp-job-board-activity-log.php';
+    public function render_tools_page() {
+        require_once plugin_dir_path(__FILE__) . 'pages/wp-job-board-admin-tools.php';
     }
 
     public function trigger_sync() {
@@ -198,7 +210,11 @@ class WP_Job_Board_Admin {
             if ( ! $this->bullhorn) {
                 $this->bullhorn = new WP_Job_Board_Bullhorn_Manager();
             }
-            $this->bullhorn->trigger_sync();
+            $force = false;
+            if (isset($_POST['force']) && $_POST['force'] === 'true') {
+                $force = true;
+            }
+            $this->bullhorn->trigger_sync(null, $force);
             wp_send_json_success(array('message' => 'Listings synced!',));
         } catch (Throwable $exception) {
             wp_send_json_error(array('message' => $exception->getMessage()));

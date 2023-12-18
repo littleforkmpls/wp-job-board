@@ -124,9 +124,9 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
      *
      * @return void
      */
-    public function trigger_sync($redirect = null): void {
+    public function trigger_sync(string $redirect = null, bool $force = false): void {
         $log_data = array();
-        $jobs     = $this->get_jobs();
+        $jobs     = $this->get_jobs($redirect, $force);
 
         if ( ! $jobs) {
             $this->throw_error('No jobs found to sync');
@@ -144,10 +144,15 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         $count = 0;
 
         foreach ($jobs as $job_order) {
+            $job_order['publicDescription'] = addslashes($job_order['publicDescription']);
             $bh_data   = json_encode($job_order, JSON_HEX_APOS | JSON_HEX_QUOT);
+            $clean_title = sanitize_title($job_order['title'] . '-' . $job_order['id']);
+            if (!$bh_data) {
+                error_log('Problem encoding job('.$clean_title.'): ' . json_last_error_msg());
+            }
             $post_data = array(
                 'post_title'     => $job_order['title'],
-                'post_name'      => sanitize_title($job_order['title'] . '-' . $job_order['id']),
+                'post_name'      => $clean_title,
                 'post_type'      => 'wjb_bh_job_order',
                 'post_content'   => '',
                 'post_status'    => 'publish',
@@ -157,20 +162,25 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
                     'wp_job_board_bh_updated' => 1,
                     'wp_job_board_bh_id'      => $job_order['id'],
                 ),
+                'tax_input' => array(
+                    'wjb_bh_job_type_tax' => $job_order['employmentType'],
+                    'wjb_bh_job_location_tax' => $this->get_mapped_state($job_order['address']['state']),
+                    'wjb_bh_job_category_tax' => $job_order['publishedCategory']['name'],
+                )
             );
 
             if (isset($existing_job_orders[$job_order['id']])) {
                 $post_data['ID'] = $existing_job_orders[$job_order['id']];
                 $post_bh_data    = get_post_meta($existing_job_orders[$job_order['id']], 'wp_job_board_bh_data', true);
 
-                // if our data is the same skip it.
-                if ($post_bh_data === $bh_data) {
+                // if our data is the same mark as updated and skip it.
+                if (!$force && $post_bh_data === $bh_data) {
                     update_post_meta($existing_job_orders[$job_order['id']], 'wp_job_board_bh_updated', 1);
                     continue;
                 }
                 $log_data[] = array(
                     'bh_id'  => $job_order['id'],
-                    'action' => 'Updated',
+                    'action' => 'Updated' . ($force ? ' (Manually)' : ''),
                     'title'  => $job_order['title'],
                     'time'   => time(),
                 );
@@ -224,7 +234,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
     /**
      * @return mixed|void
      */
-    private function get_jobs() {
+    private function get_jobs(string $redirect = null, bool $force = false) {
 
 
         $baseUrl = '{corp_token}query/JobOrder?fields=id,title,dateAdded&BhRestToken={rest_token}';
@@ -265,7 +275,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
                 $callAgain = false;
                 unset($this->options[self::CORP_TOKEN]);
                 unset($this->options[self::REST_TOKEN]);
-                $this->trigger_sync();
+                $this->trigger_sync($redirect, $force);
 
                 return;
             }

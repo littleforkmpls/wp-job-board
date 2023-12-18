@@ -130,17 +130,120 @@ class WP_Job_Board_Public {
                     'item_link'                 => __('Job Link', 'wp_job_board'),
                     'item_link_description'     => __('A link to a Job', 'wp_job_board')
                 ),
-                'menu_icon'         => 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgdmlld0JveD0iMCAwIDI0IDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZS8+PHBhdGggZD0iTTE4Ljg3LDEyLjA3bC02LDkuNDdBMSwxLDAsMCwxLDEyLDIyYS45LjksMCwwLDEtLjI4LDBBMSwxLDAsMCwxLDExLDIxVjE1SDYuODJhMiwyLDAsMCwxLTEuNjktMy4wN2w2LTkuNDdBMSwxLDAsMCwxLDEyLjI4LDIsMSwxLDAsMCwxLDEzLDNWOWg0LjE4YTIsMiwwLDAsMSwxLjY5LDMuMDdaIiBmaWxsPSIjNDY0NjQ2Ii8+PC9zdmc+',
-                'menu_position'     => 85,
-                'public'            => true,
-                'show_in_admin_bar' => false,
-                'show_in_rest'      => false,
-                'rewrite'           => array('slug' => 'jobs'),
-                'hierarchical'      => false,
-                'has_archive'       => true,
-                'can_export'        => false
+                'menu_icon'             => 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgdmlld0JveD0iMCAwIDI0IDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZS8+PHBhdGggZD0iTTE4Ljg3LDEyLjA3bC02LDkuNDdBMSwxLDAsMCwxLDEyLDIyYS45LjksMCwwLDEtLjI4LDBBMSwxLDAsMCwxLDExLDIxVjE1SDYuODJhMiwyLDAsMCwxLTEuNjktMy4wN2w2LTkuNDdBMSwxLDAsMCwxLDEyLjI4LDIsMSwxLDAsMCwxLDEzLDNWOWg0LjE4YTIsMiwwLDAsMSwxLjY5LDMuMDdaIiBmaWxsPSIjNDY0NjQ2Ii8+PC9zdmc+',
+                'menu_position'         => 85,
+                'public'                => true,
+                'show_in_admin_bar'     => false,
+                'show_in_rest'          => false,
+                'rewrite'               => array('slug' => 'jobs'),
+                'hierarchical'          => false,
+                'has_archive'           => true,
+                'can_export'            => false,
+                'supports'              => array('title'),
+                'register_meta_box_cb'  => array($this, 'show_meta_data')
             )
         );
+    }
+
+    public function show_meta_data($post) {
+        add_meta_box(
+            'wjb_job_order_data',
+            'Job Order Data',
+            array($this, 'show_meta_boxes'),
+            'wjb_bh_job_order',
+            'normal',
+            'core'
+        );
+    }
+
+    public function show_meta_boxes() {
+        global $post;
+        $bhData = get_post_meta($post->ID, 'wp_job_board_bh_data', true);
+        $data = json_decode($bhData, true);
+        $data['publicDescription'] = htmlspecialchars($data['publicDescription']);
+        if (!$data) {
+            $error = json_last_error_msg();
+        }
+        ?>
+<pre class="wp_job_board_meta_sample">
+    <?= json_encode($data, JSON_PRETTY_PRINT); ?>
+</pre>
+<?php
+    }
+
+    public function register_job_order_taxonomies() {
+        // Job type
+        $labels = array(
+            'name'              => _x( 'Job Types', 'taxonomy general name' ),
+            'singular_name'     => _x( 'Job Type', 'taxonomy singular name' ),
+            'search_items'      => __( 'Search Job Types' ),
+            'all_items'         => __( 'All Job Types' ),
+            'parent_item'       => __( 'Parent Job Types' ),
+            'parent_item_colon' => __( 'Parent Job Type:' ),
+            'edit_item'         => __( 'Edit Job Type' ),
+            'update_item'       => __( 'Update Job Type' ),
+            'add_new_item'      => __( 'Add New Job Type' ),
+            'new_item_name'     => __( 'New Job Type Name' ),
+            'menu_name'         => __( 'Job Types' ),
+        );
+        $args   = array(
+            'hierarchical'      => false,
+            'labels'            => $labels,
+            'show_ui'           => true,
+            'show_admin_column' => true,
+            'query_var'         => true,
+            'rewrite'           => [ 'slug' => 'job-type' ],
+        );
+        register_taxonomy( 'wjb_bh_job_type_tax', [ 'wjb_bh_job_order' ], $args );
+        register_taxonomy_for_object_type('wjb_bh_job_type_tax', 'wjb_bh_job_order');
+        // Job Location (State only, do some clean up to match abbrevs to states)
+        $labels = array(
+            'name'              => _x( 'Job Locations', 'taxonomy general name' ),
+            'singular_name'     => _x( 'Job Location', 'taxonomy singular name' ),
+            'search_items'      => __( 'Search Job Locations' ),
+            'all_items'         => __( 'All Job Locations' ),
+            'parent_item'       => __( 'Parent Job Locations' ),
+            'parent_item_colon' => __( 'Parent Job Location:' ),
+            'edit_item'         => __( 'Edit Job Location' ),
+            'update_item'       => __( 'Update Job Location' ),
+            'add_new_item'      => __( 'Add New Job Location' ),
+            'new_item_name'     => __( 'New Job Location Name' ),
+            'menu_name'         => __( 'Job Locations' ),
+        );
+        $args   = array(
+            'hierarchical'      => false,
+            'labels'            => $labels,
+            'show_ui'           => true,
+            'show_admin_column' => true,
+            'query_var'         => true,
+            'rewrite'           => [ 'slug' => 'job-location' ],
+        );
+        register_taxonomy( 'wjb_bh_job_location_tax', [ 'wjb_bh_job_order' ], $args );
+        register_taxonomy_for_object_type('wjb_bh_job_location_tax', 'wjb_bh_job_order');
+        // Job Category
+        $labels = array(
+            'name'              => _x( 'Job Categories', 'taxonomy general name' ),
+            'singular_name'     => _x( 'Job Category', 'taxonomy singular name' ),
+            'search_items'      => __( 'Search Job Categories' ),
+            'all_items'         => __( 'All Job Categories' ),
+            'parent_item'       => __( 'Parent Job Categories' ),
+            'parent_item_colon' => __( 'Parent Job Category:' ),
+            'edit_item'         => __( 'Edit Job Category' ),
+            'update_item'       => __( 'Update Job Category' ),
+            'add_new_item'      => __( 'Add New Job Category' ),
+            'new_item_name'     => __( 'New Job Category Name' ),
+            'menu_name'         => __( 'Job Categories' ),
+        );
+        $args   = array(
+            'hierarchical'      => false,
+            'labels'            => $labels,
+            'show_ui'           => true,
+            'show_admin_column' => true,
+            'query_var'         => true,
+            'rewrite'           => [ 'slug' => 'job-category' ],
+        );
+        register_taxonomy( 'wjb_bh_job_category_tax', [ 'wjb_bh_job_order' ], $args );
+        register_taxonomy_for_object_type('wjb_bh_job_category_tax', 'wjb_bh_job_order');
     }
 
     /**
