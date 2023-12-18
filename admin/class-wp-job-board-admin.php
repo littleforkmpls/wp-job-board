@@ -134,7 +134,7 @@ class WP_Job_Board_Admin {
             plugin_dir_url(__FILE__) . 'js/wp-job-board-admin.js',
             array('jquery'),
             filemtime(plugin_dir_path(__FILE__) . 'js/wp-job-board-admin.js'),
-            false
+            true
         );
     }
 
