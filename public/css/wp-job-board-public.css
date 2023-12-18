@@ -44,15 +44,17 @@
     card
 ---------------------------------------------------------------*/
 .wpjb-card {
+  display: grid;
+  gap: 20px;
   position: relative;
   border-radius: 5px;
   box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 2px;
   padding: 20px;
 }
-
-.wpjb-card div {
+/* not good */
+/* .wpjb-card div {
   margin-bottom: 20px;
-}
+} */
 
 .wpjb-card__hd {
   padding-right: 140px;

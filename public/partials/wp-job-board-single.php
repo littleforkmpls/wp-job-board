@@ -1,6 +1,3 @@
-<!-- <h1>WPJB Plugin Single</h1>
-<h2><?php the_title(); ?></h2> -->
-
 <?php
 $post_meta_single = get_post_meta(get_the_ID(), 'wp_job_board_bh_data', true);
 $post_meta_single_decode = json_decode($post_meta_single);
@@ -40,8 +37,9 @@ if ($daysDifference > 0) {
 } else {
   $formattedDifference = ($secondsDifference == 1) ? '1 second' : "$secondsDifference seconds";
 }
+
 // Decode HTML entities in job description (not working) 
-//$decoded_job_description = html_entity_decode($post_job_description);
+$decoded_job_description = html_entity_decode($post_job_description);
 
 // $post_job_description = htmlentities($post_job_description, null, 'utf-8'); 
 // $post_job_description = str_replace(" ", "", $post_job_description);
@@ -51,16 +49,6 @@ if ($daysDifference > 0) {
 
 // Replace UTF-8 encoded non-breaking space with a regular space
 //$cleaned_job_description = preg_replace('/\xc2\xa0/', ' ', $post_job_description);
-
-
-
-
-
-$cleaned_job_description = str_replace('u00a0', ' ', $post_job_description);
-
-
-
-
 
 // Remove the unwanted "n" characters
 //$cleaned_job_description = str_replace("\n", '', $cleaned_job_description);
@@ -84,9 +72,9 @@ $cleaned_job_description = str_replace('u00a0', ' ', $post_job_description);
 // Remove the unwanted elements
 //$cleaned_job_description = preg_replace('/\bntnttnttntn\b/', '', $cleaned_job_description);
 
-
+//$cleaned_job_description = str_replace('u00a0', ' ', $post_job_description);
 // Decode HTML entities
-$decoded_job_description = html_entity_decode($cleaned_job_description);
+//$decoded_job_description = html_entity_decode($cleaned_job_description);
 ?>
 
 
@@ -104,15 +92,20 @@ $decoded_job_description = html_entity_decode($cleaned_job_description);
     <p class="txt txt--xs"><span class="txt--xl">☑️</span> <?php echo $post_employment_type; ?></p>
   </div>
   <div class="wbjb-card__sub-hd">
-    <h3 class="txt txt--h4">Job Description</h3>
+    <h3 class="txt txt--h4">About the job</h3>
   </div>
   <div class="wpjb-card__bd">
-    <p class="txt txt--balance"><?php echo $decoded_job_description; ?></p>
+    <p class="txt txt--balance"><?php echo $post_job_description; ?></p>
   </div>
   <div class="wpjb-card__ft">
     <div class="wpjb-utilityNav">
       <button class="wpjb-utilityNav__btn txt--md">📩</button>
-      <button class="wpjb-utilityNav__btn txt--md" onclick="printContent()">⎙</button>
+      <button class="wpjb-utilityNav__btn txt--lg" onclick="printContent()">
+
+        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+          <path fill="currentcolor" d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
+        </svg>
+      </button>
       <button class="wpjb-utilityNav__btn txt--md">🔖</button>
     </div>
   </div>
