@@ -11,10 +11,16 @@ body {font-family: inherit;}
 
 
 /* these font sizes aren't currently overriding the theme's font sizes 
-so also styled inline for now*/
-h1 {font-size: 2rem;}
+so also styled inline for now */
+h1 {
+  font-size: 2rem;
+  font-weight: 500;
+}
 
-h3 {font-size: 1.25rem;}
+h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
 
 /*--------------------------------------------------------------
     Grid settings for archive page
@@ -23,7 +29,6 @@ h3 {font-size: 1.25rem;}
 .wpjb-grid {
   display: grid;
   gap: 1rem;
-  /* grid-template-columns: 200px repeat(auto-fill, 1fr); */
   grid-template-columns: 25vw 50vw;
   justify-items: center;
 }
@@ -64,10 +69,6 @@ h3 {font-size: 1.25rem;}
   box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 2px;
   padding: 20px;
 }
-/* not good */
-/* .wpjb-card div {
-  margin-bottom: 20px;
-} */
 
 .wpjb-card__hd {
   padding-right: 140px;
@@ -89,15 +90,10 @@ h3 {font-size: 1.25rem;}
   opacity: 0.5;
 }
 
-/* .wpjb-card__meta-item {
-  display: flex;
-  align-items: center;
-} */
-
 .wpjb-card__meta {
   display: grid;
-  grid-template-columns: 1fr; /* Two columns: auto for the SVG, 1fr for the span */
-  grid-gap: 10px;
+  grid-template-columns: 1fr; 
+  gap: 10px;
 }
 
 .wpjb-card__meta-item {
@@ -105,7 +101,7 @@ h3 {font-size: 1.25rem;}
   grid-template-columns: auto 1fr;
   align-items: center;
   font-size: 13px;
-  grid-gap: 10px;
+  gap: 10px;
 }
 
 /*----------------------------------------------------------------------------------
@@ -247,4 +243,40 @@ h3 {font-size: 1.25rem;}
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/*----------------------------------------------------------------------------------
+    Buttons
+----------------------------------------------------------------------------------*/
+
+.wpjb-btn__back {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  padding: 2px 0;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid;
+  border-image: linear-gradient(to right, transparent 15px, black 5px, black 100%);
+  border-image-slice: 1;
+  font-size: 0.80rem;
+  font-weight: 500; /* this matches the current icon better */
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.wpjb-btn__back:hover span{
+  margin-left: 5px;
+}
+
+.wpjb-btn__back svg {
+  margin: 0 5px
+}
+
+.wpjb-btn__back:hover svg{
+  margin: 0 5px 0 0;
+}
+
+.wpjb-btn__back:hover {
+  opacity: 0.5;
 }
