@@ -18,7 +18,7 @@
             <ul class="wpjba-tabs">
                 <li>
                     <a href="<?php echo $tools_base_url; ?>&view=connector" class="<?= $view === 'connector' ? 'wpjba-tabs-isActive' : ''?>">
-                        Data Connector
+                        Platform Connector
                     </a>
                 </li>
                 <li>
