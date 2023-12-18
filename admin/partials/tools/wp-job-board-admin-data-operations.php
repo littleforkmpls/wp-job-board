@@ -8,7 +8,7 @@
                 <p class="wpjba-p0 wpjba-m0">Erase all existing jobs &amp; job-related data stored within WordPress. Then sync new data from the connected job platform.</p>
             </div>
             <div class="wpjba-card__ft">
-                <button type="button" class="button button-primary" data-wpjb-sync="true" data-wpjb-sync-force="true">
+                <button type="button" class="button button-primary" data-wpjb-ajax="trigger_sync" data-wpjb-ajax-options="force:true">
                     Delete & Refresh Data
                 </button>
                 <span class="spinner" aria-hidden="true"></span>
