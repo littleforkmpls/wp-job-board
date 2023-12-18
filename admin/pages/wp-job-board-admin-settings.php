@@ -34,6 +34,7 @@
             </ul>
         </div>
         <div class="wpjba__bd">
+            <div class="wpjba-message" data-wpjba-message-node="true"></div>
             <?php
                 // load the partial named the same as $view
                 require_once plugin_dir_path(__FILE__) . "../partials/settings/wp-job-board-admin-{$view}.php";
