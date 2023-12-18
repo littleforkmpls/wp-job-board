@@ -4,6 +4,19 @@
  */
 
 /*--------------------------------------------------------------
+    General 
+---------------------------------------------------------------*/
+
+body {font-family: inherit;}
+
+
+/* these font sizes aren't currently overriding the theme's font sizes 
+so also styled inline for now*/
+h1 {font-size: 2rem;}
+
+h3 {font-size: 1.25rem;}
+
+/*--------------------------------------------------------------
     Grid settings for archive page
 ---------------------------------------------------------------*/
 
@@ -74,6 +87,25 @@
 .wpjb-utilityNav__btn:hover {
   cursor: pointer;
   opacity: 0.5;
+}
+
+/* .wpjb-card__meta-item {
+  display: flex;
+  align-items: center;
+} */
+
+.wpjb-card__meta {
+  display: grid;
+  grid-template-columns: 1fr; /* Two columns: auto for the SVG, 1fr for the span */
+  grid-gap: 10px;
+}
+
+.wpjb-card__meta-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  font-size: 13px;
+  grid-gap: 10px;
 }
 
 /*----------------------------------------------------------------------------------
