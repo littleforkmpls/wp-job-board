@@ -6,7 +6,7 @@
 ?>
 
 
-<div class="wpbody" id="wp_job_board_admin">
+<div class="wrap" id="wp_job_board_admin">
     <div class="wpjba">
         <div class="wpjba__hd">
             <h1>
