@@ -115,7 +115,3 @@
     ?>
     <?php submit_button(); ?>
 </form>
-<div>
-    <button type="button" id="wp_job_board_trigger_sync" class="button button-secondary">Trigger Sync</button>
-    <span class="spinner"></span>
-</div>
