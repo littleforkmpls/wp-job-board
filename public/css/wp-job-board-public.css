@@ -22,6 +22,10 @@ so also styled inline for now */
   font-weight: 500;
 }
 
+#wpjb .txt-xs {
+  font-size: 13px;
+}
+
 /*--------------------------------------------------------------
     Grid settings for archive page
 ---------------------------------------------------------------*/
@@ -290,12 +294,12 @@ so also styled inline for now */
   position: fixed;
   top: 0;
   left: 0;
-  display: flex;
+  
   justify-content: center;
   align-items:center;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.529);
   z-index: 5;
   overflow: hidden;
 }
@@ -303,8 +307,110 @@ so also styled inline for now */
 #wpjb .wpjb-form {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
   background-color: white;
   width: 60vw;
   height: auto;
   padding: 20px;
+  border-radius: 5px;
+  /* box-sizing: border-box; */
+  background: rgb(245, 245, 245);
+  box-shadow: rgb(90, 90, 90) 0px 2px 8px 2px;
+  /* box-shadow: 0 5px 15px rgba(#000, .1); */
 }
+
+.wpjb-form__hd {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 50vw;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+#wpjb .wpjb-form__input {
+  background: rgb(250, 250, 250);
+  padding: 10px;
+  margin: 10px 0;
+  width: 50vw;
+  height: 50px;
+  font-size: 14px;
+  border: none;
+  border-radius: 15px;
+  box-shadow: inset 6px 6px 6px rgb(230, 230, 230), inset -6px -6px 6px white;
+}
+
+#wpjb .wpjb-form__resume-drag {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  width: 50vw;
+  height: 150px;
+  /* border: 2px dashed #ccc; */
+  border-radius: 25px;
+  margin: 10px 0;
+  padding: 20px;
+  font-size: 14px;
+  box-sizing: border-box;
+  box-shadow: inset 6px 6px 6px rgb(230, 230, 230), inset -6px -6px 6px white;
+}
+
+#wpjb .wpjb-form__resume {
+  margin-bottom: 20px;
+}
+
+#wpjb .wpjb-form__resume-drag.active {
+  /* border: 2px solid #ccc; */
+  box-shadow: none;
+}
+
+.wpjb-form__resume-description {margin-bottom: 10px;}
+
+/* change to a font class later */
+.wpjb-form__browse-link {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.wpjb-form__browse-link:hover {
+  opacity: 0.5;
+}
+
+.wpjb-form__retry-btn {
+  background-color: transparent;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: 1px solid;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.wpjb-form__retry-btn:hover {
+  opacity: 0.5;
+}
+
+.wpjb-form__close-btn {
+  position: absolute;
+  top: 35px;
+  right: 55px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.wpjb-form__close-btn:hover {
+  opacity: 0.5;
+}
+
+
+
+.wpjb-form__support{font-size: x-small;}
