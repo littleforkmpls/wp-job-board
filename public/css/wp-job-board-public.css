@@ -12,12 +12,12 @@ body {font-family: inherit;}
 
 /* these font sizes aren't currently overriding the theme's font sizes 
 so also styled inline for now */
-h1 {
+#wpjb h1 {
   font-size: 2rem;
   font-weight: 500;
 }
 
-h3 {
+#wpjb h3 {
   font-size: 1.25rem;
   font-weight: 500;
 }
@@ -26,14 +26,14 @@ h3 {
     Grid settings for archive page
 ---------------------------------------------------------------*/
 
-.wpjb-grid {
+#wpjb .wpjb-grid {
   display: grid;
   gap: 1rem;
   grid-template-columns: 25vw 50vw;
   justify-items: center;
 }
 
-.wpjb-card__tile {
+#wpjb .wpjb-card__tile {
   padding: 0;
   box-sizing: border-box;
   width: 50px;
@@ -44,7 +44,7 @@ h3 {
   border-radius: 50%;
 }
 
-.wpjb-grid__item:first-child {
+#wpjb .wpjb-grid__item:first-child {
   position: fixed;
   left: 0;
   height: 100vh;
@@ -54,14 +54,14 @@ h3 {
   overflow-y: scroll;
 }
 
-.wpjb-grid__item:not(:first-child) {
+#wpjb .wpjb-grid__item:not(:first-child) {
   grid-column: 2; /* Rest of the items in the second column */
 }
 
 /*--------------------------------------------------------------
     card
 ---------------------------------------------------------------*/
-.wpjb-card {
+#wpjb .wpjb-card {
   display: grid;
   gap: 20px;
   position: relative;
@@ -70,33 +70,33 @@ h3 {
   padding: 20px;
 }
 
-.wpjb-card__hd {
+#wpjb .wpjb-card__hd {
   padding-right: 140px;
 }
 
-.wpjb-card__ft {
+#wpjb .wpjb-card__ft {
   position: absolute;
   top: 20px;
   right: 20px;
 }
 
-.wpjb-utilityNav__btn {
+#wpjb .wpjb-utilityNav__btn {
   border: none;
   background-color: transparent;
 }
 
-.wpjb-utilityNav__btn:hover {
+#wpjb .wpjb-utilityNav__btn:hover {
   cursor: pointer;
   opacity: 0.5;
 }
 
-.wpjb-card__meta {
+#wpjb .wpjb-card__meta {
   display: grid;
   grid-template-columns: 1fr; 
   gap: 10px;
 }
 
-.wpjb-card__meta-item {
+#wpjb .wpjb-card__meta-item {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
@@ -108,7 +108,7 @@ h3 {
     Dropdown Box
 ----------------------------------------------------------------------------------*/
 
-.wpjb-dropdown {
+#wpjb .wpjb-dropdown {
   width: 92%;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -118,22 +118,22 @@ h3 {
   user-select: none;
 }
 
-.wpjb-dropdown:hover {
+#wpjb .wpjb-dropdown:hover {
   background-color: rgb(200, 200, 200);
   cursor: pointer;
 }
 
-.wpjb-dropdown.is-active {
+#wpjb .wpjb-dropdown.is-active {
   border-bottom: none;
   border-radius: 5px 5px 0 0;
 }
 
-.wpjb-dropdown:not(:first-of-type) {
+#wpjb .wpjb-dropdown:not(:first-of-type) {
   margin: 120px auto 0 auto;
 }
 
 /* Display CSS arrow to the right of the dropdown text */
-.wpjb-dropdown:after {
+#wpjb .wpjb-dropdown:after {
   content: "";
   height: 0;
   position: absolute;
@@ -148,13 +148,13 @@ h3 {
 }
 
 /* Reverse the CSS arrow when the dropdown is active */
-.wpjb-dropdown.is-active:after {
+#wpjb .wpjb-dropdown.is-active:after {
   border-bottom-color: #000;
   border-top-color: transparent;
   margin-top: -9px;
 }
 
-.wpjb-dropdown__list {
+#wpjb .wpjb-dropdown__list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -172,7 +172,7 @@ h3 {
   z-index: 9999;
 }
 
-.is-active .wpjb-dropdown__list {
+.is-active #wpjb .wpjb-dropdown__list {
   border-width: 0 1px 1px 1px;
   border-style: solid;
   border-color: #ccc;
@@ -182,31 +182,31 @@ h3 {
   /* make sure that the user still can select checkboxes */
 }
 
-.wpjb-dropdown__list li label {
+#wpjb .wpjb-dropdown__list li label {
   display: block;
   padding: 10px;
   transition: all 0.2s ease-out;
 }
 
-.wpjb-dropdown__list li label:hover {
+#wpjb .wpjb-dropdown__list li label:hover {
   background-color: #555;
   color: white;
 }
 
-.wpjb-quickSort {
+#wpjb .wpjb-quickSort {
   margin-top: 1rem;
   display: grid;
   grid-template-columns: 25vw 25vw;
   align-items: center;
 }
 
-.wpjb-quickSort__match-number {
+#wpjb .wpjb-quickSort__match-number {
   grid-column: 1;
   justify-self: flex-start;
   font-size: small;
 }
 
-.wpjb-quickSort__quickSort-dropdown {
+#wpjb .wpjb-quickSort__quickSort-dropdown {
   grid-column: 2;
   justify-self: flex-end;
   font-size: small;
@@ -216,7 +216,7 @@ h3 {
     Search Input
 ----------------------------------------------------------------------------------*/
 
-.wpjb-search {
+#wpjb .wpjb-search {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -224,7 +224,7 @@ h3 {
   padding: 20px;
 }
 
-.wpjb-search__text-input {
+#wpjb .wpjb-search__text-input {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
@@ -233,13 +233,13 @@ h3 {
   margin: 1rem 0;
 }
 
-.wpjb-search__text-input::placeholder {
+#wpjb .wpjb-search__text-input::placeholder {
   text-align: right;
   opacity: 0.5;
   font-size: small;
 }
 
-.wpjb-search__hd {
+#wpjb .wpjb-search__hd {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -249,7 +249,7 @@ h3 {
     Buttons
 ----------------------------------------------------------------------------------*/
 
-.wpjb-btn__back {
+#wpjb .wpjb-btn__back {
   display: flex;
   align-items: center;
   background-color: transparent;
@@ -258,25 +258,53 @@ h3 {
   border-left: none;
   border-right: none;
   border-bottom: 1px solid;
-  border-image: linear-gradient(to right, transparent 15px, black 5px, black 100%);
+  border-image: linear-gradient(to right, transparent 22px, black 5px, black 100%);
   border-image-slice: 1;
   font-size: 0.80rem;
   font-weight: 500; /* this matches the current icon better */
   margin-bottom: 20px;
-  cursor: pointer;
 }
-.wpjb-btn__back:hover span{
+#wpjb .wpjb-btn__back:hover span{
   margin-left: 5px;
 }
 
-.wpjb-btn__back svg {
+#wpjb .wpjb-btn__back svg {
   margin: 0 5px
 }
 
-.wpjb-btn__back:hover svg{
+#wpjb .wpjb-btn__back:hover svg{
   margin: 0 5px 0 0;
 }
 
-.wpjb-btn__back:hover {
+#wpjb .wpjb-btn__back:hover {
   opacity: 0.5;
+  cursor: pointer;
+}
+
+/*----------------------------------------------------------------------------------
+    Form  
+----------------------------------------------------------------------------------*/
+
+#wpjb .wpjb-form__modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 5;
+  overflow: hidden;
+}
+
+#wpjb .wpjb-form {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: 60vw;
+  height: auto;
+  padding: 20px;
 }
