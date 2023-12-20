@@ -144,8 +144,8 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         $count = 0;
 
         foreach ($jobs as $job_order) {
-            $job_order['publicDescription'] = addslashes($job_order['publicDescription']);
-            $bh_data   = json_encode($job_order, JSON_HEX_APOS | JSON_HEX_QUOT);
+//            $job_order['publicDescription'] = addslashes($job_order['publicDescription']);
+            $bh_data   = json_encode($job_order);
             $clean_title = sanitize_title($job_order['title'] . '-' . $job_order['id']);
             if (!$bh_data) {
                 error_log('Problem encoding job('.$clean_title.'): ' . json_last_error_msg());
@@ -158,7 +158,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
                 'post_status'    => 'publish',
                 'comment_status' => 'closed',
                 'meta_input'     => array(
-                    'wp_job_board_bh_data'    => $bh_data,
+                    'wp_job_board_bh_data'    => addslashes($bh_data), // we have to do this because wp strips slashes when saving
                     'wp_job_board_bh_updated' => 1,
                     'wp_job_board_bh_id'      => $job_order['id'],
                 ),

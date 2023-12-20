@@ -1,18 +1,40 @@
 (($) => {
     'use strict';
 
-    const forceSyncTriggers  = document.documentElement.querySelectorAll('[data-wpjb-sync="true"]');
+    const ajaxTriggers  = document.documentElement.querySelectorAll('[data-wpjb-ajax]');
     const messageNode   = document.documentElement.querySelector('[data-wpjba-message-node="true"]');
 
-    if (forceSyncTriggers && messageNode) {
-        forceSyncTriggers.forEach((element, index) => {
+    if (ajaxTriggers && messageNode) {
+        ajaxTriggers.forEach((element, index) => {
+
+            // determine the ajax action & options
+            let ajaxAction = element.getAttribute('data-wpjb-ajax');
+            let ajaxOptions = element.getAttribute('data-wpjb-ajax-options');
+
+            // setup data to be sent with ajax request
+            let ajaxDataObject = {
+                action: ajaxAction
+            }
+
+            // if options are present
+            if (ajaxOptions && ajaxOptions !== '') {
+
+                // split options to array
+                let ajaxOptionsArray = ajaxOptions.split(',');
+
+                // loop array and assign to data object
+                ajaxOptionsArray.forEach((element) => {
+                    let elementKey = element.split(':')[0].trim();
+                    let elementValue = element.split(':')[1].trim();
+                    ajaxDataObject[elementKey] = elementValue;
+                });
+            }
+
+            // listen for click
             element.addEventListener('click', (event) => {
 
                 // prevent element from doing any normal click behaviors
                 event.preventDefault();
-
-                // determine if this is a forced reset operation
-                let isForce = (element.getAttribute('data-wpjb-sync-force') == 'true') ? true : false;
 
                 // if the button was pressed and had previously shown a notice then hide it
                 messageNode.innerHTML = '';
@@ -28,10 +50,7 @@
                 // POST an ajax call to fire the sync
                 $.post(
                     ajaxurl,
-                    {
-                        action: 'trigger_sync',
-                        force: isForce,
-                    },
+                    ajaxDataObject,
                     (response) => {
                         let messageClass = 'notice-success';
 
