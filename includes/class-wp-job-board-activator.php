@@ -19,9 +19,8 @@
  * @subpackage WP_Job_Board/includes
  * @author     Little Fork
  */
-class WP_Job_Board_Activator {
-
-
+class WP_Job_Board_Activator
+{
     /**
      * Short Description. (use period)
      *
@@ -29,7 +28,8 @@ class WP_Job_Board_Activator {
      *
      * @since    0.1.0
      */
-    public static function activate() {
+    public static function activate()
+    {
         $sql = 'CREATE TABLE IF NOT EXISTS wp_job_board_log(
     id    bigint unsigned auto_increment primary key,
     bh_id    bigint unsigned not null,

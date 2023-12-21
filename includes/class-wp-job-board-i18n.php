@@ -23,16 +23,15 @@
  * @subpackage WP_Job_Board/includes
  * @author     Little Fork
  */
-class WP_Job_Board_I18n {
-
-
+class WP_Job_Board_I18n
+{
     /**
      * Load the plugin text domain for translation.
      *
      * @since    0.1.0
      */
-    public function load_plugin_textdomain() {
-
+    public function load_plugin_textdomain()
+    {
         load_plugin_textdomain(
             'wp-job-board',
             false,

@@ -1,38 +1,38 @@
 <?php
 
-class WP_Job_Board_Updater {
-
+class WP_Job_Board_Updater
+{
     public $plugin_slug;
     public $version;
     public $cache_key;
     public $cache_allowed;
 
-    public function __construct() {
-
-        if ( defined( 'WP_JOB_BOARD_DEV_MODE' ) ) {
+    public function __construct()
+    {
+        if (defined('WP_JOB_BOARD_DEV_MODE')) {
             add_filter('https_ssl_verify', '__return_false');
             add_filter('https_local_ssl_verify', '__return_false');
             add_filter('http_request_host_is_external', '__return_true');
         }
 
-        $this->plugin_slug   = dirname ( plugin_basename( __DIR__ ) );
+        $this->plugin_slug   = dirname(plugin_basename(__DIR__));
         $this->version       = '0.1.7';
         $this->cache_key     = 'wp_job_board_updater';
         $this->cache_allowed = false;
 
-        add_filter( 'plugins_api', [ $this, 'info' ], 20, 3 );
-        add_filter( 'site_transient_update_plugins', [ $this, 'update' ] );
-        add_action( 'upgrader_process_complete', [ $this, 'purge' ], 10, 2 );
-
+        add_filter('plugins_api', [ $this, 'info' ], 20, 3);
+        add_filter('site_transient_update_plugins', [ $this, 'update' ]);
+        add_action('upgrader_process_complete', [ $this, 'purge' ], 10, 2);
     }
 
-    public function request(){
+    public function request()
+    {
+        $remote = get_transient($this->cache_key);
 
-        $remote = get_transient( $this->cache_key );
-
-        if( false === $remote || ! $this->cache_allowed ) {
-
-            $remote = wp_remote_get( 'https://plugins.little-fork.com/wp-job-board/plugin-wp-job-board.json', [
+        if (false === $remote || ! $this->cache_allowed) {
+            $remote = wp_remote_get(
+                'https://plugins.little-fork.com/wp-job-board/plugin-wp-job-board.json',
+                [
                     'timeout' => 10,
                     'headers' => [
                         'Accept' => 'application/json'
@@ -40,36 +40,34 @@ class WP_Job_Board_Updater {
                 ]
             );
 
-            if ( is_wp_error( $remote ) || 200 !== wp_remote_retrieve_response_code( $remote ) || empty( wp_remote_retrieve_body( $remote ) ) ) {
+            if (is_wp_error($remote) || 200 !== wp_remote_retrieve_response_code($remote) || empty(wp_remote_retrieve_body($remote))) {
                 return false;
             }
 
-            set_transient( $this->cache_key, $remote, DAY_IN_SECONDS );
-
+            set_transient($this->cache_key, $remote, DAY_IN_SECONDS);
         }
 
-        $remote = json_decode( wp_remote_retrieve_body( $remote ) );
+        $remote = json_decode(wp_remote_retrieve_body($remote));
 
         return $remote;
-
     }
 
-    function info( $response, $action, $args ) {
-
+    public function info($response, $action, $args)
+    {
         // do nothing if you're not getting plugin information right now
-        if ( 'plugin_information' !== $action ) {
+        if ('plugin_information' !== $action) {
             return $response;
         }
 
         // do nothing if it is not our plugin
-        if ( empty( $args->slug ) || $this->plugin_slug !== $args->slug ) {
+        if (empty($args->slug) || $this->plugin_slug !== $args->slug) {
             return $response;
         }
 
         // get updates
         $remote = $this->request();
 
-        if ( ! $remote ) {
+        if (!$remote) {
             return $response;
         }
 
@@ -95,7 +93,7 @@ class WP_Job_Board_Updater {
             'changelog'    => $remote->sections->changelog
         ];
 
-        if ( ! empty( $remote->banners ) ) {
+        if (!empty($remote->banners)) {
             $response->banners = [
                 'low'  => $remote->banners->low,
                 'high' => $remote->banners->high
@@ -103,18 +101,23 @@ class WP_Job_Board_Updater {
         }
 
         return $response;
-
     }
 
-    public function update( $transient ) {
+    public function update($transient)
+    {
 
-        if ( empty($transient->checked ) ) {
+        if (empty($transient->checked)) {
             return $transient;
         }
 
         $remote = $this->request();
 
-        if ( $remote && version_compare( $this->version, $remote->version, '<' ) && version_compare( $remote->requires, get_bloginfo( 'version' ), '<=' ) && version_compare( $remote->requires_php, PHP_VERSION, '<' ) ) {
+        if (
+            $remote
+            && version_compare($this->version, $remote->version, '<')
+            && version_compare($remote->requires, get_bloginfo('version'), '<=')
+            && version_compare($remote->requires_php, PHP_VERSION, '<')
+        ) {
             $response              = new \stdClass();
             $response->slug        = $this->plugin_slug;
             $response->plugin      = "{$this->plugin_slug}/{$this->plugin_slug}.php";
@@ -123,20 +126,16 @@ class WP_Job_Board_Updater {
             $response->package     = $remote->download_url;
 
             $transient->response[ $response->plugin ] = $response;
-
         }
 
         return $transient;
-
     }
 
-    public function purge( $upgrader, $options ) {
-
-        if ( $this->cache_allowed && 'update' === $options['action'] && 'plugin' === $options[ 'type' ] ) {
+    public function purge($upgrader, $options)
+    {
+        if ($this->cache_allowed && 'update' === $options['action'] && 'plugin' === $options[ 'type' ]) {
             // just clean the cache when new plugin version is installed
-            delete_transient( $this->cache_key );
+            delete_transient($this->cache_key);
         }
-
     }
-
 }

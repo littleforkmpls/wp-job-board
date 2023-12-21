@@ -4,7 +4,8 @@
  * WP Shortcodes for use with WP Job Board
  */
 
-function wpjb_archive($attr) {
+function wpjb_archive($attr)
+{
     $html = '';
 
     if (file_exists(plugin_dir_path(__DIR__) . 'public/partials/wp-job-board-archive.php')) {
@@ -17,7 +18,8 @@ function wpjb_archive($attr) {
 
 add_shortcode('wpjb_archive', 'wpjb_archive');
 
-function wpjb_single($attr) {
+function wpjb_single($attr)
+{
     $html = '';
 
     if (file_exists(plugin_dir_path(__DIR__) . 'public/partials/wp-job-board-single.php')) {

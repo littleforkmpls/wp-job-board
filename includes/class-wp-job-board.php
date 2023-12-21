@@ -26,8 +26,8 @@
  * @subpackage WP_Job_Board/includes
  * @author     Little Fork
  */
-class WP_Job_Board {
-
+class WP_Job_Board
+{
     /**
      * The loader that's responsible for maintaining and registering all hooks that power
      * the plugin.
@@ -65,7 +65,8 @@ class WP_Job_Board {
      *
      * @since    0.1.0
      */
-    public function __construct() {
+    public function __construct()
+    {
         if (defined('WP_JOB_BOARD_VERSION')) {
             $this->version = WP_JOB_BOARD_VERSION;
         } else {
@@ -96,8 +97,8 @@ class WP_Job_Board {
      * @since    0.1.0
      * @access   private
      */
-    private function load_dependencies() {
-
+    private function load_dependencies()
+    {
         /**
          * The class responsible for orchestrating the actions and filters of the
          * core plugin.
@@ -150,8 +151,8 @@ class WP_Job_Board {
      * @since    0.1.0
      * @access   private
      */
-    private function set_locale() {
-
+    private function set_locale()
+    {
         $plugin_i18n = new WP_Job_Board_I18n();
 
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
@@ -164,8 +165,8 @@ class WP_Job_Board {
      * @since    0.1.0
      * @access   private
      */
-    private function define_admin_hooks() {
-
+    private function define_admin_hooks()
+    {
         $updater = new WP_Job_Board_Updater();
 
         $plugin_admin = new WP_Job_Board_Admin($this->get_wp_job_board(), $this->get_version());
@@ -189,7 +190,8 @@ class WP_Job_Board {
      * @return    string    The name of the plugin.
      * @since     0.1.0
      */
-    public function get_wp_job_board() {
+    public function get_wp_job_board()
+    {
         return $this->wp_job_board;
     }
 
@@ -199,7 +201,8 @@ class WP_Job_Board {
      * @return    string    The version number of the plugin.
      * @since     0.1.0
      */
-    public function get_version() {
+    public function get_version()
+    {
         return $this->version;
     }
 
@@ -210,8 +213,8 @@ class WP_Job_Board {
      * @since    0.1.0
      * @access   private
      */
-    private function define_public_hooks() {
-
+    private function define_public_hooks()
+    {
         $plugin_public = new WP_Job_Board_Public($this->get_wp_job_board(), $this->get_version());
 
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
@@ -220,10 +223,10 @@ class WP_Job_Board {
         $this->loader->add_action('init', $plugin_public, 'register_job_order_taxonomies');
 
         $this->loader->add_action('rest_api_init', $plugin_public, 'register_resume_endpoint');
-
     }
 
-    private function start_session() {
+    private function start_session()
+    {
         if (!session_id()) {
             session_start();
         }
@@ -234,7 +237,8 @@ class WP_Job_Board {
      *
      * @since    0.1.0
      */
-    public function run() {
+    public function run()
+    {
         $this->loader->run();
     }
 
@@ -244,7 +248,8 @@ class WP_Job_Board {
      * @return    WP_Job_Board_Loader    Orchestrates the hooks of the plugin.
      * @since     0.1.0
      */
-    public function get_loader() {
+    public function get_loader()
+    {
         return $this->loader;
     }
 }
