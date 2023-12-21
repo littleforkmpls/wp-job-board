@@ -67,10 +67,10 @@
             debugMode: true 
             }); 
         
-        const dragArea = document.querySelector(".wpjb-form__resume-drag");
-        const dragDropText = document.querySelector(".wpjb-form__resume-title");
+        const dragArea = document.querySelector(".wpjb-drag__fieldset");
+        const dragDropText = document.querySelector(".wpjb-drag__field-text");
 
-        let browseInput = document.getElementById("wpjb-form__resume-browse");
+        let browseInput = document.getElementById("wpjb-contact__resume");
         let file;
 
         const fileErrorSpan = document.querySelector(".file-error");

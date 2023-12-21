@@ -10,10 +10,14 @@
 body {font-family: inherit;}
 
 
-/* these font sizes aren't currently overriding the theme's font sizes 
-so also styled inline for now */
+
 #wpjb h1 {
   font-size: 2rem;
+  font-weight: 500;
+}
+
+#wpjb h2 {
+  font-size: 1.5rem;
   font-weight: 500;
 }
 
@@ -35,7 +39,10 @@ so also styled inline for now */
 #wpjb .txt-4xl{font-size: 2.625rem;}
 #wpjb .txt-5xl{font-size: 3.625rem;}
 
-#wpjb .txt-left{width: 100%;}
+#wpjb .txt-left{
+  width: 90vw;
+  max-width: 500px;  
+}
 
 #wpjb .label-txt-left{
   width: 100%;
@@ -43,11 +50,9 @@ so also styled inline for now */
   color: #757575;
 }
 
-.body-no-scroll {
-  overflow: hidden;
-}
 
-.browse-label:focus-within {
+
+#wpjb .browse-label:focus-within {
   outline: 1px solid #00449e;
 } 
 
@@ -311,19 +316,78 @@ so also styled inline for now */
 }
 
 /*----------------------------------------------------------------------------------
-    Form  
+    Form/MicroModal
 ----------------------------------------------------------------------------------*/
 
+/**************************\
+  Basic Modal Styles
+\**************************/
 
+#wpjb .wpjb-modal {
+  font-family: -apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,arial,sans-serif;
+}
 
-#wpjb .wpjb-fieldset {
+#wpjb .wpjb-modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.6);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-#wpjb .wpjb-fieldset__dragAndDrop {
+#wpjb .wpjb-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* position: relative; */
+  background-color: white;
+  width: 100vw;
+  max-width: 600px;
+  height: auto;
+  padding: 20px;
+  border-radius: 5px;
+  /* box-sizing: border-box; */
+  background: rgb(245, 245, 245);
+  box-shadow: rgb(70, 70, 70) 0px 2px 8px 2px;
+  /* box-shadow: 0 5px 15px rgba(#000, .1); */
+}
+
+#wpjb .wpjb-form__hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90vw;
+  max-width: 500px;
+  margin-top: 10px;
+}
+
+#wpjb .x-btn {
+  background: transparent;
+  border: 0;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+#wpjb .wpjb-form__hd .x-btn:before { content: "\2715"; }
+
+#wpjb .wpjb-form__bd {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+  color: rgba(0,0,0,.8);
+}
+
+#wpjb .wpjb-fieldset {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -343,7 +407,14 @@ so also styled inline for now */
   box-shadow: inset 6px 6px 6px rgb(220, 220, 220), inset -6px -6px 6px white;
 }
 
-#wpjb .wpjb-form__resume-drag {
+#wpjb .wpjb-drag {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#wpjb .wpjb-drag__fieldset {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -365,128 +436,39 @@ so also styled inline for now */
   margin-bottom: 20px;
 }
 
-#wpjb .wpjb-form__resume-drag.active {
+#wpjb .wpjb-drag__fieldset.active {
   /* border: 2px solid #ccc; */
   box-shadow: inset 6px 6px 6px rgb(200, 200, 200), inset -6px -6px 6px rgb(230, 230, 230);
 }
 
 /* change to a font class later */
-.wpjb-form__browse-link {
+#wpjb .wpjb-drag__browse-btn {
   background-color: transparent;
   border: none;
   cursor: pointer;
   font-weight: 500;
 }
 
-.wpjb-form__browse-link:hover {
+#wpjb .wpjb-drag__browse-btn:hover {
   opacity: 0.5;
 }
 
-.file-error {
+#wpjb .file-error {
   color: red;
   opacity: 0;
 }
 
-.hidden-label {
+#wpjb .hidden-label {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-.visible-label {
+#wpjb .visible-label {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
 
-
-
-/*----------------------------------------------------------------------------------
-    MicroModal
-----------------------------------------------------------------------------------*/
-
-/**************************\
-  Basic Modal Styles
-\**************************/
-
-/* .modal {
-  font-family: -apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,arial,sans-serif;
-} */
-
-.modal__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal__container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  /* position: relative; */
-  background-color: white;
-  width: 100vw;
-  max-width: 600px;
-  height: auto;
-  padding: 20px;
-  border-radius: 5px;
-  /* box-sizing: border-box; */
-  background: rgb(245, 245, 245);
-  box-shadow: rgb(70, 70, 70) 0px 2px 8px 2px;
-  /* box-shadow: 0 5px 15px rgba(#000, .1); */
-}
-
-.modal__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal__subhead {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  padding-left: 5px;
-  margin-top: 10px;
-}
-
-.modal__title {
-  margin-top: 0;
-  margin-bottom: 0;
-  font-weight: 600;
-  font-size: 1.25rem;
-  line-height: 1.25;
-  color: #00449e;
-  box-sizing: border-box;
-}
-
-.modal__close {
-  background: transparent;
-  border: 0;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-}
-
-.modal__header .modal__close:before { content: "\2715"; }
-
-.modal__content {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  line-height: 1.5;
-  color: rgba(0,0,0,.8);
-}
-
-.modal__btn {
+#wpjb .btn {
   font-size: .875rem;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -514,12 +496,12 @@ so also styled inline for now */
   transition: transform .25s ease-out,-webkit-transform .25s ease-out;
 }
 
-.modal__btn:focus, .modal__btn:hover {
+#wpjb .btn:focus, .btn:hover {
   -webkit-transform: scale(1.05);
   transform: scale(1.05);
 }
 
-.modal__btn-primary {
+#wpjb .btn__submit {
   background-color: #00449e;
   color: #fff;
 }
@@ -557,23 +539,23 @@ so also styled inline for now */
   display: block;
 }
 
-.micromodal-slide[aria-hidden="false"] .modal__overlay {
+.micromodal-slide[aria-hidden="false"] .wpjb-modal__overlay {
   animation: mmfadeIn .3s cubic-bezier(0.0, 0.0, 0.2, 1);
 }
 
-.micromodal-slide[aria-hidden="false"] .modal__container {
+.micromodal-slide[aria-hidden="false"] .wpjb-modal__container {
   animation: mmslideIn .3s cubic-bezier(0, 0, .2, 1);
 }
 
-.micromodal-slide[aria-hidden="true"] .modal__overlay {
+.micromodal-slide[aria-hidden="true"] .wpjb-modal__overlay {
   animation: mmfadeOut .3s cubic-bezier(0.0, 0.0, 0.2, 1);
 }
 
-.micromodal-slide[aria-hidden="true"] .modal__container {
+.micromodal-slide[aria-hidden="true"] .wpjb-modal__container {
   animation: mmslideOut .3s cubic-bezier(0, 0, .2, 1);
 }
 
-.micromodal-slide .modal__container,
-.micromodal-slide .modal__overlay {
+.micromodal-slide .wpjb-form,
+.micromodal-slide .wpjb-modal__overlay {
   will-change: transform;
 }
