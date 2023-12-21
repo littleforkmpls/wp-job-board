@@ -232,7 +232,7 @@ class WP_Job_Board_Public
             'add_new_item'      => __('Add New Job Location'),
             'new_item_name'     => __('New Job Location Name'),
             'menu_name'         => __('Job Locations'),
-        )
+        );
 
         $args   = array(
             'hierarchical'      => false,
