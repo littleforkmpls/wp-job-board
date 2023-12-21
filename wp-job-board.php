@@ -20,7 +20,7 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined('WPINC')) {
+if (!defined('WPINC')) {
     die;
 }
 /**
@@ -32,7 +32,8 @@ define('WP_JOB_BOARD_VERSION', '0.1.7');
  * The code that runs during plugin activation.
  * This action is documented in includes/class-wp-job-board-activator.php
  */
-function activate_wp_job_board() {
+function activate_wp_job_board()
+{
     require_once plugin_dir_path(__FILE__) . 'includes/class-wp-job-board-activator.php';
     WP_Job_Board_Activator::activate();
 }
@@ -41,7 +42,8 @@ function activate_wp_job_board() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-wp-job-board-deactivator.php
  */
-function deactivate_wp_job_board() {
+function deactivate_wp_job_board()
+{
     require_once plugin_dir_path(__FILE__) . 'includes/class-wp-job-board-deactivator.php';
     WP_Job_Board_Deactivator::deactivate();
 }
@@ -64,8 +66,8 @@ require plugin_dir_path(__FILE__) . 'includes/class-wp-job-board.php';
  *
  * @since    0.1.0
  */
-function run_wp_job_board() {
-
+function run_wp_job_board()
+{
     $plugin = new WP_Job_Board();
     $plugin->run();
 }
