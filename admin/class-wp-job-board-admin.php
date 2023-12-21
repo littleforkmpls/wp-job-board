@@ -1,13 +1,4 @@
 <?php
-/**
- * The admin-specific functionality of the plugin.
- *
- * @link       http://example.com
- * @since      0.1.0
- *
- * @package    WP_Job_Board
- * @subpackage WP_Job_Board/admin
- */
 
 /**
  * The admin-specific functionality of the plugin.
@@ -65,7 +56,7 @@ class WP_Job_Board_Admin {
      *
      * @since  0.1.0
      * @access private
-     * @var WP_Job_Board_Bullhorn_Manager $bullhorn Bullhorn Manager Inst5ance
+     * @var WP_Job_Board_Bullhorn_Manager $bullhorn Bullhorn Manager Instance
      */
     private $bullhorn;
 
@@ -77,7 +68,8 @@ class WP_Job_Board_Admin {
      *
      * @since    0.1.0
      */
-    public function __construct($wp_job_board, $version) {
+    public function __construct($wp_job_board, $version)
+    {
         $this->wp_job_board = $wp_job_board;
         $this->version      = $version;
     }
@@ -87,20 +79,8 @@ class WP_Job_Board_Admin {
      *
      * @since    0.1.0
      */
-    public function enqueue_styles() {
-
-        /**
-         * This function is provided for demonstration purposes only.
-         *
-         * An instance of this class should be passed to the run() function
-         * defined in WP_Job_Board_Loader as all of the hooks are defined
-         * in that particular class.
-         *
-         * The WP_Job_Board_Loader will then create the relationship
-         * between the defined hooks and the functions defined in this
-         * class.
-         */
-
+    public function enqueue_styles()
+    {
         wp_enqueue_style(
             $this->wp_job_board,
             plugin_dir_url(__FILE__) . 'css/wp-job-board-admin.css',
@@ -115,20 +95,8 @@ class WP_Job_Board_Admin {
      *
      * @since    0.1.0
      */
-    public function enqueue_scripts() {
-
-        /**
-         * This function is provided for demonstration purposes only.
-         *
-         * An instance of this class should be passed to the run() function
-         * defined in WP_Job_Board_Loader as all of the hooks are defined
-         * in that particular class.
-         *
-         * The WP_Job_Board_Loader will then create the relationship
-         * between the defined hooks and the functions defined in this
-         * class.
-         */
-
+    public function enqueue_scripts()
+    {
         wp_enqueue_script(
             $this->wp_job_board,
             plugin_dir_url(__FILE__) . 'js/wp-job-board-admin.js',
@@ -138,7 +106,13 @@ class WP_Job_Board_Admin {
         );
     }
 
-    public function add_menu() {
+    /**
+     * Register Settings & create admin menu pages.
+     *
+     * @since    0.1.0
+     */
+    public function add_menu()
+    {
         register_setting(
             self::SETTINGS_GROUP,
             self::SETTING_CLIENT_ID,
@@ -197,17 +171,20 @@ class WP_Job_Board_Admin {
         );
     }
 
-    public function render_settings_page() {
+    public function render_settings_page()
+    {
         require_once plugin_dir_path(__FILE__) . 'pages/wp-job-board-admin-settings.php';
     }
 
-    public function render_tools_page() {
+    public function render_tools_page()
+    {
         require_once plugin_dir_path(__FILE__) . 'pages/wp-job-board-admin-tools.php';
     }
 
-    public function trigger_sync() {
+    public function trigger_sync()
+    {
         try {
-            if ( ! $this->bullhorn) {
+            if (!$this->bullhorn) {
                 $this->bullhorn = new WP_Job_Board_Bullhorn_Manager();
             }
             $force = false;
@@ -221,15 +198,17 @@ class WP_Job_Board_Admin {
         }
     }
 
-    public function refresh_log() {
+    public function refresh_log()
+    {
         require_once plugin_dir_path(__FILE__) . 'partials/wp-job-board-activity-log.php';
     }
 
-    public function add_cron() {
+    public function add_cron()
+    {
         if (!get_option(WP_Job_Board_Admin::SETTING_ENABLE_CRON)) {
-            $timestamp = wp_next_scheduled( WP_Job_Board_Admin::CRON_SYNC_JOBS );
+            $timestamp = wp_next_scheduled(WP_Job_Board_Admin::CRON_SYNC_JOBS);
             if ($timestamp) {
-                wp_unschedule_event( $timestamp, WP_Job_Board_Admin::CRON_SYNC_JOBS );
+                wp_unschedule_event($timestamp, WP_Job_Board_Admin::CRON_SYNC_JOBS);
             }
             return;
         }
@@ -240,10 +219,11 @@ class WP_Job_Board_Admin {
         }
     }
 
-    public function add_30m_interval($schedules) {
+    public function add_30m_interval($schedules)
+    {
         $schedules['30m'] = array(
             'interval' => '1800',
-            'display'  => esc_html__( 'Every 30 minutes' ),
+            'display'  => esc_html__('Every 30 minutes'),
         );
         return $schedules;
     }
