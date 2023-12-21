@@ -1,26 +1,23 @@
 === WP Job Board ===
 Contributors: Little Fork
-Tags: comments, spam
+Tags: jobs, job board, ats, bullhorn
 Requires at least: 6.0
-Tested up to: 6.3
+Tested up to: 6.4.1
+Requires PHP: 8.2
 License: Commercial
 
-Aggregate and display job listings, as well as submit resumes
+Aggregates and displays job listings from your ATS on your WordPress website.
 
 == Description ==
 
-Sync job listings from APIs (only Bullhorn at this time).
+Sync your ATS data directly with WordPress to display jobs on your website and allow users to easily apply for open positions.
 
 == Installation ==
 
-Upload provided zip to WP Admin Plugins, Add Plugins. Then activate plugin.
+Activate the plugin and connect an ATS.
 
+Full documentation can be found on [GitHub](https://github.com/littleforkmpls/wp-job-board/wiki)
 
 == Changelog ==
-= 0.1.1 =
-* Version Bump
 
-= 0.1.0 =
-* Initial version of plugin
-
-== Upgrade Notice ==
+View release notes for all versions on [GitHub](https://github.com/littleforkmpls/wp-job-board/releases)

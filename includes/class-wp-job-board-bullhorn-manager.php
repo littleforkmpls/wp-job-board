@@ -19,33 +19,33 @@
  * @subpackage WP_Job_Board/includes
  * @author     Little Fork
  */
-class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
-
+class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
+{
     /**
      * Urls and endpoints for fetching our information.
      */
-    const SERVICES_URL = 'https://rest.bullhornstaffing.com/rest-services/loginInfo?username={API_Username}';
-    const ACCESS_CODE_ENDPOINT = '{oauth_url}/authorize?client_id={client_id}&response_type=code&action=Login&username={username}&password={password}';
-    const ACCESS_TOKEN_ENDPOINT = '{oauth_url}/token?grant_type=authorization_code&code={auth_code}&client_id={client_id}&client_secret={client_secret}';
-    const ACCESS_TOKEN_REFRESH_ENDPOINT = '{oauth_url}/token?grant_type=refresh_token&refresh_token={refresh_token}&client_id={client_id}&client_secret={client_secret}';
+    public const SERVICES_URL = 'https://rest.bullhornstaffing.com/rest-services/loginInfo?username={API_Username}';
+    public const ACCESS_CODE_ENDPOINT = '{oauth_url}/authorize?client_id={client_id}&response_type=code&action=Login&username={username}&password={password}';
+    public const ACCESS_TOKEN_ENDPOINT = '{oauth_url}/token?grant_type=authorization_code&code={auth_code}&client_id={client_id}&client_secret={client_secret}';
+    public const ACCESS_TOKEN_REFRESH_ENDPOINT = '{oauth_url}/token?grant_type=refresh_token&refresh_token={refresh_token}&client_id={client_id}&client_secret={client_secret}';
 
     /**
      * The following are config array keys.
      */
-    const ACCESS_CODE = 'wp_job_board_bullhorn_access_code';
-    const ACCESS_TOKEN = 'wp_job_board_bullhorn_access_token';
-    const ACCESS_TOKEN_REFRESH = 'wp_job_board_bullhorn_access_token_refresh';
-    const ACCESS_TOKEN_EXPIRES = 'wp_job_board_bullhorn_access_token_expires';
-    const OAUTH_URL = 'wp_job_board_bullhorn_oauth_url';
-    const REST_URL = 'wp_job_board_bullhorn_rest_url';
-    const REST_TOKEN = 'wp_job_board_bullhorn_rest_token';
-    const CORP_TOKEN = 'wp_job_board_bullhorn_corp_token';
+    public const ACCESS_CODE = 'wp_job_board_bullhorn_access_code';
+    public const ACCESS_TOKEN = 'wp_job_board_bullhorn_access_token';
+    public const ACCESS_TOKEN_REFRESH = 'wp_job_board_bullhorn_access_token_refresh';
+    public const ACCESS_TOKEN_EXPIRES = 'wp_job_board_bullhorn_access_token_expires';
+    public const OAUTH_URL = 'wp_job_board_bullhorn_oauth_url';
+    public const REST_URL = 'wp_job_board_bullhorn_rest_url';
+    public const REST_TOKEN = 'wp_job_board_bullhorn_rest_token';
+    public const CORP_TOKEN = 'wp_job_board_bullhorn_corp_token';
 
     /**
      * Date format for consistency.
      */
-    const DATE_FORMAT = 'Y-m-d H:i:s';
-    const SESSION_REST_EXPIRES = 'wp_job_board_session_rest_key_expires';
+    public const DATE_FORMAT = 'Y-m-d H:i:s';
+    public const SESSION_REST_EXPIRES = 'wp_job_board_session_rest_key_expires';
 
     /**
      * Our config options managed as an array.
@@ -100,7 +100,8 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
     /**
      * Constructor to set up our class.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->options           = get_option(WP_Job_Board_Admin::OPTION_ARRAY_KEY, array());
         $this->api_username      = get_option(WP_Job_Board_Admin::SETTING_API_USERNAME);
         $this->api_password      = get_option(WP_Job_Board_Admin::SETTING_API_PASSWORD);
@@ -124,11 +125,14 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
      *
      * @return void
      */
-    public function trigger_sync(string $redirect = null, bool $force = false): void {
+    public function trigger_sync(
+        string $redirect = null,
+        bool $force = false
+    ): void {
         $log_data = array();
         $jobs     = $this->get_jobs($redirect, $force);
 
-        if ( ! $jobs) {
+        if (!$jobs) {
             $this->throw_error('No jobs found to sync');
         }
 
@@ -144,11 +148,11 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         $count = 0;
 
         foreach ($jobs as $job_order) {
-//            $job_order['publicDescription'] = addslashes($job_order['publicDescription']);
+            // $job_order['publicDescription'] = addslashes($job_order['publicDescription']);
             $bh_data   = json_encode($job_order);
             $clean_title = sanitize_title($job_order['title'] . '-' . $job_order['id']);
             if (!$bh_data) {
-                error_log('Problem encoding job('.$clean_title.'): ' . json_last_error_msg());
+                error_log('Problem encoding job(' . $clean_title . '): ' . json_last_error_msg());
             }
             $post_data = array(
                 'post_title'     => $job_order['title'],
@@ -195,14 +199,14 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
 
             $result = wp_insert_post($post_data, true);
 
-            $count ++;
+            $count++;
 
             if ($count && $count % 20 === 0) {
                 $this->save_logs($log_data);
                 $log_data = array();
             }
 
-            if ( ! $result || $result instanceof WP_Error) {
+            if (!$result || $result instanceof WP_Error) {
                 $this->throw_error('Could not insert Job Order ' . $job_order['id'] . ($result ? ' - ' . $result->get_error_message() : ''));
             }
         }
@@ -234,9 +238,8 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
     /**
      * @return mixed|void
      */
-    private function get_jobs(string $redirect = null, bool $force = false) {
-
-
+    private function get_jobs(string $redirect = null, bool $force = false)
+    {
         $baseUrl = '{corp_token}query/JobOrder?fields=id,title,dateAdded&BhRestToken={rest_token}';
         $baseUrl = '{corp_token}search/{entity}?fields={fields}&sort={fields}&count={count}&start={start}&BhRestToken={rest_token}';
         $baseUrl = '{corp_token}search/{entity}?fields={fields}&sort={sort}&count={count}&start={start}&BhRestToken={rest_token}';
@@ -280,7 +283,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
                 return;
             }
 
-            if ( ! isset($result['data'])) {
+            if (!isset($result['data'])) {
                 $callAgain = false;
                 $this->throw_error('Could not sync any jobs.');
             }
@@ -300,10 +303,11 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
      * @return mixed
      * @throws Exception
      */
-    private function get_corp_token() {
-        if ( ! empty($this->options[self::CORP_TOKEN]) && ! empty($this->options[self::REST_TOKEN])) {
+    private function get_corp_token()
+    {
+        if (!empty($this->options[self::CORP_TOKEN]) && ! empty($this->options[self::REST_TOKEN])) {
             // check our session first
-            if ( ! empty($_SESSION[self::SESSION_REST_EXPIRES]) && $_SESSION[self::SESSION_REST_EXPIRES] > time()) {
+            if (!empty($_SESSION[self::SESSION_REST_EXPIRES]) && $_SESSION[self::SESSION_REST_EXPIRES] > time()) {
                 return $this->options[self::CORP_TOKEN];
             }
             // if we're still not good, ping
@@ -349,7 +353,8 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
      *
      * @return string
      */
-    private function get_services(string $service): string {
+    private function get_services(string $service): string
+    {
         $endpoint_url = $this->get_url(
             self::SERVICES_URL,
             array(
@@ -375,7 +380,8 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
      * @return string
      * @throws Exception
      */
-    private function get_access_token(): string {
+    private function get_access_token(): string
+    {
         $expired = true;
         // If we have an expires date, we should have a token.  If we have both of those
         // things and the expires is not past, return the token.
@@ -385,7 +391,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
             $expired     = $now > $expiresDate;
         }
 
-        if ( ! $expired && isset($this->options[self::ACCESS_TOKEN])) {
+        if (!$expired && isset($this->options[self::ACCESS_TOKEN])) {
             return $this->options[self::ACCESS_TOKEN];
         }
 
@@ -414,10 +420,10 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         $token = $this->call_api($url, array(), 'post');
 
         if (isset($token['error'])) {
-            if (isset($token['error_description'])
-                && ($token['error_description'] === 'Invalid, expired, or revoked authorization code.'
-                    || $token['error_description'] === 'Invalid, expired, or revoked refresh token.')
-                ) {
+            if (
+                isset($token['error_description'])
+                && ($token['error_description'] === 'Invalid, expired, or revoked authorization code.' || $token['error_description'] === 'Invalid, expired, or revoked refresh token.')
+            ) {
                 update_option(WP_Job_Board_Admin::OPTION_ARRAY_KEY, array());
                 $this->throw_error('Problem getting authorize token.  Please attempt action again.');
             }
@@ -438,7 +444,8 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
     /**
      * @return mixed|string
      */
-    private function get_oauth_url() {
+    private function get_oauth_url()
+    {
         if (isset($this->options[self::OAUTH_URL])) {
             return $this->options[self::OAUTH_URL];
         }
@@ -449,7 +456,8 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
     /**
      * @return string
      */
-    private function get_access_code(): string {
+    private function get_access_code(): string
+    {
         if (isset($this->options[self::ACCESS_CODE])) {
             return $this->options[self::ACCESS_CODE];
         }
@@ -478,7 +486,8 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         return $this->options[self::ACCESS_CODE];
     }
 
-    private function save_logs($log_data) {
+    private function save_logs($log_data)
+    {
         global $wpdb;
         $sql_start   = 'INSERT INTO wp_job_board_log (bh_id, bh_title, action, timestamp) values';
         $insert_data = '';
@@ -507,10 +516,10 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         $one_week_ago = (new DateTime())->sub(new DateInterval('P7D'))->getTimestamp();
 
         $wpdb->query($wpdb->prepare('DELETE FROM wp_job_board_log WHERE timestamp < %d', $one_week_ago));
-
     }
 
-    public function submit_resume(): array {
+    public function submit_resume(): array
+    {
         $first_name   = $this->get_posted_data('first_name');
         $last_name    = $this->get_posted_data('last_name');
         $phone        = $this->get_posted_data('phone');
@@ -538,15 +547,17 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         return array();
     }
 
-    private function get_posted_data($key, $default = null) {
-        if ( ! isset($_POST[$key])) {
+    private function get_posted_data($key, $default = null)
+    {
+        if (!isset($_POST[$key])) {
             return $default;
         }
 
         return $_POST[$key];
     }
 
-    private function get_job_order(string|int $wp_post_id, string|int $job_order_id) {
+    private function get_job_order(string|int $wp_post_id, string|int $job_order_id)
+    {
         $post = get_post($wp_post_id);
         $meta = get_post_meta($wp_post_id, 'wp_job_board_bh_data');
 
@@ -554,13 +565,13 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
             $this->throw_error('Job has been closed');
         }
 
-        if ( ! empty($meta[0])) {
+        if (!empty($meta[0])) {
             $data = json_decode($meta[0], true);
         } else {
             $data = null;
         }
 
-        if ( ! $data || ! isset($data['publishedCategory']) || ! isset($data['publishedCategory']['id'])) {
+        if (!$data || !isset($data['publishedCategory']) || !isset($data['publishedCategory']['id'])) {
             $tokens = array(
                 '{corp_token}'   => $this->get_corp_token(),
                 '{job_order_id}' => $job_order_id,
@@ -578,7 +589,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
                 'post'
             );
 
-            if ( ! isset($result['total']) || $result['total'] !== 1) {
+            if (!isset($result['total']) || $result['total'] !== 1) {
                 $this->throw_error('Could not find Job Order');
             }
 
@@ -590,9 +601,10 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         return $data;
     }
 
-    private function get_candidate(string $email, array $job_order) {
+    private function get_candidate(string $email, array $job_order)
+    {
         $category_data = null;
-        if ( ! empty($job_order['publishedCategory']) && ! empty($job_order['publishedCategory']['id']) && ! empty($job_order['publishedCategory']['name'])) {
+        if (!empty($job_order['publishedCategory']) && ! empty($job_order['publishedCategory']['id']) && ! empty($job_order['publishedCategory']['name'])) {
             $category_data = array(
                 'id'   => $job_order['publishedCategory']['id'],
                 'name' => $job_order['publishedCategory']['name'],
@@ -666,7 +678,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
 
         $url    = $this->get_url('{corp_token}entity/Candidate?BhRestToken={rest_token}', $tokens);
         $result = $this->call_api($url, array('body' => $body, 'method' => 'PUT'), 'post');
-        if ( ! empty($result['errorMessage'])) {
+        if (!empty($result['errorMessage'])) {
             $this->throw_error($result['errorMessage']);
         }
 
@@ -680,7 +692,8 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         return $candidate;
     }
 
-    private function create_submission(array $job_order, array $candidate) {
+    private function create_submission(array $job_order, array $candidate)
+    {
         $tokens = array(
             '{corp_token}' => $this->get_corp_token(),
             '{rest_token}' => $this->options[self::REST_TOKEN],
@@ -708,10 +721,10 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         }
 
         return $result;
-
     }
 
-    private function add_file(mixed $resume, array $candidate) {
+    private function add_file(mixed $resume, array $candidate)
+    {
         $tokens = array(
             '{corp_token}'   => $this->get_corp_token(),
             '{candidate_id}' => $candidate['id'],
@@ -728,12 +741,12 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
             "\t",
             "\r"
         ), '', base64_encode(file_get_contents($resume['tmp_name'])));
-        if ( ! empty($result['data'])) {
+        if (!empty($result['data'])) {
             foreach ($result['data'] as $entity_file) {
                 $tokens['{file_id}'] = $entity_file['id'];
                 $file_url            = $this->get_url('{corp_token}file/Candidate/{candidate_id}/{file_id}', $tokens);
                 $file_result         = $this->call_api($file_url);
-                if ( ! empty($file_result['File']) && ! empty($file_result['File']['fileContent'])) {
+                if (!empty($file_result['File']) && ! empty($file_result['File']['fileContent'])) {
                     $test_content = str_replace(array(
                         ' ',
                         "\n",
@@ -773,7 +786,8 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         return $result;
     }
 
-    private function get_data_from_resume(mixed $resume) {
+    private function get_data_from_resume(mixed $resume)
+    {
         $file_type = pathinfo($resume['name'])['extension'];
 
         $local_file = $resume['tmp_name']; //path to a local file on your server
@@ -817,47 +831,48 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base {
         return $result;
     }
 
-    private function update_candidate_from_resume(mixed $candidate, mixed $resume_data) {
+    private function update_candidate_from_resume(mixed $candidate, mixed $resume_data)
+    {
         $body = array();
-        if ( ! empty($resume_data['candidate']['occupation'])) {
+        if (!empty($resume_data['candidate']['occupation'])) {
             $body['occupation'] = $resume_data['candidate']['occupation'];
         }
-        if ( ! empty($resume_data['candidate']['companyName'])) {
+        if (!empty($resume_data['candidate']['companyName'])) {
             $body['companyName'] = $resume_data['candidate']['companyName'];
         }
-        if ( ! empty($resume_data['candidate']['phone'])) {
+        if (!empty($resume_data['candidate']['phone'])) {
             $body['phone'] = $resume_data['candidate']['phone'];
         }
         if (
-            ! empty($resume_data['candidateEducation'][0]['major'])
-            && ! empty($resume_data['candidateEducation'][0]['school'])
-            && ! empty($resume_data['candidateEducation'][0]['degree'])
+            !empty($resume_data['candidateEducation'][0]['major'])
+            && !empty($resume_data['candidateEducation'][0]['school'])
+            && !empty($resume_data['candidateEducation'][0]['degree'])
         ) {
             $body['degreeList'] = "{$resume_data['candidateEducation'][0]['major']} - {$resume_data['candidateEducation'][0]['degree']} - {$resume_data['candidateEducation'][0]['school']}";
         }
-        if ( ! empty($resume_data['candidateEducation'][0]['degree'])) {
+        if (!empty($resume_data['candidateEducation'][0]['degree'])) {
             $body['educationDegree'] = $resume_data['candidateEducation'][0]['degree'];
         }
-        if ( ! empty($resume_data['candidate']['address'])) {
-            if ( ! empty($resume_data['candidate']['address']['address1'])) {
+        if (!empty($resume_data['candidate']['address'])) {
+            if (!empty($resume_data['candidate']['address']['address1'])) {
                 $body['address']['address1'] = $resume_data['candidate']['address']['address1'];
             }
-            if ( ! empty($resume_data['candidate']['address']['address2'])) {
+            if (!empty($resume_data['candidate']['address']['address2'])) {
                 $body['address']['address2'] = $resume_data['candidate']['address']['address2'];
             }
-            if ( ! empty($resume_data['candidate']['address']['city'])) {
+            if (!empty($resume_data['candidate']['address']['city'])) {
                 $body['address']['city'] = $resume_data['candidate']['address']['city'];
             }
-            if ( ! empty($resume_data['candidate']['address']['state'])) {
+            if (!empty($resume_data['candidate']['address']['state'])) {
                 $body['address']['state'] = $resume_data['candidate']['address']['state'];
             }
-            if ( ! empty($resume_data['candidate']['address']['zip'])) {
+            if (!empty($resume_data['candidate']['address']['zip'])) {
                 $body['address']['zip'] = $resume_data['candidate']['address']['zip'];
             }
-            if ( ! empty($resume_data['candidate']['address']['countryID'])) {
+            if (!empty($resume_data['candidate']['address']['countryID'])) {
                 $body['address']['countryID'] = $resume_data['candidate']['address']['countryID'];
             }
-            if ( ! empty($resume_data['candidate']['address']['countryName'])) {
+            if (!empty($resume_data['candidate']['address']['countryName'])) {
                 $body['address']['countryName'] = $resume_data['candidate']['address']['countryName'];
             }
         }

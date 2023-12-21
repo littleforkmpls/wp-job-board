@@ -17,8 +17,8 @@
  * @subpackage WP_Job_Board/includes
  * @author     Little Fork
  */
-class WP_Job_Board_API_Manager_Base {
-
+class WP_Job_Board_API_Manager_Base
+{
     /**
      * Helper function to replace tokens `{token_name}` with values from
      * a token_name => value array;
@@ -28,7 +28,8 @@ class WP_Job_Board_API_Manager_Base {
      *
      * @return string
      */
-    protected function get_url($url, $tokens): string {
+    protected function get_url($url, $tokens): string
+    {
         $built_url = str_replace(array_keys($tokens), array_values($tokens), $url);
 
         if (is_array($built_url)) {
@@ -38,12 +39,20 @@ class WP_Job_Board_API_Manager_Base {
         return $built_url;
     }
 
-    protected function call_api(string $endpoint_url, array $args = array(), string $method = 'get', string $return = 'body', bool $json_decode = true) {
+    protected function call_api(
+        string $endpoint_url,
+        array $args = array(),
+        string $method = 'get',
+        string $return = 'body',
+        bool $json_decode = true
+    ) {
         $func = "wp_remote_{$method}";
-        if ( ! function_exists($func)) {
+
+        if (!function_exists($func)) {
             $this->throw_error("Could not call {$method}");
         }
-        if ( ! empty($args['body']) && is_array($args['body']) && empty($args['skip_json'])) {
+
+        if (!empty($args['body']) && is_array($args['body']) && empty($args['skip_json'])) {
             $args['body'] = json_encode($args['body']);
             if (empty($args['headers'])) {
                 $args['headers'] = [];
@@ -52,9 +61,11 @@ class WP_Job_Board_API_Manager_Base {
                 $args['headers']['Content-Type'] = 'application/json';
             }
         }
+
         $response = $func($endpoint_url, $args);
         $code     = wp_remote_retrieve_response_code($response);
         $message  = wp_remote_retrieve_response_message($response);
+
         if ($response instanceof WP_Error) {
             $this->throw_error("Could not reach {$endpoint_url} - {$code} - {$message}");
         }
@@ -66,7 +77,8 @@ class WP_Job_Board_API_Manager_Base {
         if ($return === 'body') {
             if ($json_decode) {
                 $decoded = json_decode($body, true);
-                if ( ! $decoded) {
+
+                if (!$decoded) {
                     $decoded = array();
                 }
 
@@ -79,12 +91,14 @@ class WP_Job_Board_API_Manager_Base {
         return $response;
     }
 
-    protected function throw_error(string $message) {
+    protected function throw_error(string $message)
+    {
         $class = $this::class;
         throw new Error("WP Job Board - {$class} - Message: {$message}");
     }
 
-    protected function get_mapped_state(string $state): string {
+    protected function get_mapped_state(string $state): string
+    {
         $abbrev = strtoupper($state);
         if (isset(self::$state_map[$abbrev])) {
             return self::$state_map[$abbrev];

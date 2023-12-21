@@ -19,8 +19,8 @@
  * @subpackage WP_Job_Board/includes
  * @author     Little Fork
  */
-class WP_Job_Board_Deactivator {
-
+class WP_Job_Board_Deactivator
+{
     /**
      * Short Description. (use period)
      *
@@ -28,7 +28,8 @@ class WP_Job_Board_Deactivator {
      *
      * @since    0.1.0
      */
-    public static function deactivate() {
+    public static function deactivate()
+    {
         wp_clear_scheduled_hook(WP_Job_Board_Admin::CRON_SYNC_JOBS);
     }
 }

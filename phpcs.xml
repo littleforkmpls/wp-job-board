@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="PHPCS Rules">
-    <description>PHP CS Rules for NSC Custom WordPress Plugin</description>
+    <description>PHPCS Rules for WP Job Board Plugin</description>
 
     <arg name="extensions" value="php" />
     <file>.</file>
@@ -12,11 +12,11 @@
     <arg value="p"/>
     <arg value="s"/>
 
-    <rule ref="PSR1"/>
-    <rule ref="PSR2"/>
-    <rule ref="PSR12"/>
-
-    <rule ref="Squiz">
+    <rule ref="PSR12">
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace" />
+        <exclude name="PSR1.Methods.CamelCapsMethodName"/>
         <exclude name="Squiz.Classes.ValidClassName.NotCamelCaps"/>
+        <exclude name="PSR12.Files.FileHeader.SpacingAfterBlock" />
     </rule>
+
 </ruleset>
