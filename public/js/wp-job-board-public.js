@@ -1,16 +1,24 @@
+
+
 (function ($) {
     "use strict";
 
     // Form Modal
 
+    
+    
+    MicroModal.init();
+
     function showForm() {
         var formOverlay = document.querySelector(".wpjb-form__modal-overlay");
         formOverlay.style.display = "flex";
+        document.body.classList.add("body-no-scroll");
     }
 
     function closeForm() {
         var formOverlay = document.querySelector(".wpjb-form__modal-overlay");
         formOverlay.style.display = "none";
+        document.body.classList.remove("body-no-scroll");
     }
 
     // dropdown menu function
@@ -44,45 +52,41 @@
 
     // Resume upload
     $(document).on("DOMContentLoaded", function () {
+
+
+        MicroModal.init({ 
+            onShow: modal => console.info(`${modal.id} is shown`), 
+            onClose: modal => console.info(`${modal.id} is hidden`), 
+            openTrigger: 'data-micromodal-trigger', 
+            closeTrigger: 'data-micromodal-close', 
+            openClass: 'is-open', 
+            disableScroll: true, 
+            disableFocus: false, 
+            awaitOpenAnimation: true, 
+            awaitCloseAnimation: true, 
+            debugMode: true 
+            }); 
+        
         const dragArea = document.querySelector(".wpjb-form__resume-drag");
         const dragDropText = document.querySelector(".wpjb-form__resume-title");
 
-        let browse = document.querySelector(".wpjb-form__browse-link");
         let browseInput = document.getElementById("wpjb-form__resume-browse");
+        let file;
 
-        browse.onclick = () => {
-            browseInput.click();
-        }
+        const fileErrorSpan = document.querySelector(".file-error");
+
+        // confirm resume is attached on browse option
 
         browseInput.addEventListener("change", function () {
             console.log("file selected");
-            let fileType = browseInput.files[0].type;
-            console.log(fileType);
-
-            let validExtensions = [
-                "application/pdf",
-                "application/doc",
-                "application/docx",
-                "application/txt",
-                "application/rtf",
-                "application/odt",
-                "application/html",
-                "application/text",
-            ];
-
-            if (validExtensions.includes(fileType)) {
-                console.log("valid file type");
-                // Display "file uploaded" and the file name
-                dragArea.innerHTML = `${browseInput.files[0].name} upload successful!`;
-            } else {
-                console.log("invalid file type");
-                dragArea.innerHTML = `Invalid file type. <button class="wpjb-form__retry-btn" onclick="retryUpload()">Retry</button>`;
+            if (this.files.length > 0) {
+                dragArea.innerHTML = `✓ ${this.files[0].name} attached!`;
             }
         });
+        
 
-        let file;
+        // Drag and drop resume functionality
 
-        // when file is dragged over dragArea
         dragArea.addEventListener("dragover", (event) => {
             // console.log("file dragged over dragArea");
             event.preventDefault();
@@ -119,24 +123,29 @@
 
             if (validExtensions.includes(fileType)) {
                 console.log("valid file type");
-                // Display "file uploaded" and the file name
-                dragArea.innerHTML = `File uploaded: ${file.name}`;
+                fileErrorSpan.style.opacity = "0";
+                dragArea.innerHTML = `✓ ${file.name} attached!`;
             } else {
                 console.log("invalid file type");
-                dragArea.innerHTML = `Invalid file type. <button class="wpjb-form__retry-btn" onclick="retryUpload()">Retry</button>`;
+                fileErrorSpan.style.opacity = "1";
             }
         });
-
-        function retryUpload() {
-            // Implement retry logic here
-            console.log("Retry button clicked");
-            dragArea.innerHTML = `Drag & Drop`;
-
-            // You can add code to reset the upload area or perform other actions.
-        }
     });
-    // public functions
 
+    // Move input label up when input is filled
+    function showLabel(labelId, input) {
+        const label = document.getElementById(labelId);
+        if (input.value.trim() !== '') {
+            label.classList.remove('hidden-label');
+            label.classList.add('visible-label');
+          } else {
+            label.classList.remove('visible-label');
+            label.classList.add('hidden-label');
+          }
+      }
+
+    // public functions
+    window.showLabel = showLabel;  
     window.closeForm = closeForm;
     window.showForm = showForm;
     window.printContent = printContent;

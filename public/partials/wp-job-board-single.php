@@ -105,67 +105,77 @@ if ($daysDifference > 0) {
 
     </div>
     <div class="wpjb-btn__container">
-      <button onclick="showForm()">Apply</button>
+      <button data-micromodal-trigger="modal-1">Apply</button>
     </div>
   </div>
 
-  <div class="wpjb-form__modal-overlay">
-    <div class="wpjb-form">
-      <div class="wpjb-form__hd">
-        <h1><?php the_title(); ?></h1>
-        <span class="wpjb-form__hd-subtitle txt-xs"><?php echo $post_city_name; ?>, <?php echo $post_state_name; ?> | <?php echo $post_employment_type; ?></span>
-      </div>
-      <div class="wpjb-form__bd">
-        <form action="">
-          <div class="wpjb-form__firstName">
-            <label for="wpjb-form__firstName-input" aria-label="First Name"></label>
-            <input type="text" id="wpjb-form__firstName-input" class="wpjb-form__input" placeholder="First Name" />
+  <!-- <a href="#" data-micromodal-trigger="modal-1">Apply</a> -->
+  <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+      <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+        <header class="modal__header">
+          <h1 class="modal__title" id="modal-1-title">
+            <?php the_title(); ?>
+          </h1>
+          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+        </header>
+        <span class="txt-xxs txt-left"><?php echo $post_city_name; ?>, <?php echo $post_state_name; ?> | <?php echo $post_employment_type; ?></span>
+        <main class="modal__content" id="modal-1-content">
+          <div class="wpjb-fieldset">
+            <label id="firstNameLabel" for="wpjb-contact__firstName" aria-label="First Name" class="label-txt-left hidden-label">First Name</label>
+            <input type="text" id="wpjb-contact__firstName" class="wpjb-field" placeholder="First Name" oninput="showLabel('firstNameLabel', this)" value required inputmode="text" autocomplete="on" autocapitalize="off" autocorrect="off" spellcheck="false" />
           </div>
-          <div class="wpjb-form__lastName">
-            <label for="wpjb-form__lastName-input" aria-label="Last Name"></label>
-            <input type="text" id="wpjb-form__lastName-input" class="wpjb-form__input" placeholder="Last Name" />
-            <div class="wpjb-form__email">
-              <label for="wpjb-form__email-input" aria-label="Email"></label>
-              <input type="email" id="wpjb-form__email-input" class="wpjb-form__input" placeholder="Email" />
-            </div>
-            <div class="wpjb-form__phone">
-              <label for="wpjb-form__phone-input" aria-label="Mobile Phone"></label>
-              <input type="tel" id="wpjb-form__phone-input" class="wpjb-form__input" placeholder="Mobile Phone" />
-            </div>
+          <div class="wpjb-fieldset">
+            <label id="lastNameLabel" for="wpjb-contact__lastName" aria-label="Last Name" class="label-txt-left hidden-label">Last Name</label>
+            <input type="text" id="wpjb-contact__lastName" class="wpjb-field" placeholder="Last Name" oninput="showLabel('lastNameLabel')" value required inputmode="text" autocomplete="on" autocapitalize="off" autocorrect="off" spellcheck="false" />
+          </div>
+          <div class="wpjb-fieldset">
+            <label id="emailLabel" for="wpjb-contact__email" aria-label="Email" class="label-txt-left hidden-label">Email</label>
+            <input type="email" id="wpjb-contact__email" class="wpjb-field" placeholder="Email" oninput="showLabel('emailLabel')" value required inputmode="email" autocomplete="on" autocapitalize="off" autocorrect="off" spellcheck="false" />
+          </div>
+          <div class="wpjb-fieldset">
+            <label  id="phoneLabel" for="wpjb-contact__phone" aria-label="Mobile Phone" class="label-txt-left hidden-label">Mobile Phone</label>
+            <input type="tel" id="wpjb-contact__phone" class="wpjb-field" placeholder="Mobile Phone" oninput="showLabel('phoneLabel')" required required inputmode="tel" autocomplete="on"/>
+          </div>
 
-            <div class="wpjb-form__resume">
-              <h4>Upload your resume</h4>
-              <div class="wpjb-form__resume-drag">
-                <span class="wpjb-form__resume-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="24" width="20" viewBox="0 0 384 512">
-                    <path opacity="1" fill="currentcolor" d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM216 408c0 13.3-10.7 24-24 24s-24-10.7-24-24V305.9l-31 31c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l72-72c9.4-9.4 24.6-9.4 33.9 0l72 72c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-31-31V408z" />
-                  </svg>
-                </span>
-                <span class="wpjb-form__resume-title">Drag & Drop</span>
-                <span class="wpjb-form__resume-description">
-                  or
-                  <label for="wpjb-form__resume-browse" aria-label="Resume Upload">
-                    <span class="wpjb-form__browse-link">
-                      browse
-                    </span>
-                    <input type="file" id="wpjb-form__resume-browse" style="display: none;" />
-                  </label>
-                </span>
-                <span class="wpjb-form__support">Supported file types: html,text,txt,pdf,doc,docx,rtf,odt </span>
-              </div>
-            </div>
-
-            <div class="wpjb-form__ft">
-              <button class="wpjb-form__close-btn" onclick="closeForm()">
-                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512">
-                  <path opacity="1" fill="#1E3050" d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+          <div class="wpjb-fieldset__dragAndDrop">
+            <span class="label-txt-left">Upload your resume</span>
+            <div class="wpjb-form__resume-drag">
+              <span class="wpjb-form__resume-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="20" viewBox="0 0 384 512">
+                  <path opacity="1" fill="currentcolor" d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM216 408c0 13.3-10.7 24-24 24s-24-10.7-24-24V305.9l-31 31c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l72-72c9.4-9.4 24.6-9.4 33.9 0l72 72c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-31-31V408z" />
                 </svg>
-              </button>
-              <!-- <button class="wpjb-form__submit-btn">Submit</button>
-              <button onclick="closeForm()">Cancel</button> -->
+              </span>
+              <span class="wpjb-form__resume-title">Drag & Drop</span>
+              <span class="wpjb-form__resume-description">or</span>
+                <div class="browse-label">
+                <label  for="wpjb-form__resume-browse" aria-label="Resume Upload">
+                  <span class="wpjb-form__browse-link">
+                    browse
+                  </span>
+                  <input 
+                    type="file" 
+                    id="wpjb-form__resume-browse"  
+                    required 
+                    accept=".html, .text, .txt, .pdf, .doc, .docx, .rft, .odt"
+                    aria-describedby="file-upload-instructions"
+                    style="opacity: 0; position: absolute; z-index: -1;"
+                    />
+                </label>
+                </div>
+              <span class="file-error">Invalid file type, please try again!</span>
+              <span class="txt-xxxs">Supported file types: html,text,txt,pdf,doc,docx,rtf,odt </span>
             </div>
-        </form>
+          </div>
+        </main>
+        <footer class="modal__footer">
+          <button class="modal__btn modal__btn-primary">Continue</button>
+          <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
+        </footer>
       </div>
     </div>
   </div>
+
+
+</div>
 </div>
