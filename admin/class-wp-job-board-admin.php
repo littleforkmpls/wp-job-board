@@ -107,11 +107,11 @@ class WP_Job_Board_Admin {
     }
 
     /**
-     * Register Settings & create admin menu pages.
+     * Register settings.
      *
      * @since    0.1.0
      */
-    public function add_menu()
+    public function register_settings()
     {
         register_setting(
             self::SETTINGS_GROUP,
@@ -146,7 +146,15 @@ class WP_Job_Board_Admin {
             self::SETTING_ENABLE_CRON,
             array()
         );
+    }
 
+    /**
+     * Register Settings & create admin menu pages.
+     *
+     * @since    0.1.0
+     */
+    public function build_admin_menu()
+    {
         add_submenu_page(
             'edit.php?post_type=wjb_bh_job_order',
             'WP Job Board Tools',

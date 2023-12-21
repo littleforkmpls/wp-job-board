@@ -172,7 +172,8 @@ class WP_Job_Board {
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
-        $this->loader->add_action('admin_menu', $plugin_admin, 'add_menu');
+        $this->loader->add_action('admin_menu', $plugin_admin, 'register_settings');
+        $this->loader->add_action('admin_menu', $plugin_admin, 'build_admin_menu');
         $this->loader->add_action('admin_post_trigger_sync', $plugin_admin, 'trigger_sync');
         $this->loader->add_action('wp_ajax_trigger_sync', $plugin_admin, 'trigger_sync');
         $this->loader->add_action('wp_ajax_refresh_log', $plugin_admin, 'refresh_log');
