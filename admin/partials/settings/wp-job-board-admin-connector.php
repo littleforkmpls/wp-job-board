@@ -84,14 +84,13 @@ function render_input_field($args)
     $value = esc_attr(get_option($args['name']));
     $type  = esc_attr($args['type']);
     $name  = esc_attr($args['name']);
-    $desc  = $args['description'];
 
-    $output = `<input type="{$type}" name="{$name}" value="{$value}" class="regular-text" />`;
+    $output = "<input type='{$type}' name='{$name}' value='{$value}' class='regular-text' />";
 
-    if (!empty($desc)) {
-        $desc = wp_kses_post($desc);
+    if (!empty($args['description'])) {
+        $desc = wp_kses_post($args['description']);
 
-        $output .= `<p class="description">{$desc}</p>`;
+        $output .= "<p class='description'>{$desc}</p>";
     }
 
     echo $output;
@@ -113,7 +112,7 @@ function render_checkbox_field($args)
     $name    = esc_attr($args['name']);
     $checked = checked(1, get_option($args['name']), false);
 
-    $output = `'<input type="checkbox" name="{$name}" value="1" {$checked} />`;
+    $output = "<input type='checkbox' name='{$name}' value='1' {$checked} />";
 
     echo $output;
 }
