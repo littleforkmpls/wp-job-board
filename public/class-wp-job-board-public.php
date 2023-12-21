@@ -19,8 +19,8 @@
  * @subpackage WP_Job_Board/public
  * @author     Little Fork
  */
-class WP_Job_Board_Public {
-
+class WP_Job_Board_Public
+{
     /**
      * The ID of this plugin.
      *
@@ -48,8 +48,8 @@ class WP_Job_Board_Public {
      *
      * @since    0.1.0
      */
-    public function __construct($wp_job_board, $version) {
-
+    public function __construct($wp_job_board, $version)
+    {
         $this->wp_job_board = $wp_job_board;
         $this->version      = $version;
     }
@@ -59,12 +59,13 @@ class WP_Job_Board_Public {
      *
      * @since    0.1.0
      */
-    public function enqueue_styles() {
+    public function enqueue_styles()
+    {
         wp_enqueue_style(
-            $this->wp_job_board, 
-            plugin_dir_url(__FILE__) . 'css/wp-job-board-public.css', 
-            array(), 
-            filemtime(plugin_dir_path(__FILE__) . 'css/wp-job-board-public.css'), 
+            $this->wp_job_board,
+            plugin_dir_url(__FILE__) . 'css/wp-job-board-public.css',
+            array(),
+            filemtime(plugin_dir_path(__FILE__) . 'css/wp-job-board-public.css'),
             'all'
         );
     }
@@ -74,12 +75,13 @@ class WP_Job_Board_Public {
      *
      * @since    0.1.0
      */
-    public function enqueue_scripts() {
+    public function enqueue_scripts()
+    {
         wp_enqueue_script(
-            $this->wp_job_board, 
-            plugin_dir_url(__FILE__) . 'js/wp-job-board-public.js', 
-            array('jquery'), 
-            filemtime(plugin_dir_path(__FILE__) . 'js/wp-job-board-public.js'), 
+            $this->wp_job_board,
+            plugin_dir_url(__FILE__) . 'js/wp-job-board-public.js',
+            array('jquery'),
+            filemtime(plugin_dir_path(__FILE__) . 'js/wp-job-board-public.js'),
             false
         );
     }
@@ -90,7 +92,8 @@ class WP_Job_Board_Public {
      * @since    0.1.0
      * @return void
      */
-    public function register_job_order_post_type() {
+    public function register_job_order_post_type()
+    {
         register_post_type(
             'wjb_bh_job_order',
             array(
@@ -145,7 +148,13 @@ class WP_Job_Board_Public {
         );
     }
 
-    public function show_meta_data($post) {
+    /**
+     * Display Meta Data
+     *
+     * @since    0.1.7
+     */
+    public function show_meta_data($post)
+    {
         add_meta_box(
             'wjb_job_order_data',
             'Job Order Data',
@@ -156,36 +165,47 @@ class WP_Job_Board_Public {
         );
     }
 
-    public function show_meta_boxes() {
+    /**
+     * Display Meta Boxes
+     *
+     * @since    0.1.7
+     */
+    public function show_meta_boxes()
+    {
         global $post;
+
         $bhData = get_post_meta($post->ID, 'wp_job_board_bh_data', true);
         $data = json_decode($bhData, true);
         $data['publicDescription'] = htmlspecialchars($data['publicDescription']);
+
         if (!$data) {
             $error = json_last_error_msg();
         }
-        ?>
-<pre class="wp_job_board_meta_sample">
-    <?= json_encode($data, JSON_PRETTY_PRINT); ?>
-</pre>
-<?php
+
+        $data_encoded = json_encode($data, JSON_PRETTY_PRINT);
+
+        $output = `<pre class="wp_job_board_meta_sample">{$data_encoded}</pre`;
+
+        echo $output;
     }
 
-    public function register_job_order_taxonomies() {
+    public function register_job_order_taxonomies()
+    {
         // Job type
         $labels = array(
-            'name'              => _x( 'Job Types', 'taxonomy general name' ),
-            'singular_name'     => _x( 'Job Type', 'taxonomy singular name' ),
-            'search_items'      => __( 'Search Job Types' ),
-            'all_items'         => __( 'All Job Types' ),
-            'parent_item'       => __( 'Parent Job Types' ),
-            'parent_item_colon' => __( 'Parent Job Type:' ),
-            'edit_item'         => __( 'Edit Job Type' ),
-            'update_item'       => __( 'Update Job Type' ),
-            'add_new_item'      => __( 'Add New Job Type' ),
-            'new_item_name'     => __( 'New Job Type Name' ),
-            'menu_name'         => __( 'Job Types' ),
+            'name'              => __('Job Types', 'taxonomy general name'),
+            'singular_name'     => __('Job Type', 'taxonomy singular name'),
+            'search_items'      => __('Search Job Types'),
+            'all_items'         => __('All Job Types'),
+            'parent_item'       => __('Parent Job Types'),
+            'parent_item_colon' => __('Parent Job Type:'),
+            'edit_item'         => __('Edit Job Type'),
+            'update_item'       => __('Update Job Type'),
+            'add_new_item'      => __('Add New Job Type'),
+            'new_item_name'     => __('New Job Type Name'),
+            'menu_name'         => __('Job Types'),
         );
+
         $args   = array(
             'hierarchical'      => false,
             'labels'            => $labels,
@@ -194,22 +214,26 @@ class WP_Job_Board_Public {
             'query_var'         => true,
             'rewrite'           => [ 'slug' => 'job-type' ],
         );
-        register_taxonomy( 'wjb_bh_job_type_tax', [ 'wjb_bh_job_order' ], $args );
+
+        register_taxonomy('wjb_bh_job_type_tax', [ 'wjb_bh_job_order' ], $args);
+
         register_taxonomy_for_object_type('wjb_bh_job_type_tax', 'wjb_bh_job_order');
+
         // Job Location (State only, do some clean up to match abbrevs to states)
         $labels = array(
-            'name'              => _x( 'Job Locations', 'taxonomy general name' ),
-            'singular_name'     => _x( 'Job Location', 'taxonomy singular name' ),
-            'search_items'      => __( 'Search Job Locations' ),
-            'all_items'         => __( 'All Job Locations' ),
-            'parent_item'       => __( 'Parent Job Locations' ),
-            'parent_item_colon' => __( 'Parent Job Location:' ),
-            'edit_item'         => __( 'Edit Job Location' ),
-            'update_item'       => __( 'Update Job Location' ),
-            'add_new_item'      => __( 'Add New Job Location' ),
-            'new_item_name'     => __( 'New Job Location Name' ),
-            'menu_name'         => __( 'Job Locations' ),
-        );
+            'name'              => __('Job Locations', 'taxonomy general name'),
+            'singular_name'     => __('Job Location', 'taxonomy singular name'),
+            'search_items'      => __('Search Job Locations'),
+            'all_items'         => __('All Job Locations'),
+            'parent_item'       => __('Parent Job Locations'),
+            'parent_item_colon' => __('Parent Job Location:'),
+            'edit_item'         => __('Edit Job Location'),
+            'update_item'       => __('Update Job Location'),
+            'add_new_item'      => __('Add New Job Location'),
+            'new_item_name'     => __('New Job Location Name'),
+            'menu_name'         => __('Job Locations'),
+        )
+
         $args   = array(
             'hierarchical'      => false,
             'labels'            => $labels,
@@ -218,22 +242,26 @@ class WP_Job_Board_Public {
             'query_var'         => true,
             'rewrite'           => [ 'slug' => 'job-location' ],
         );
-        register_taxonomy( 'wjb_bh_job_location_tax', [ 'wjb_bh_job_order' ], $args );
+
+        register_taxonomy('wjb_bh_job_location_tax', [ 'wjb_bh_job_order' ], $args);
+
         register_taxonomy_for_object_type('wjb_bh_job_location_tax', 'wjb_bh_job_order');
+
         // Job Category
         $labels = array(
-            'name'              => _x( 'Job Categories', 'taxonomy general name' ),
-            'singular_name'     => _x( 'Job Category', 'taxonomy singular name' ),
-            'search_items'      => __( 'Search Job Categories' ),
-            'all_items'         => __( 'All Job Categories' ),
-            'parent_item'       => __( 'Parent Job Categories' ),
-            'parent_item_colon' => __( 'Parent Job Category:' ),
-            'edit_item'         => __( 'Edit Job Category' ),
-            'update_item'       => __( 'Update Job Category' ),
-            'add_new_item'      => __( 'Add New Job Category' ),
-            'new_item_name'     => __( 'New Job Category Name' ),
-            'menu_name'         => __( 'Job Categories' ),
+            'name'              => __('Job Categories', 'taxonomy general name'),
+            'singular_name'     => __('Job Category', 'taxonomy singular name'),
+            'search_items'      => __('Search Job Categories'),
+            'all_items'         => __('All Job Categories'),
+            'parent_item'       => __('Parent Job Categories'),
+            'parent_item_colon' => __('Parent Job Category:'),
+            'edit_item'         => __('Edit Job Category'),
+            'update_item'       => __('Update Job Category'),
+            'add_new_item'      => __('Add New Job Category'),
+            'new_item_name'     => __('New Job Category Name'),
+            'menu_name'         => __('Job Categories'),
         );
+
         $args   = array(
             'hierarchical'      => false,
             'labels'            => $labels,
@@ -242,7 +270,7 @@ class WP_Job_Board_Public {
             'query_var'         => true,
             'rewrite'           => [ 'slug' => 'job-category' ],
         );
-        register_taxonomy( 'wjb_bh_job_category_tax', [ 'wjb_bh_job_order' ], $args );
+        register_taxonomy('wjb_bh_job_category_tax', [ 'wjb_bh_job_order' ], $args);
         register_taxonomy_for_object_type('wjb_bh_job_category_tax', 'wjb_bh_job_order');
     }
 
@@ -252,7 +280,8 @@ class WP_Job_Board_Public {
      * @since    0.1.0
      * @return void
      */
-    public function register_resume_endpoint() {
+    public function register_resume_endpoint()
+    {
         register_rest_route(
             'wp-job-board/v1',
             '/submit-resume',
@@ -270,7 +299,8 @@ class WP_Job_Board_Public {
      * @since    0.1.0
      * @return void
      */
-    public function submit_resume() {
+    public function submit_resume()
+    {
         try {
             if (!$this->bullhorn) {
                 $this->bullhorn = new WP_Job_Board_Bullhorn_Manager();
