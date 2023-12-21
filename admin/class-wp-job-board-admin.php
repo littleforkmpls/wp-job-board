@@ -16,22 +16,21 @@ class WP_Job_Board_Admin
      * The following are handled through the Settings API and are
      * client facing on the admin site.
      */
-    const SETTINGS_GROUP        = 'wp_job_board_settings_group';
-    const SETTINGS_SECTION      = 'wp_job_board_settings_section';
-    const SETTING_CLIENT_ID     = 'wp_job_board_client_id';
-    const SETTING_CLIENT_SECRET = 'wp_job_board_client_secret';
-    const SETTING_API_USERNAME  = 'wp_job_board_api_username';
-    const SETTING_API_PASSWORD  = 'wp_job_board_api_password';
-    const SETTING_ENABLE_CRON   = 'wp_job_board_enable_cron';
+    public const SETTINGS_GROUP        = 'wp_job_board_settings_group';
+    public const SETTINGS_SECTION      = 'wp_job_board_settings_section';
+    public const SETTING_CLIENT_ID     = 'wp_job_board_client_id';
+    public const SETTING_CLIENT_SECRET = 'wp_job_board_client_secret';
+    public const SETTING_API_USERNAME  = 'wp_job_board_api_username';
+    public const SETTING_API_PASSWORD  = 'wp_job_board_api_password';
+    public const SETTING_ENABLE_CRON   = 'wp_job_board_enable_cron';
 
     /**
      * The following are handled in an Options Object(the first const)
      * and are handled by the plugin alone.
      */
-    const OPTION_ARRAY_KEY = 'wp_job_board_options';
-
-    const PAGE_SLUG = 'wp_job_board';
-    const CRON_SYNC_JOBS = 'wp_job_board_sync_jobs_cron';
+    public const OPTION_ARRAY_KEY = 'wp_job_board_options';
+    public const PAGE_SLUG        = 'wp_job_board';
+    public const CRON_SYNC_JOBS   = 'wp_job_board_sync_jobs_cron';
 
     /**
      * The ID of this plugin.

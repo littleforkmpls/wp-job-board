@@ -6,7 +6,7 @@ Tested up to: 6.4.1
 Requires PHP: 8.2
 License: Commercial
 
-Aggregates and display job listings from your ATS on your WordPress website.
+Aggregates and displays job listings from your ATS on your WordPress website.
 
 == Description ==
 
