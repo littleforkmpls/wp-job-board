@@ -12,9 +12,7 @@
     <arg value="p"/>
     <arg value="s"/>
 
-    <rule ref="PSR1">
-        <exclude name="Classes.ClassDeclaration.MissingNamespace"/>
-    </rule>
+    <rule ref="PSR1"/>
     <rule ref="PSR2"/>
     <rule ref="PSR12"/>
 

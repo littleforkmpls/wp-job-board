@@ -10,19 +10,19 @@
  * @subpackage WP_Job_Board/admin
  * @author     Little Fork
  */
-class WP_Job_Board_Admin {
-
+class WP_Job_Board_Admin
+{
     /**
      * The following are handled through the Settings API and are
      * client facing on the admin site.
      */
-    const SETTINGS_GROUP = 'wp_job_board_settings_group';
-    const SETTINGS_SECTION = 'wp_job_board_settings_section';
-    const SETTING_CLIENT_ID = 'wp_job_board_client_id';
+    const SETTINGS_GROUP        = 'wp_job_board_settings_group';
+    const SETTINGS_SECTION      = 'wp_job_board_settings_section';
+    const SETTING_CLIENT_ID     = 'wp_job_board_client_id';
     const SETTING_CLIENT_SECRET = 'wp_job_board_client_secret';
-    const SETTING_API_USERNAME = 'wp_job_board_api_username';
-    const SETTING_API_PASSWORD = 'wp_job_board_api_password';
-    const SETTING_ENABLE_CRON = 'wp_job_board_enable_cron';
+    const SETTING_API_USERNAME  = 'wp_job_board_api_username';
+    const SETTING_API_PASSWORD  = 'wp_job_board_api_password';
+    const SETTING_ENABLE_CRON   = 'wp_job_board_enable_cron';
 
     /**
      * The following are handled in an Options Object(the first const)
