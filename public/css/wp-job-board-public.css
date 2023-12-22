@@ -4,7 +4,7 @@
  */
 
 /*--------------------------------------------------------------
-    General 
+    General
 ---------------------------------------------------------------*/
 
 body {font-family: inherit;}
@@ -41,7 +41,7 @@ body {font-family: inherit;}
 
 #wpjb .txt-left{
   width: 90vw;
-  max-width: 500px;  
+  max-width: 500px;
 }
 
 #wpjb .label-txt-left{
@@ -54,7 +54,7 @@ body {font-family: inherit;}
 
 #wpjb .browse-label:focus-within {
   outline: 1px solid #00449e;
-} 
+}
 
 /*--------------------------------------------------------------
     Grid settings for archive page
@@ -126,7 +126,7 @@ body {font-family: inherit;}
 
 #wpjb .wpjb-card__meta {
   display: grid;
-  grid-template-columns: 1fr; 
+  grid-template-columns: 1fr;
   gap: 10px;
 }
 
@@ -316,45 +316,74 @@ body {font-family: inherit;}
 }
 
 /*----------------------------------------------------------------------------------
-    Form/MicroModal
+ Modal
 ----------------------------------------------------------------------------------*/
-
-/**************************\
-  Basic Modal Styles
-\**************************/
-
 #wpjb .wpjb-modal {
-  font-family: -apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,arial,sans-serif;
+    display: none;
+}
+
+#wpjb .wpjb-modal--isOpen {
+    display: block;
 }
 
 #wpjb .wpjb-modal__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 100;
 }
 
+#wpjb .wpjb-modal__container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 101;
+}
+
+#wpjb .wpjb-modal__container__content {
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: #464646 0px 2px 8px 2px;
+    background-color: #ffffff;
+}
+
+#wpjb .wpjb-modal__container__close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 105;
+}
+
+#wpjb .wpjb-modal__container__close__btn {
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #ff0000;
+    font-size: 24px;
+    line-height: 40px;
+    font-weight: 900;
+    text-align: center;
+    cursor: pointer;
+}
+
+#wpjb .wpjb-modal__container__close__btn::before {
+    content: "\2717";
+}
+
+/*----------------------------------------------------------------------------------
+ Form
+----------------------------------------------------------------------------------*/
 #wpjb .wpjb-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* position: relative; */
-  background-color: white;
-  width: 100vw;
-  max-width: 600px;
-  height: auto;
-  padding: 20px;
-  border-radius: 5px;
-  /* box-sizing: border-box; */
-  background: rgb(245, 245, 245);
-  box-shadow: rgb(70, 70, 70) 0px 2px 8px 2px;
-  /* box-shadow: 0 5px 15px rgba(#000, .1); */
 }
 
 #wpjb .wpjb-form__hd {
@@ -365,20 +394,6 @@ body {font-family: inherit;}
   max-width: 500px;
   margin-top: 10px;
 }
-
-#wpjb .x-btn {
-  background: transparent;
-  border: 0;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-}
-
-#wpjb .wpjb-form__hd .x-btn:before { content: "\2715"; }
 
 #wpjb .wpjb-form__bd {
   margin-top: 2rem;
@@ -506,56 +521,3 @@ body {font-family: inherit;}
   color: #fff;
 }
 
-
-
-/**************************\
-  Demo Animation Style
-\**************************/
-@keyframes mmfadeIn {
-    from { opacity: 0; }
-      to { opacity: 1; }
-}
-
-@keyframes mmfadeOut {
-    from { opacity: 1; }
-      to { opacity: 0; }
-}
-
-@keyframes mmslideIn {
-  from { transform: translateY(15%); }
-    to { transform: translateY(0); }
-}
-
-@keyframes mmslideOut {
-    from { transform: translateY(0); }
-    to { transform: translateY(-10%); }
-}
-
-.micromodal-slide {
-  display: none;
-}
-
-.micromodal-slide.is-open {
-  display: block;
-}
-
-.micromodal-slide[aria-hidden="false"] .wpjb-modal__overlay {
-  animation: mmfadeIn .3s cubic-bezier(0.0, 0.0, 0.2, 1);
-}
-
-.micromodal-slide[aria-hidden="false"] .wpjb-modal__container {
-  animation: mmslideIn .3s cubic-bezier(0, 0, .2, 1);
-}
-
-.micromodal-slide[aria-hidden="true"] .wpjb-modal__overlay {
-  animation: mmfadeOut .3s cubic-bezier(0.0, 0.0, 0.2, 1);
-}
-
-.micromodal-slide[aria-hidden="true"] .wpjb-modal__container {
-  animation: mmslideOut .3s cubic-bezier(0, 0, .2, 1);
-}
-
-.micromodal-slide .wpjb-form,
-.micromodal-slide .wpjb-modal__overlay {
-  will-change: transform;
-}

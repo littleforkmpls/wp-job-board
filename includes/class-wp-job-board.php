@@ -126,6 +126,7 @@ class WP_Job_Board
          * Utility Files
          */
         require_once plugin_dir_path(__DIR__) . 'includes/shortcodes.php';
+        require_once plugin_dir_path(__DIR__) . 'includes/template-helpers.php';
 
         /**
          * API Managers

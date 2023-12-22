@@ -1,28 +1,20 @@
+(($) => {
+    'use strict';
 
-
-(function ($) {
-    "use strict";
-
-    // Form Modal
-
-    
-    
-    MicroModal.init();
-
-    function showForm() {
-        var formOverlay = document.querySelector(".wpjb-form__modal-overlay");
-        formOverlay.style.display = "flex";
-        document.body.classList.add("body-no-scroll");
-    }
-
-    function closeForm() {
-        var formOverlay = document.querySelector(".wpjb-form__modal-overlay");
-        formOverlay.style.display = "none";
-        document.body.classList.remove("body-no-scroll");
-    }
+    MicroModal.init({
+        onShow: modal => console.info(`${modal.id} is shown`),
+        onClose: modal => console.info(`${modal.id} is hidden`),
+        openTrigger: 'data-micromodal-trigger',
+        closeTrigger: 'data-micromodal-close',
+        openClass: 'wpjb-modal--isOpen',
+        disableScroll: true,
+        disableFocus: false,
+        awaitOpenAnimation: false,
+        awaitCloseAnimation: false,
+        debugMode: true
+    });
 
     // dropdown menu function
-
     $(".wpjb-dropdown").click(function () {
         $(this).toggleClass("is-active");
     });
@@ -32,7 +24,6 @@
     });
 
     // print function
-
     function printContent() {
         console.log("print btn clicked!");
         const content = $("#wpjb-card").html();
@@ -54,19 +45,6 @@
     $(document).on("DOMContentLoaded", function () {
 
 
-        MicroModal.init({ 
-            onShow: modal => console.info(`${modal.id} is shown`), 
-            onClose: modal => console.info(`${modal.id} is hidden`), 
-            openTrigger: 'data-micromodal-trigger', 
-            closeTrigger: 'data-micromodal-close', 
-            openClass: 'is-open', 
-            disableScroll: true, 
-            disableFocus: false, 
-            awaitOpenAnimation: true, 
-            awaitCloseAnimation: true, 
-            debugMode: true 
-            }); 
-        
         const dragArea = document.querySelector(".wpjb-drag__fieldset");
         const dragDropText = document.querySelector(".wpjb-drag__field-text");
 
@@ -83,7 +61,7 @@
                 dragArea.innerHTML = `✓ ${this.files[0].name} attached!`;
             }
         });
-        
+
 
         // Drag and drop resume functionality
 
@@ -145,8 +123,6 @@
       }
 
     // public functions
-    window.showLabel = showLabel;  
-    window.closeForm = closeForm;
-    window.showForm = showForm;
+    window.showLabel = showLabel;
     window.printContent = printContent;
 })(jQuery);

@@ -78,18 +78,19 @@ class WP_Job_Board_Public
     public function enqueue_scripts()
     {
         wp_enqueue_script(
-            $this->wp_job_board, 
-            plugin_dir_url(__FILE__) . 'js/wp-job-board-public.js', 
-            array('jquery'), 
-            filemtime(plugin_dir_path(__FILE__) . 'js/wp-job-board-public.js'), 
-            false
+            $this->wp_job_board,
+            plugin_dir_url(__FILE__) . 'js/wp-job-board-public.js',
+            array('jquery', 'wpjb-micromodal'),
+            filemtime(plugin_dir_path(__FILE__) . 'js/wp-job-board-public.js'),
+            true
         );
+
         wp_enqueue_script(
-            'wpjb-micromodal', 
-            plugin_dir_url(__FILE__) . 'js/micromodal.min.js', 
-            null, 
-            filemtime(plugin_dir_path(__FILE__) . 'js/micromodal.min.js'), 
-            false
+            'wpjb-micromodal',
+            plugin_dir_url(__FILE__) . 'js/micromodal.min.js',
+            null,
+            filemtime(plugin_dir_path(__FILE__) . 'js/micromodal.min.js'),
+            true
         );
     }
 
@@ -191,7 +192,7 @@ class WP_Job_Board_Public
 
         $data_encoded = json_encode($data, JSON_PRETTY_PRINT);
 
-        $output = `<pre class="wp_job_board_meta_sample">{$data_encoded}</pre`;
+        $output = "<pre class='wp_job_board_meta_sample'>{$data_encoded}</pre>";
 
         echo $output;
     }
