@@ -6,6 +6,7 @@ NOTES.md
 /.nova
 .htaccess
 .well-known
+/node_modules
 
 # Common Files #
 .DS_Store*
