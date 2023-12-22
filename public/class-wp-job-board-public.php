@@ -192,7 +192,7 @@ class WP_Job_Board_Public
 
         $data_encoded = json_encode($data, JSON_PRETTY_PRINT);
 
-        $output = `<pre class="wp_job_board_meta_sample">{$data_encoded}</pre`;
+        $output = "<pre class='wp_job_board_meta_sample'>{$data_encoded}</pre>";
 
         echo $output;
     }
