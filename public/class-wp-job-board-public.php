@@ -78,17 +78,18 @@ class WP_Job_Board_Public
     public function enqueue_scripts()
     {
         wp_enqueue_script(
-            $this->wp_job_board, 
-            plugin_dir_url(__FILE__) . 'js/wp-job-board-public.js', 
-            array('jquery'), 
-            filemtime(plugin_dir_path(__FILE__) . 'js/wp-job-board-public.js'), 
+            $this->wp_job_board,
+            plugin_dir_url(__FILE__) . 'js/wp-job-board-public.js',
+            array('jquery', 'wpjb-micromodal'),
+            filemtime(plugin_dir_path(__FILE__) . 'js/wp-job-board-public.js'),
             false
         );
+
         wp_enqueue_script(
-            'wpjb-micromodal', 
-            plugin_dir_url(__FILE__) . 'js/micromodal.min.js', 
-            null, 
-            filemtime(plugin_dir_path(__FILE__) . 'js/micromodal.min.js'), 
+            'wpjb-micromodal',
+            plugin_dir_url(__FILE__) . 'js/micromodal.min.js',
+            null,
+            filemtime(plugin_dir_path(__FILE__) . 'js/micromodal.min.js'),
             false
         );
     }
