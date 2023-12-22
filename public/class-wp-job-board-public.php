@@ -82,7 +82,7 @@ class WP_Job_Board_Public
             plugin_dir_url(__FILE__) . 'js/wp-job-board-public.js',
             array('jquery', 'wpjb-micromodal'),
             filemtime(plugin_dir_path(__FILE__) . 'js/wp-job-board-public.js'),
-            false
+            true
         );
 
         wp_enqueue_script(
@@ -90,7 +90,7 @@ class WP_Job_Board_Public
             plugin_dir_url(__FILE__) . 'js/micromodal.min.js',
             null,
             filemtime(plugin_dir_path(__FILE__) . 'js/micromodal.min.js'),
-            false
+            true
         );
     }
 
