@@ -1,44 +1,16 @@
 <?php
-$post_meta_single = get_post_meta(get_the_ID(), 'wp_job_board_bh_data', true);
-$post_meta_single_decode = json_decode($post_meta_single);
-$post_publish_date = $post_meta_single_decode->dateLastPublished;
-$post_modified_date = $post_meta_single_decode->dateLastModified;
-$post_employment_type = $post_meta_single_decode->employmentType;
-$post_city_name = $post_meta_single_decode->address->city;
-$post_state_name = $post_meta_single_decode->address->state;
-$post_job_description = $post_meta_single_decode->publicDescription;
 
-// Convert publish date to milliseconds
-$post_modified_date = floor($post_modified_date / 1000);
+$post_id  = get_the_ID();
+$job_meta = get_job_meta($post_id);
 
-//DateTime objects for the post modified date and current time
-$modifiedDateTime = new DateTime("@$post_modified_date");
-$currentDateTime = new DateTime();
+$job_title              = $job_meta->title;
+$job_description        = $job_meta->publicDescription;
+$job_employment_type    = $job_meta->employmentType;
+$job_location_city      = $job_meta->address->city;
+$job_location_state     = $job_meta->address->state;
+$job_date_published     = get_formatted_date($job_meta->dateLastPublished);
+$job_date_modified      = get_relative_date($job_meta->dateLastModified);
 
-// Calculate the difference with the DateTime::diff method :: is for static methods
-$interval = $modifiedDateTime->diff($currentDateTime);
-
-// Access the components of the DateInterval
-$daysDifference = $interval->days;
-$hoursDifference = $interval->h;
-$minutesDifference = $interval->i;
-$secondsDifference = $interval->s;
-
-//variable for formatted time difference
-$formattedDifference = '';
-
-// Check the time difference and format accordingly
-if ($daysDifference > 0) {
-    $formattedDifference = ($daysDifference == 1) ? '1 day' : "$daysDifference days";
-} elseif ($hoursDifference > 0) {
-    $formattedDifference = ($hoursDifference == 1) ? '1 hour' : "$hoursDifference hours";
-} elseif ($minutesDifference > 0) {
-    $formattedDifference = ($minutesDifference == 1) ? '1 minute' : "$minutesDifference minutes";
-} else {
-    $formattedDifference = ($secondsDifference == 1) ? '1 second' : "$secondsDifference seconds";
-}
-
-// style="opacity: 0; position: absolute; z-index: -1;"
 ?>
 
 <div id="wpjb">
@@ -50,31 +22,33 @@ if ($daysDifference > 0) {
     </div>
     <div class="wpjb-card" id="wpjb-card">
         <div class="wpjb-card__hd">
-            <h1><?php the_title(); ?></h1>
+            <h1>
+                <?php echo $job_title; ?>
+            </h1>
         </div>
         <div class="wpjb-card__meta">
             <span class="wpjb-card__meta-item">
                 <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-calendar-days.svg'); ?>
-                <span> Posted <?php echo date('m.d.y', (int) $post_publish_date); ?></span>
+                <span>Posted <?php echo $job_date_published; ?></span>
             </span>
             <span class="wpjb-card__meta-item">
                 <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-clock.svg'); ?>
-                <span style="font-weight: 500;">Updated <?php echo $formattedDifference; ?> ago</span>
+                <span style="font-weight: 500;">Updated <?php echo $job_date_modified; ?></span>
             </span>
             <span class="wpjb-card__meta-item">
                 <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-location-dot.svg'); ?>
-                <span><?php echo $post_city_name; ?>, <?php echo $post_state_name; ?></span>
+                <span><?php echo $job_location_city; ?>, <?php echo $job_location_state; ?></span>
             </span>
             <span class="wpjb-card__meta-item">
                 <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-briefcase-blank.svg'); ?>
-                <span> <?php echo $post_employment_type; ?></span>
+                <span> <?php echo $job_employment_type; ?></span>
             </span>
         </div>
         <div class="wbjb-card__sub-hd">
             <h3>About the job</h3>
         </div>
         <div class="wpjb-card__bd">
-            <p class="txt txt-balance"><?php echo $post_job_description; ?></p>
+            <p class="txt txt-balance"><?php echo $job_description; ?></p>
         </div>
         <div class="wpjb-card__ft">
             <div class="wpjb-utilityNav">
@@ -105,7 +79,7 @@ if ($daysDifference > 0) {
                             <?php the_title(); ?>
                         </h2>
                     </header>
-                    <span class="txt-xxs txt-left"><?php echo $post_city_name; ?>, <?php echo $post_state_name; ?> | <?php echo $post_employment_type; ?></span>
+                    <span class="txt-xxs txt-left"><?php echo $job_location_city; ?>, <?php echo $job_location_state; ?> | <?php echo $job_employment_type; ?></span>
                     <form>
                         <main class="wpjb-form__bd" id="modal-1-content">
                             <div class="wpjb-fieldset">
