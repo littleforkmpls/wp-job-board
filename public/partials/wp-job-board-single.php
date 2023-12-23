@@ -48,7 +48,9 @@ $job_date_modified      = get_relative_date($job_meta->dateLastModified);
             <h3>About the job</h3>
         </div>
         <div class="wpjb-card__bd">
-            <p class="txt txt-balance"><?php echo $job_description; ?></p>
+            <div class="wpjb-userContent">
+                <?php echo $job_description; ?>
+            </div>
         </div>
         <div class="wpjb-card__ft">
             <div class="wpjb-utilityNav">
