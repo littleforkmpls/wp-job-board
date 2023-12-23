@@ -116,7 +116,7 @@
 /* ---------------------- Cards ---------------------- */
 #wp_job_board_admin .wpjba-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 20px;
 }
 
