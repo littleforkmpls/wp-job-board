@@ -4,6 +4,12 @@
  * WP Shortcodes for use with WP Job Board
  */
 
+/**
+ * Shortcode for displaying job archive partial on a WP Archive page
+ *
+ * @since  0.1.8
+ * @return string JSON
+ */
 function wpjb_archive($attr)
 {
     $html = '';
@@ -22,6 +28,12 @@ function wpjb_archive($attr)
 
 add_shortcode('wpjb_archive', 'wpjb_archive');
 
+/**
+ * Shortcode for displaying job single partial on a WP Archive page
+ *
+ * @since  0.1.8
+ * @return string JSON
+ */
 function wpjb_single($attr)
 {
     $html = '';

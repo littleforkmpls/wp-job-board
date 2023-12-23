@@ -158,8 +158,6 @@ class WP_Job_Board_Public
 
     /**
      * Display Meta Data
-     *
-     * @since    0.1.7
      */
     public function show_meta_data($post)
     {
@@ -175,8 +173,6 @@ class WP_Job_Board_Public
 
     /**
      * Display Meta Boxes
-     *
-     * @since    0.1.7
      */
     public function show_meta_boxes()
     {

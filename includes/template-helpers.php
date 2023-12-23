@@ -7,7 +7,7 @@
 /**
  * Helper for getting Job Meta Data
  *
- * @since  0.1.7
+ * @since  0.1.8
  * @return string JSON
  */
 function get_job_meta($id)
