@@ -199,15 +199,18 @@ class WP_Job_Board_Admin
                 $force = true;
             }
             $this->bullhorn->trigger_sync(null, $force);
-            wp_send_json_success(array('message' => 'Listings synced!',));
+            wp_send_json_success(array('message' => 'Job data synced successfully.',));
         } catch (Throwable $exception) {
             wp_send_json_error(array('message' => $exception->getMessage()));
         }
     }
 
-    public function refresh_log()
+    public function clear_logs()
     {
-        require_once plugin_dir_path(__FILE__) . 'partials/wp-job-board-activity-log.php';
+        global $wpdb;
+
+        $wpdb->query($wpdb->prepare('TRUNCATE TABLE wp_job_board_log'));
+        wp_send_json_success(array('message' => 'Logs cleared successfully.'));
     }
 
     public function add_cron()
