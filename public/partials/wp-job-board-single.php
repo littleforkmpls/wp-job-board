@@ -3,13 +3,17 @@
 $post_id  = get_the_ID();
 $job_meta = get_job_meta($post_id);
 
-$job_title              = $job_meta->title;
-$job_description        = $job_meta->publicDescription;
-$job_employment_type    = $job_meta->employmentType;
-$job_location_city      = $job_meta->address->city;
-$job_location_state     = $job_meta->address->state;
-$job_date_published     = get_formatted_date($job_meta->dateLastPublished);
-$job_date_modified      = get_relative_date($job_meta->dateLastModified);
+$job_title                  = $job_meta->title;
+$job_description            = $job_meta->publicDescription;
+$job_employment_type        = $job_meta->employmentType;
+$job_location_city          = $job_meta->address->city;
+$job_location_state         = $job_meta->address->state;
+$job_location_postal_code   = $job_meta->address->zip;
+$job_location_country_code  = $job_meta->address->countryCode;
+$job_date_published         = get_formatted_date($job_meta->dateLastPublished);
+$job_date_modified          = get_relative_date($job_meta->dateLastModified);
+$job_date_published_iso8601 = get_iso8601_date($job_meta->dateLastPublished);
+$job_date_modified_iso8601  = get_iso8601_date($job_meta->dateLastModified);
 
 ?>
 
@@ -182,3 +186,29 @@ $job_date_modified      = get_relative_date($job_meta->dateLastModified);
         </div>
     </div>
 </div>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    "title": "<?php echo $job_title; ?>",
+    "description": <?php echo json_encode($job_description); ?>,
+    "datePosted": "<?php echo $job_date_published_iso8601; ?>",
+    "directApply": true,
+    "employmentType": "<?php echo $job_employment_type; ?>",
+    "hiringOrganization": {
+        "@type": "Organization",
+        "name": "NSC Staffing"
+    },
+    "jobLocation": {
+        "@type": "Place",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "<?php echo $job_location_city; ?>",
+            "addressRegion": "<?php echo $job_location_state; ?>",
+            "postalCode": "<?php echo $job_location_postal_code; ?>",
+            "addressCountry": "<?php echo $job_location_country_code; ?>"
+        }
+    }
+}
+</script>
