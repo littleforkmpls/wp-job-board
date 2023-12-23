@@ -89,9 +89,6 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
         'isDeleted',
         'publicDescription',
         'publishedCategory',
-        'publishedZip',
-        'salary',
-        'salaryUnit',
         'status',
         'title',
     );
