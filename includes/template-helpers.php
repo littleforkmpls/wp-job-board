@@ -69,3 +69,19 @@ function get_relative_date($timestamp, $milliseconds = true)
 
     return $relative_date;
 }
+
+/**
+ * Helper for converting timestamps to a ISO8691 formatted date
+ *
+ * @return string
+ */
+function get_iso8601_date($timestamp, $milliseconds = true)
+{
+    if ($milliseconds == true) {
+        $timestamp = floor($timestamp / 1000);
+    }
+
+    $iso8601_date = date('c', $timestamp);
+
+    return $iso8601_date;
+}
