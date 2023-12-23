@@ -67,11 +67,8 @@ class WP_Job_Board
      */
     public function __construct()
     {
-        if (defined('WP_JOB_BOARD_VERSION')) {
-            $this->version = WP_JOB_BOARD_VERSION;
-        } else {
-            $this->version = '0.1.7';
-        }
+        $this->version = WP_JOB_BOARD_VERSION;
+
         $this->wp_job_board = 'wp-job-board';
 
         $this->load_dependencies();
