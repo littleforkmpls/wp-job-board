@@ -118,7 +118,7 @@ class WP_Job_Board_Public
                     'not_found'                 => __('No Jobs found', 'wp_job_board'),
                     'not_found_in_trash'        => __('No Jobs found in Trash', 'wp_job_board'),
                     'parent_item_colon'         => __('Parent Jobs:', 'wp_job_board'),
-                    'all_items'                 => __('Job Data', 'wp_job_board'),
+                    'all_items'                 => __('Jobs', 'wp_job_board'),
                     'archives'                  => __('Job Archives', 'wp_job_board'),
                     'attributes'                => __('Job Attributes', 'wp_job_board'),
                     'insert_into_item'          => __('Insert into Job', 'wp_job_board'),
@@ -207,7 +207,7 @@ class WP_Job_Board_Public
             array(
                 'hierarchical'      => false,
                 'labels'            => array(
-                    'menu_name'         => __('Job Types'),
+                    'menu_name'         => __('&#8211; Type'),
                     'name'              => __('Job Types', 'taxonomy general name'),
                     'singular_name'     => __('Job Type', 'taxonomy singular name'),
                     'search_items'      => __('Search Job Types'),
@@ -239,7 +239,7 @@ class WP_Job_Board_Public
             array(
                 'hierarchical'      => false,
                 'labels'            => array(
-                    'menu_name'         => __('Job Locations'),
+                    'menu_name'         => __('&#8211; Location'),
                     'name'              => __('Job Locations', 'taxonomy general name'),
                     'singular_name'     => __('Job Location', 'taxonomy singular name'),
                     'search_items'      => __('Search Job Locations'),
@@ -271,7 +271,7 @@ class WP_Job_Board_Public
             array(
                 'hierarchical'      => false,
                 'labels'            => array(
-                    'menu_name'         => __('Job Categories'),
+                    'menu_name'         => __('&#8211; Category'),
                     'name'              => __('Job Categories', 'taxonomy general name'),
                     'singular_name'     => __('Job Category', 'taxonomy singular name'),
                     'search_items'      => __('Search Job Categories'),
@@ -293,6 +293,7 @@ class WP_Job_Board_Public
                 'rewrite'           => ['slug' => 'job-category']
             )
         );
+
     }
 
     /**
