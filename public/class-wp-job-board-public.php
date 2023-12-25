@@ -303,7 +303,7 @@ class WP_Job_Board_Public
             array(
                 'hierarchical'      => false,
                 'labels'            => array(
-                    'menu_name'         => __('&#8211; Inudstry'),
+                    'menu_name'         => __('&#8211; Industry'),
                     'name'              => __('Job Industries', 'taxonomy general name'),
                     'singular_name'     => __('Job Industry', 'taxonomy singular name'),
                     'search_items'      => __('Search Job Industries'),
