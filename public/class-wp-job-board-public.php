@@ -294,6 +294,37 @@ class WP_Job_Board_Public
             )
         );
 
+        /*
+         * Register Taxonomy: Job Industry
+         */
+        register_taxonomy(
+            'wjb_bh_job_industry_tax',
+            ['wjb_bh_job_order'],
+            array(
+                'hierarchical'      => false,
+                'labels'            => array(
+                    'menu_name'         => __('&#8211; Inudstry'),
+                    'name'              => __('Job Industries', 'taxonomy general name'),
+                    'singular_name'     => __('Job Industry', 'taxonomy singular name'),
+                    'search_items'      => __('Search Job Industries'),
+                    'all_items'         => __('All Job Industries'),
+                    'parent_item'       => __('Parent Job Industries'),
+                    'parent_item_colon' => __('Parent Job Industry:'),
+                    'edit_item'         => __('Edit Job Industry'),
+                    'update_item'       => __('Update Job Industry'),
+                    'add_new_item'      => __('Add New Job Industry'),
+                    'new_item_name'     => __('New Job Industry Name'),
+                    'popular_items'     => __('Popular Job Industries'),
+                    'view_item'         => __('View Job Industry'),
+                    'not_found'         => __('No Job Industries Found'),
+                    'back_to_items'     => __('←︎︎ Back to Job Industries')
+                ),
+                'show_ui'           => true,
+                'show_admin_column' => true,
+                'query_var'         => true,
+                'rewrite'           => ['slug' => 'job-industry']
+            )
+        );
     }
 
     /**
