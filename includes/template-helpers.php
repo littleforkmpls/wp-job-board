@@ -85,3 +85,27 @@ function get_iso8601_date($timestamp, $milliseconds = true)
 
     return $iso8601_date;
 }
+
+/**
+ * Helper for getting full list of terms for job filters
+ *
+ * @return array
+ */
+function get_filter_terms($taxonomy)
+{
+    $terms = get_terms(
+        array(
+            'taxonomy'   => $taxonomy,
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'hide_empty' => true,
+        )
+    );
+
+    // if get_terms returns an error or no terms return an empty string
+    if (is_wp_error($terms) || (count($terms) < 1 )) {
+        $terms = '';
+    }
+
+    return $terms;
+}
