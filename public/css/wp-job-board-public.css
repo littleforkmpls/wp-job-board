@@ -330,7 +330,7 @@ body {font-family: inherit;}
     position: fixed;
     inset: 0;
     background-color: rgba(0,0,0,0.6);
-    z-index: 100;
+    z-index: 1000;
 }
 
 #wpjb .wpjb-modal__container {
@@ -338,7 +338,7 @@ body {font-family: inherit;}
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 101;
+    z-index: 1001;
 }
 
 #wpjb .wpjb-modal__container__content {
