@@ -14,15 +14,12 @@ function wpjb_archive($attr)
 {
     $html = '';
 
-    if (file_exists(plugin_dir_path(__DIR__) . 'public/partials/wp-job-board-archive.php')) {
-        if (is_archive() && get_post_type() == 'wjb_bh_job_order') {
-            ob_start();
-            include(plugin_dir_path(__DIR__) . 'public/partials/wp-job-board-archive.php');
-            $html .= ob_get_clean();
-        } else {
-            $html = '<div style="color: red; font-weight: bold; font-size: 36px;">The wpjb_archive shortcode must be placed on an "archive" page.</div>';
-        }
+    if (file_exists(plugin_dir_path(__DIR__) . 'public/pages/wp-job-board-archive.php')) {
+        ob_start();
+        include(plugin_dir_path(__DIR__) . 'public/pages/wp-job-board-archive.php');
+        $html .= ob_get_clean();
     }
+
     return $html;
 }
 
@@ -38,15 +35,12 @@ function wpjb_single($attr)
 {
     $html = '';
 
-    if (file_exists(plugin_dir_path(__DIR__) . 'public/partials/wp-job-board-single.php')) {
-        if (is_single() && get_post_type() == 'wjb_bh_job_order') {
-            ob_start();
-            include(plugin_dir_path(__DIR__) . 'public/partials/wp-job-board-single.php');
-            $html .= ob_get_clean();
-        } else {
-            $html = '<div style="color: red; font-weight: bold; font-size: 36px;">The wpjb_single shortcode must be placed on an WordPress "single" page.</div>';
-        }
+    if (file_exists(plugin_dir_path(__DIR__) . 'public/pages/wp-job-board-single.php')) {
+        ob_start();
+        include(plugin_dir_path(__DIR__) . 'public/pages/wp-job-board-single.php');
+        $html .= ob_get_clean();
     }
+
     return $html;
 }
 
