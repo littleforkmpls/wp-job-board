@@ -288,7 +288,6 @@ body {
 
 #wpjb .wpjb-btn__back:hover span {
     font-weight: 500; /* this matches the current icon better */
-    margin-bottom: 20px;
 }
 #wpjb .wpjb-btn__back:hover span{
     margin-left: 5px;
