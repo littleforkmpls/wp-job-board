@@ -22,7 +22,7 @@ $job_date_modified      = get_relative_date($job_meta->dateLastModified);
     </div>
     <div class="wpjb-card" id="wpjb-card">
         <div class="wpjb-card__hd">
-            <h1>
+            <h1 class="wpjb-card__title">
                 <?php echo $job_title; ?>
             </h1>
         </div>
@@ -44,11 +44,11 @@ $job_date_modified      = get_relative_date($job_meta->dateLastModified);
                 <span> <?php echo $job_employment_type; ?></span>
             </span>
         </div>
-        <div class="wbjb-card__sub-hd">
-            <h3>About the job</h3>
+        <div>
+            <h3 class="wbjb-card__sub-title">About the job</h3>
         </div>
         <div class="wpjb-card__bd">
-            <p class="txt txt-balance"><?php echo $job_description; ?></p>
+            <p class="wpjb-card__description"><?php echo $job_description; ?></p>
         </div>
         <div class="wpjb-card__ft">
             <div class="wpjb-utilityNav">
@@ -79,7 +79,7 @@ $job_date_modified      = get_relative_date($job_meta->dateLastModified);
                             <?php the_title(); ?>
                         </h2>
                     </header>
-                    <span class="txt-xxs txt-left"><?php echo $job_location_city; ?>, <?php echo $job_location_state; ?> | <?php echo $job_employment_type; ?></span>
+                    <span class="wpjb-form__meta-data"><?php echo $job_location_city; ?>, <?php echo $job_location_state; ?> | <?php echo $job_employment_type; ?></span>
                     <form>
                         <main class="wpjb-form__bd" id="modal-1-content">
                             <div class="wpjb-fieldset">
@@ -145,7 +145,7 @@ $job_date_modified      = get_relative_date($job_meta->dateLastModified);
                             </div>
 
                             <div class="wpjb-drag">
-                                <span class="label-txt-left">Upload your resume</span>
+                                <span class="wpjb-drag__title">Upload your resume</span>
                                 <div class="wpjb-drag__fieldset">
                                     <span>
                                         <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-file-arrow-up.svg'); ?>
@@ -166,8 +166,8 @@ $job_date_modified      = get_relative_date($job_meta->dateLastModified);
                                             />
                                         </label>
                                     </div>
-                                    <span class="file-error">Invalid file type, please try again!</span>
-                                    <span class="txt-xxxs">Supported file types: html,text,txt,pdf,doc,docx,rtf,odt </span>
+                                    <span class="wpjb-drag__file-error">Invalid file type, please try again!</span>
+                                    <span class="wpjb-drag__file-type">Supported file types: html,text,txt,pdf,doc,docx,rtf,odt </span>
                                 </div>
                             </div>
                         </main>
