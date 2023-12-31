@@ -168,4 +168,21 @@ class WP_Job_Board_API_Manager_Base
         'MH' => 'Marshall Islands',
         'PR' => 'Puerto Rico',
     );
+
+    protected function get_mapped_industry(string $value): string
+    {
+        if (isset(self::$industry_map[$value])) {
+            return self::$industry_map[$value];
+        }
+        return 'Other';
+    }
+
+    public static array $industry_map = array(
+        '1' => 'Corporate',
+        '2' => 'Light Industrial',
+        '4' => 'Skilled Trades',
+        '6' => 'Marine',
+        '7' => 'Professional and Technical',
+    );
+
 }

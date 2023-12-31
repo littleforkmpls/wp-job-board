@@ -12,9 +12,8 @@ body {
 }
 
 /*--------------------------------------------------------------
-    Grid settings for archive page
+ Grid
 ---------------------------------------------------------------*/
-
 #wpjb .wpjb-grid {
     display: grid;
     gap: 1rem;
@@ -47,22 +46,24 @@ body {
 #wpjb .wpjb-grid__item:not(:first-child) {
     grid-column: 2;
     /* Rest of the items in the second column */
+    gap: 20px;
+    grid-template-columns: 250px auto;
 }
 
 /*--------------------------------------------------------------
-    card
+ Card
 ---------------------------------------------------------------*/
 #wpjb .wpjb-card {
-    display: grid;
-    gap: 20px;
-    position: relative;
-    border-radius: 5px;
-    box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 2px;
-    padding: 20px;
+      display: grid;
+      gap: 20px;
+      position: relative;
+      border-radius: 5px;
+      box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 2px;
+      padding: 20px;
 }
 
 #wpjb .wpjb-card__hd {
-    padding-right: 140px;
+    padding-right: 140px; /* prevents headline from overlapping util nav */
 }
 
 #wpjb .wpjb-card__title {
@@ -78,12 +79,13 @@ body {
 .wpjb-card__description {
     font-size: 1rem;
     text-wrap: balance;
+    padding-right: 140px; /* prevents headline from overlapping util nav */
 }
 
 #wpjb .wpjb-card__ft {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
 }
 
 #wpjb .wpjb-utilityNav__btn {
@@ -97,17 +99,17 @@ body {
 }
 
 #wpjb .wpjb-card__meta {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
 }
 
 #wpjb .wpjb-card__meta-item {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    font-size: 13px;
-    gap: 10px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      font-size: 13px;
+      gap: 10px;
 }
 
 /*----------------------------------------------------------------------------------
@@ -251,10 +253,22 @@ body {
     align-items: center;
 }
 
-/*----------------------------------------------------------------------------------
-    Buttons
-----------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------
+ Utility Nav
+---------------------------------------------------------------*/
+#wpjb .wpjb-utilityNav__btn {
+    border: none;
+    background-color: transparent;
+}
 
+#wpjb .wpjb-utilityNav__btn:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+/*----------------------------------------------------------------------------------
+ Buttons
+----------------------------------------------------------------------------------*/
 #wpjb .wpjb-btn__back {
     display: flex;
     align-items: center;
@@ -273,6 +287,10 @@ body {
 }
 
 #wpjb .wpjb-btn__back:hover span {
+    font-weight: 500; /* this matches the current icon better */
+    margin-bottom: 20px;
+}
+#wpjb .wpjb-btn__back:hover span{
     margin-left: 5px;
 }
 
@@ -280,7 +298,7 @@ body {
     margin: 0 5px
 }
 
-#wpjb .wpjb-btn__back:hover svg {
+#wpjb .wpjb-btn__back:hover svg{
     margin: 0 5px 0 0;
 }
 
@@ -303,8 +321,8 @@ body {
 #wpjb .wpjb-modal__overlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 100;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 1000;
 }
 
 #wpjb .wpjb-modal__container {
@@ -312,7 +330,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 101;
+    z-index: 1001;
 }
 
 #wpjb .wpjb-modal__container__content {
@@ -517,6 +535,163 @@ body {
 }
 
 #wpjb .btn__submit {
-    background-color: #00449e;
-    color: #fff;
+  background-color: #00449e;
+  color: #fff;
+}
+
+/*----------------------------------------------------------------------------------
+ User Content - apply basic styles to html when it's unknown
+----------------------------------------------------------------------------------*/
+/* reasonable defaults */
+#wpjb .wpjb-userContent {
+    color: inherit;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: inherit;
+    font-style: normal;
+    font-weight: normal;
+    letter-spacing: normal;
+    overflow: hidden; /* clear content and don't let it overflow the div */
+    word-wrap: break-word; /* don't let long word break outside the div */
+}
+
+/* vertical rhythm */
+#wpjb .wpjb-userContent > * { margin-top: 1rem; }
+#wpjb .wpjb-userContent > *:first-child { margin-top: 0 !important; }
+#wpjb .wpjb-userContent > *:last-child) { margin-bottom: 0 !important; }
+
+/* media assets */
+#wpjb .wpjb-userContent img,
+#wpjb .wpjb-userContent iframe,
+#wpjb .wpjb-userContent embed,
+#wpjb .wpjb-userContent object,
+#wpjb .wpjb-userContent video,
+#wpjb .wpjb-userContent audio,
+#wpjb .wpjb-userContent canvas,
+#wpjb .wpjb-userContent picture {
+    display: inline-block;
+    max-width: 100% !important;
+}
+
+/* links */
+#wpjb .wpjb-userContent a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+/* paragraphs */
+#wpjb .wpjb-userContent p {
+    hyphens: manual;
+}
+
+/* headings */
+#wpjb .wpjb-userContent h1,
+#wpjb .wpjb-userContent h2,
+#wpjb .wpjb-userContent h3,
+#wpjb .wpjb-userContent h4,
+#wpjb .wpjb-userContent h5,
+#wpjb .wpjb-userContent h6 {
+    margin-top: 1.3rem;
+    color: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: normal;
+}
+
+#wpjb .wpjb-userContent h1 { font-size: clamp(1.5rem, 1.413rem + 0.4348vw, 1.75rem); } /* 24px to 28px */
+#wpjb .wpjb-userContent h2 { font-size: clamp(1.25rem, 1.163rem + 0.4348vw, 1.5rem); } /* 20px to 24px */
+#wpjb .wpjb-userContent h3 { font-size: clamp(1.125rem, 1.0815rem + 0.2174vw, 1.25rem); } /* 18px to 20px */
+#wpjb .wpjb-userContent h4 { font-size: clamp(1rem, 0.9565rem + 0.2174vw, 1.125rem); } /* 16px to 18px */
+#wpjb .wpjb-userContent h5 { font-size: clamp(1rem, 0.9565rem + 0.2174vw, 1.125rem); } /* 16px to 18px */
+#wpjb .wpjb-userContent h6 { font-size: clamp(1rem, 0.9565rem + 0.2174vw, 1.125rem); } /* 16px to 18px */
+
+#wpjb .wpjb-zuserContent h1 a,
+#wpjb .wpjb-userContent h2 a,
+#wpjb .wpjb-userContent h3 a,
+#wpjb .wpjb-userContent h4 a,
+#wpjb .wpjb-userContent h5 a,
+#wpjb .wpjb-userContent h6 a {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+/* lists */
+#wpjb .wpjb-userContent ul {
+    list-style-type: disc;
+}
+
+#wpjb .wpjb-userContent ol {
+    list-style-type: decimal;
+}
+
+#wpjb .wpjb-userContent li {
+    margin-left: 1.7rem; /* leave room for the marker */
+}
+
+#wpjb .wpjb-userContent li:not(:last-child) {
+    margin-bottom: 0.3rem; /* create space between items */
+}
+
+#wpjb .wpjb-userContent ul ul,
+#wpjb .wpjb-userContent ul ol,
+#wpjb .wpjb-userContent ol ul,
+#wpjb .wpjb-userContent ol ol {
+    margin-top: 0.3rem; /* nested lists add top-margin to equalize space */
+    margin-bottom: 0; /* nested lists have no margin-bottom */
+}
+
+#wpjb .wpjb-userContent ol ul,
+#wpjb .wpjb-userContent ul ul {
+    list-style-type: circle;
+}
+
+#wpjb .wpjb-userContent ol ol ul,
+#wpjb .wpjb-userContent ol ul ul,
+#wpjb .wpjb-userContent ul ol ul,
+#wpjb .wpjb-userContent ul ul ul {
+    list-style-type: square;
+}
+
+/* typography treatments */
+#wpjb .wpjb-userContent address {
+    font-style: italic;
+}
+
+#wpjb .wpjb-userContent strong,
+#wpjb .wpjb-userContent b {
+    font-weight: bold;
+}
+
+#wpjb .wpjb-userContent em,
+#wpjb .wpjb-userContent i {
+    font-style: italic;
+}
+
+#wpjb .wpjb-userContent del,
+#wpjb .wpjb-userContent strike,
+#wpjb .wpjb-userContent s {
+    text-decoration: line-through;
+}
+
+#wpjb .wpjb-userContent u,
+#wpjb .wpjb-userContent ins {
+    text-decoration: underline;
+}
+
+#wpjb .wpjb-userContent sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+
+#wpjb .wpjb-userContent sub {
+    vertical-align: sub;
+    font-size: smaller;
+}
+
+#wpjb .wpjb-userContent abbr,
+#wpjb .wpjb-userContent acronym {
+    border: none;
+    text-decoration: underline dotted;
 }

@@ -80,6 +80,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
 
     private array $job_order_fields = array(
         'address',
+        'correlatedCustomText8',
         'dateLastModified',
         'dateLastPublished',
         'employmentType',
@@ -89,13 +90,9 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
         'isDeleted',
         'publicDescription',
         'publishedCategory',
-        'publishedZip',
-        'salary',
-        'salaryUnit',
         'status',
         'title',
     );
-
 
     /**
      * Constructor to set up our class.
@@ -169,6 +166,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
                 'tax_input' => array(
                     'wjb_bh_job_type_tax' => $job_order['employmentType'],
                     'wjb_bh_job_location_tax' => $this->get_mapped_state($job_order['address']['state']),
+                    'wjb_bh_job_industry_tax' => $this->get_mapped_industry($job_order['correlatedCustomText8']),
                     'wjb_bh_job_category_tax' => $job_order['publishedCategory']['name'],
                 )
             );

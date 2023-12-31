@@ -16,7 +16,7 @@ class WP_Job_Board_Updater
         }
 
         $this->plugin_slug   = dirname(plugin_basename(__DIR__));
-        $this->version       = '0.1.7';
+        $this->version       = WP_JOB_BOARD_VERSION;
         $this->cache_key     = 'wp_job_board_updater';
         $this->cache_allowed = false;
 

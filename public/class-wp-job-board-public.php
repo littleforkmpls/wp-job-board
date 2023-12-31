@@ -118,7 +118,7 @@ class WP_Job_Board_Public
                     'not_found'                 => __('No Jobs found', 'wp_job_board'),
                     'not_found_in_trash'        => __('No Jobs found in Trash', 'wp_job_board'),
                     'parent_item_colon'         => __('Parent Jobs:', 'wp_job_board'),
-                    'all_items'                 => __('Job Data', 'wp_job_board'),
+                    'all_items'                 => __('Jobs', 'wp_job_board'),
                     'archives'                  => __('Job Archives', 'wp_job_board'),
                     'attributes'                => __('Job Attributes', 'wp_job_board'),
                     'insert_into_item'          => __('Insert into Job', 'wp_job_board'),
@@ -158,8 +158,6 @@ class WP_Job_Board_Public
 
     /**
      * Display Meta Data
-     *
-     * @since    0.1.7
      */
     public function show_meta_data($post)
     {
@@ -175,8 +173,6 @@ class WP_Job_Board_Public
 
     /**
      * Display Meta Boxes
-     *
-     * @since    0.1.7
      */
     public function show_meta_boxes()
     {
@@ -197,89 +193,138 @@ class WP_Job_Board_Public
         echo $output;
     }
 
+    /**
+     * Register Taxonomies that will hold job specific meta data
+     */
     public function register_job_order_taxonomies()
     {
-        // Job type
-        $labels = array(
-            'name'              => __('Job Types', 'taxonomy general name'),
-            'singular_name'     => __('Job Type', 'taxonomy singular name'),
-            'search_items'      => __('Search Job Types'),
-            'all_items'         => __('All Job Types'),
-            'parent_item'       => __('Parent Job Types'),
-            'parent_item_colon' => __('Parent Job Type:'),
-            'edit_item'         => __('Edit Job Type'),
-            'update_item'       => __('Update Job Type'),
-            'add_new_item'      => __('Add New Job Type'),
-            'new_item_name'     => __('New Job Type Name'),
-            'menu_name'         => __('Job Types'),
+        /*
+         * Register Taxonomy: Job Type
+         */
+        register_taxonomy(
+            'wjb_bh_job_type_tax',
+            ['wjb_bh_job_order'],
+            array(
+                'hierarchical'      => false,
+                'labels'            => array(
+                    'menu_name'         => __('&#8211; Type'),
+                    'name'              => __('Job Types', 'taxonomy general name'),
+                    'singular_name'     => __('Job Type', 'taxonomy singular name'),
+                    'search_items'      => __('Search Job Types'),
+                    'all_items'         => __('All Job Types'),
+                    'parent_item'       => __('Parent Job Types'),
+                    'parent_item_colon' => __('Parent Job Type:'),
+                    'edit_item'         => __('Edit Job Type'),
+                    'update_item'       => __('Update Job Type'),
+                    'add_new_item'      => __('Add New Job Type'),
+                    'new_item_name'     => __('New Job Type Name'),
+                    'popular_items'     => __('Popular Job Types'),
+                    'view_item'         => __('View Job Type'),
+                    'not_found'         => __('No Job Types Found'),
+                    'back_to_items'     => __('←︎︎ Back to Job Types')
+                ),
+                'show_ui'           => true,
+                'show_admin_column' => true,
+                'query_var'         => true,
+                'rewrite'           => ['slug' => 'job-type']
+            )
         );
 
-        $args   = array(
-            'hierarchical'      => false,
-            'labels'            => $labels,
-            'show_ui'           => true,
-            'show_admin_column' => true,
-            'query_var'         => true,
-            'rewrite'           => [ 'slug' => 'job-type' ],
+        /*
+         * Register Taxonomy: Job Location
+         */
+        register_taxonomy(
+            'wjb_bh_job_location_tax',
+            ['wjb_bh_job_order'],
+            array(
+                'hierarchical'      => false,
+                'labels'            => array(
+                    'menu_name'         => __('&#8211; Location'),
+                    'name'              => __('Job Locations', 'taxonomy general name'),
+                    'singular_name'     => __('Job Location', 'taxonomy singular name'),
+                    'search_items'      => __('Search Job Locations'),
+                    'all_items'         => __('All Job Locations'),
+                    'parent_item'       => __('Parent Job Locations'),
+                    'parent_item_colon' => __('Parent Job Location:'),
+                    'edit_item'         => __('Edit Job Location'),
+                    'update_item'       => __('Update Job Location'),
+                    'add_new_item'      => __('Add New Job Location'),
+                    'new_item_name'     => __('New Job Location Name'),
+                    'popular_items'     => __('Popular Job Locations'),
+                    'view_item'         => __('View Job Location'),
+                    'not_found'         => __('No Job Locations Found'),
+                    'back_to_items'     => __('←︎︎ Back to Job Locations')
+                ),
+                'show_ui'           => true,
+                'show_admin_column' => true,
+                'query_var'         => true,
+                'rewrite'           => ['slug' => 'job-location']
+            )
         );
 
-        register_taxonomy('wjb_bh_job_type_tax', [ 'wjb_bh_job_order' ], $args);
-
-        register_taxonomy_for_object_type('wjb_bh_job_type_tax', 'wjb_bh_job_order');
-
-        // Job Location (State only, do some clean up to match abbrevs to states)
-        $labels = array(
-            'name'              => __('Job Locations', 'taxonomy general name'),
-            'singular_name'     => __('Job Location', 'taxonomy singular name'),
-            'search_items'      => __('Search Job Locations'),
-            'all_items'         => __('All Job Locations'),
-            'parent_item'       => __('Parent Job Locations'),
-            'parent_item_colon' => __('Parent Job Location:'),
-            'edit_item'         => __('Edit Job Location'),
-            'update_item'       => __('Update Job Location'),
-            'add_new_item'      => __('Add New Job Location'),
-            'new_item_name'     => __('New Job Location Name'),
-            'menu_name'         => __('Job Locations'),
+        /*
+         * Register Taxonomy: Job Category
+         */
+        register_taxonomy(
+            'wjb_bh_job_category_tax',
+            ['wjb_bh_job_order'],
+            array(
+                'hierarchical'      => false,
+                'labels'            => array(
+                    'menu_name'         => __('&#8211; Category'),
+                    'name'              => __('Job Categories', 'taxonomy general name'),
+                    'singular_name'     => __('Job Category', 'taxonomy singular name'),
+                    'search_items'      => __('Search Job Categories'),
+                    'all_items'         => __('All Job Categories'),
+                    'parent_item'       => __('Parent Job Categories'),
+                    'parent_item_colon' => __('Parent Job Category:'),
+                    'edit_item'         => __('Edit Job Category'),
+                    'update_item'       => __('Update Job Category'),
+                    'add_new_item'      => __('Add New Job Category'),
+                    'new_item_name'     => __('New Job Category Name'),
+                    'popular_items'     => __('Popular Job Categories'),
+                    'view_item'         => __('View Job Category'),
+                    'not_found'         => __('No Job Categories Found'),
+                    'back_to_items'     => __('←︎︎ Back to Job Categories')
+                ),
+                'show_ui'           => true,
+                'show_admin_column' => true,
+                'query_var'         => true,
+                'rewrite'           => ['slug' => 'job-category']
+            )
         );
 
-        $args   = array(
-            'hierarchical'      => false,
-            'labels'            => $labels,
-            'show_ui'           => true,
-            'show_admin_column' => true,
-            'query_var'         => true,
-            'rewrite'           => [ 'slug' => 'job-location' ],
+        /*
+         * Register Taxonomy: Job Industry
+         */
+        register_taxonomy(
+            'wjb_bh_job_industry_tax',
+            ['wjb_bh_job_order'],
+            array(
+                'hierarchical'      => false,
+                'labels'            => array(
+                    'menu_name'         => __('&#8211; Industry'),
+                    'name'              => __('Job Industries', 'taxonomy general name'),
+                    'singular_name'     => __('Job Industry', 'taxonomy singular name'),
+                    'search_items'      => __('Search Job Industries'),
+                    'all_items'         => __('All Job Industries'),
+                    'parent_item'       => __('Parent Job Industries'),
+                    'parent_item_colon' => __('Parent Job Industry:'),
+                    'edit_item'         => __('Edit Job Industry'),
+                    'update_item'       => __('Update Job Industry'),
+                    'add_new_item'      => __('Add New Job Industry'),
+                    'new_item_name'     => __('New Job Industry Name'),
+                    'popular_items'     => __('Popular Job Industries'),
+                    'view_item'         => __('View Job Industry'),
+                    'not_found'         => __('No Job Industries Found'),
+                    'back_to_items'     => __('←︎︎ Back to Job Industries')
+                ),
+                'show_ui'           => true,
+                'show_admin_column' => true,
+                'query_var'         => true,
+                'rewrite'           => ['slug' => 'job-industry']
+            )
         );
-
-        register_taxonomy('wjb_bh_job_location_tax', [ 'wjb_bh_job_order' ], $args);
-
-        register_taxonomy_for_object_type('wjb_bh_job_location_tax', 'wjb_bh_job_order');
-
-        // Job Category
-        $labels = array(
-            'name'              => __('Job Categories', 'taxonomy general name'),
-            'singular_name'     => __('Job Category', 'taxonomy singular name'),
-            'search_items'      => __('Search Job Categories'),
-            'all_items'         => __('All Job Categories'),
-            'parent_item'       => __('Parent Job Categories'),
-            'parent_item_colon' => __('Parent Job Category:'),
-            'edit_item'         => __('Edit Job Category'),
-            'update_item'       => __('Update Job Category'),
-            'add_new_item'      => __('Add New Job Category'),
-            'new_item_name'     => __('New Job Category Name'),
-            'menu_name'         => __('Job Categories'),
-        );
-
-        $args   = array(
-            'hierarchical'      => false,
-            'labels'            => $labels,
-            'show_ui'           => true,
-            'show_admin_column' => true,
-            'query_var'         => true,
-            'rewrite'           => [ 'slug' => 'job-category' ],
-        );
-        register_taxonomy('wjb_bh_job_category_tax', [ 'wjb_bh_job_order' ], $args);
-        register_taxonomy_for_object_type('wjb_bh_job_category_tax', 'wjb_bh_job_order');
     }
 
     /**
