@@ -11,7 +11,7 @@
                         <?php the_title(); ?>
                     </h2>
                 </header>
-                <span class="txt-xxs txt-left"><?php echo $job_location_city; ?>, <?php echo $job_location_state; ?> | <?php echo $job_employment_type; ?></span>
+                <span class="wpjb-form__meta-data"><?php echo $job_location_city; ?>, <?php echo $job_location_state; ?> | <?php echo $job_employment_type; ?></span>
                 <form>
                     <main class="wpjb-form__bd" id="modal-1-content">
                         <div class="wpjb-fieldset">
@@ -98,8 +98,8 @@
                                         />
                                     </label>
                                 </div>
-                                <span class="file-error">Invalid file type, please try again!</span>
-                                <span class="txt-xxxs">Supported file types: html,text,txt,pdf,doc,docx,rtf,odt </span>
+                                <span class="wpjb-drag__file-error">Invalid file type, please try again!</span>
+                                <span class="wpjb-drag__file-type">Supported file types: html,text,txt,pdf,doc,docx,rtf,odt </span>
                             </div>
                         </div>
                     </main>

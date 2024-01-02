@@ -1,6 +1,6 @@
 <div class="wpjb-card" id="wpjb-card">
     <div class="wpjb-card__hd">
-        <h1>
+        <h1 class="wpjb-card__title">
             <?php echo $job_title; ?>
         </h1>
     </div>
@@ -23,7 +23,7 @@
         </span>
     </div>
     <div class="wbjb-card__sub-hd">
-        <h3>
+        <h3 class="wpjb-card__sub-title">
             About the job
         </h3>
     </div>
