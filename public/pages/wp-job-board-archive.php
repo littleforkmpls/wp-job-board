@@ -24,9 +24,10 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
             <div class="wpjb-grid__item">
                 <div class="wpjb-facet">
                     <div class="wpjb-facet__hd">
-                        <button class="wpjb-reset__btn">Reset</button>
-                        <input type="search" class="wpjb-search__text-input" id="wpjbSearchTextInput" placeholder="Search" />
+                        <button class="wpjb-reset__btn">Clear Search Settings</button>
+                        <input type="search" class="wpjb-search__text-input" id="wpjbSearchTextInput" placeholder="🔍 Search" />
                     </div>
+                    <div class="wpjb-facet__section-container">
                     <?php if ($industry_terms) : ?>
                         <div class="wpjb-facet__section">
                             <details>
@@ -119,6 +120,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                             </details>
                         </div>
                     <?php endif; ?>
+                    </div>
                 </div>
             </div>
             <div class="wpjb-grid__item">
