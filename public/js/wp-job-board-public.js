@@ -14,15 +14,6 @@
         debugMode: true
     });
 
-    // dropdown menu function
-    $(".wpjb-dropdown").click(function () {
-        $(this).toggleClass("is-active");
-    });
-
-    $(".wpjb-dropdown ul").click(function (e) {
-        e.stopPropagation();
-    });
-
     // print function
     function printContent() {
         console.log("print btn clicked!");
@@ -121,6 +112,12 @@
             label.classList.add('hidden-label');
           }
       }
+
+    //Open and close dropdown by clicking anywhere on the details section
+    document.getElementById('wpjbFacetSection').addEventListener('click', function () {
+        var details = this.querySelector('details');
+        details.open = !details.open;
+    });
 
     // public functions
     window.showLabel = showLabel;

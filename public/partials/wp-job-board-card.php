@@ -11,7 +11,7 @@
         </span>
         <span class="wpjb-card__meta-item">
             <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-clock.svg'); ?>
-            <span style="font-weight: 500;">Updated <?php echo $job_date_modified; ?></span>
+            <span>Updated <?php echo $job_date_modified; ?></span>
         </span>
         <span class="wpjb-card__meta-item">
             <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-location-dot.svg'); ?>

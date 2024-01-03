@@ -24,8 +24,8 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
             <div class="wpjb-grid__item">
                 <div class="wpjb-facet">
                     <div class="wpjb-facet__hd">
-                        <button class="wpjb-search__btn">Reset</button>
-                        <input type="search" class="wpjb-search__text-input" id="wpjbSearchTextInput" placeholder="Search                                 🔍" />
+                        <button class="wpjb-reset__btn">Reset</button>
+                        <input type="search" class="wpjb-search__text-input" id="wpjbSearchTextInput" placeholder="Search" />
                     </div>
                     <?php if ($industry_terms) : ?>
                         <div class="wpjb-facet__section">
@@ -149,9 +149,10 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                 $job_date_modified_iso8601  = get_iso8601_date($job_meta->dateLastModified);
 
                                 ?>
+                                <div id="archive">
                                 <div class="wpjb-card">
                                     <div class="wpjb-card__hd">
-                                        <h3>
+                                        <h3 class="wpjb-card__title">
                                             <?php echo $job_title; ?>
                                         </h3>
                                     </div>
@@ -162,7 +163,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                         </span>
                                         <span class="wpjb-card__meta-item">
                                             <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-clock.svg'); ?>
-                                            <span style="font-weight: 500;">Updated <?php echo $job_date_modified; ?></span>
+                                            <span>Updated <?php echo $job_date_modified; ?></span>
                                         </span>
                                         <span class="wpjb-card__meta-item">
                                             <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-location-dot.svg'); ?>
@@ -173,6 +174,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                             <span> <?php echo $job_employment_type; ?></span>
                                         </span>
                                     </div>
+                                </div>
                                 </div>
                             <?php endwhile; ?>
                         <?php else : ?>

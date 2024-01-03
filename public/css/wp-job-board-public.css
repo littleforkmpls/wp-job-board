@@ -59,6 +59,7 @@ body {
       display: grid;
       gap: 20px;
       position: relative;
+      width: 50vw;
       border-radius: 5px;
       box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 2px;
       padding: 20px;
@@ -74,6 +75,11 @@ body {
     font-weight: 500;
 }
 
+#wpjb  #archive .wpjb-card__title {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
 #wpjb .wpjb-card__sub-title {
     font-size: 1.25rem;
     font-weight: 500;
@@ -82,7 +88,8 @@ body {
 .wpjb-card__description {
     font-size: 1rem;
     text-wrap: balance;
-    padding-right: 140px; /* prevents headline from overlapping util nav */
+    padding-right: 140px;
+    /* prevents headline from overlapping util nav */
 }
 
 #wpjb .wpjb-card__ft {
@@ -107,6 +114,8 @@ body {
       gap: 10px;
 }
 
+#wpjb #archive .wpjb-card__meta {gap: 5px;}
+
 #wpjb .wpjb-card__meta-item {
       display: grid;
       grid-template-columns: auto 1fr;
@@ -115,120 +124,98 @@ body {
       gap: 10px;
 }
 
+#wpjb #archive .wpjb-card__meta-item {
+    font-size: .7rem;
+}
 /*----------------------------------------------------------------------------------
     Dropdown Box
 ----------------------------------------------------------------------------------*/
-
-#wpjb .wpjb-facet__hd {
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
-}
-
-#wpjb .wpjb-facet__section {
-    width: 200px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px;
-    position: relative;
-    margin: 0 auto 20px auto;
-    /* user-select: none; */
-}
-
-#wpjb .wpjb-facet__section:hover {
-    background-color: rgb(200, 200, 200);
-    cursor: pointer;
-}
-
-#wpjb .wpjb-facet__section.is-active {
-    border-bottom: none;
-    border-radius: 5px 5px 0 0;
-}
-
-#wpjb .wpjb-facet__section__list {
-    background-color: rgb(230, 230, 230);
-    transition: 0.2s ease-in-out;
-    overflow-y: scroll;
-}
-
-.is-active #wpjb .wpjb-facet__section__list {
-    position: absolute;
-    border-width: 0 1px 1px 1px;
-    border-style: solid;
-    border-color: #ccc;
-    border-radius: 0 0 5px 5px;
-    max-height: 100px;
-    pointer-events: auto;
-    /* make sure that the user still can select checkboxes */
-}
-
-#wpjb .wpjb-facet__section__list li label {
-    display: block;
-    padding: 10px;
-    transition: all 0.2s ease-out;
-}
-
-#wpjb .wpjb-facet__section__list li label:hover {
-    background-color: #555;
-    color: white;
-}
-
-#wpjb .wpjb-quickSort {
-    margin-top: 1rem;
-    display: grid;
-    grid-template-columns: 25vw 25vw;
-    align-items: center;
-}
-
-#wpjb .wpjb-quickSort__match-number {
-    grid-column: 1;
-    justify-self: flex-start;
-    font-size: small;
-}
-
-#wpjb .wpjb-quickSort__quickSort-dropdown {
-    grid-column: 2;
-    justify-self: flex-end;
-    font-size: small;
-}
-
-/*----------------------------------------------------------------------------------
-    Search Input
-----------------------------------------------------------------------------------*/
-
 #wpjb .wpjb-facet {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding-left: 20px;
 }
 
-#wpjb .wpjb-search__text-input {
-    width: 200px;
-    padding: 5px;
-    border-radius: 5px;
+#wpjb .wpjb-facet__hd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+#wpjb .wpjb-facet__section {
+    width: 100%;
     border: 1px solid #ccc;
-    font-size: 1rem;
-    margin: 20px 0;
+    border-radius: 5px;
+    padding: 5px;
+    position: relative;
+    font-size: 0.9rem;
+    margin: 0 auto 20px auto;
+    user-select: none;
 }
 
-#wpjb .wpjb-search__text-input:hover {
+#wpjb .wpjb-facet__section:hover {
+    background-color: rgb(220, 220, 220);
     cursor: pointer;
+}
+
+#wpjb .wpjb-facet__section__list {
+    background-color: rgb(255, 255, 255);
+    overflow-y: scroll;
+}
+
+#wpjb .wpjb-facet__section__list li label {
+    display: block;
+    padding: 5px;
+}
+
+#wpjb .wpjb-facet__section__list li label:hover {
     background-color: rgb(200, 200, 200);
+    color: white;
 }
 
-#wpjb .wpjb-search__text-input::placeholder {
-    text-align: right;
-    opacity: 0.5;
-    font-size: small;
-}
-
-/* #wpjb .wpjb-search__hd {
+#wpjb .wpjb-facet__section details summary {
     display: flex;
     justify-content: space-between;
     align-items: center;
-} */
+    overflow: hidden;
+}
+
+#wpjb .wpjb-facet__section details summary::after {
+    content: "\25BC";
+    padding-left: 5px;
+}
+
+#wpjb .wpjb-facet__section details[open] summary::after {
+    content: "\25B2"; /* Unicode character for upward arrow when details are open */
+}
+
+
+/*----------------------------------------------------------------------------------
+    Search Input
+----------------------------------------------------------------------------------*/
+
+#wpjb .wpjb-search__text-input {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 0.9rem;
+    margin: 15px 0 20px 0;
+    cursor: pointer;
+}
+
+#wpjb .wpjb-search__text-input:hover {
+    background-color: rgb(220, 220, 220);
+}
+
+#wpjb .wpjb-search__text-input::placeholder {
+    /* text-align: center; */
+    font-size: 0.9rem;
+}
 
 /*--------------------------------------------------------------
  Utility Nav
@@ -281,6 +268,21 @@ body {
 #wpjb .wpjb-btn__back:hover {
     opacity: 0.5;
     cursor: pointer;
+}
+
+#wpjb .wpjb-reset__btn {
+    padding: 1px;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    border-bottom: 1px solid black;
+    background-color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+#wpjb .wpjb-reset__btn:hover {
+    opacity: 0.5;
 }
 
 /*----------------------------------------------------------------------------------
@@ -432,7 +434,7 @@ body {
 
 #wpjb .wpjb-drag__fieldset.active {
     /* border: 2px solid #ccc; */
-    box-shadow: inset 6px 6px 6px rgb(200, 200, 200), inset -6px -6px 6px rgb(230, 230, 230);
+    box-shadow: inset 6px 6px 6px rgb(220, 220, 220), inset -6px -6px 6px rgb(230, 230, 230);
 }
 
 /* change to a font class later */
