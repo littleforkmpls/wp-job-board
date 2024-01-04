@@ -11,10 +11,6 @@ body {
     font-family: inherit;
 }
 
-#wpjb .wpjb-results__title {
-    margin-left: 20px;
-}
-
 /*--------------------------------------------------------------
  Grid
 ---------------------------------------------------------------*/
@@ -165,7 +161,9 @@ body {
     width: 100%;
 }
 
-#wpjb .wpjb-facet__section-container {width: 100%;}
+#wpjb .wpjb-facet__section-container {
+    width: 100%;
+}
 
 #wpjb .wpjb-facet__section {
     width: 100%;
@@ -221,6 +219,7 @@ body {
 @media screen and (max-width: 600px) {
     #wpjb .wpjb-facet {
         padding-left: 0;
+        position: static;
     }
 
     #wpjb .wpjb-facet__hd {
@@ -236,13 +235,12 @@ body {
 
     #wpjb .wpjb-facet__section {
         padding: 1px;
-        border-left: none;
+        /* border-left: none;
         border-top: none;
         border-right: none;
         border-bottom: 1px solid black;
-        border-radius: 0px;
-        background-color: white;
-        width: auto;
+        border-radius: 0px; */
+        width: 25vw;
         cursor: pointer;
         font-size: 0.8rem;
         margin: 5px;
@@ -261,8 +259,13 @@ body {
 }
 
 @media screen and (max-width: 400px) {
+
     #wpjb .wpjb-facet__section-container {
         flex-direction: column;
+    }
+
+    #wpjb .wpjb-facet__section {
+        width: -webkit-fill-available;
     }
 }
 
@@ -292,7 +295,7 @@ body {
 @media screen and (max-width: 600px) {
     #wpjb .wpjb-search__text-input {
         margin: 5px;
-        width: auto;
+        width: 25vw;
         font-size: 0.75rem;
     }
 
@@ -302,12 +305,26 @@ body {
     }
 }
 
+@media screen and (max-width: 400px) {
+    #wpjb .wpjb-search__text-input {
+        width: -webkit-fill-available;
+    }
+}
+
 /*--------------------------------------------------------------
  Utility Nav
 ---------------------------------------------------------------*/
 #wpjb .wpjb-utilityNav__btn {
     border: none;
     background-color: transparent;
+}
+
+#wpjb #archive .wpjb-utilityNav__btn {
+    font-size: 0.8rem;
+}
+
+#wpjb #archive .wpjb-utilityNav__btn:hover {
+    text-decoration: underline;
 }
 
 #wpjb .wpjb-utilityNav__btn:hover {

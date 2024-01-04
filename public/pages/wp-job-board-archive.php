@@ -28,98 +28,98 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                         <input type="search" class="wpjb-search__text-input" id="wpjbSearchTextInput" placeholder="🔍 Search" />
                     </div>
                     <div class="wpjb-facet__section-container">
-                    <?php if ($industry_terms) : ?>
-                        <div class="wpjb-facet__section">
-                            <details>
-                                <summary>
-                                    Industry
-                                </summary>
-                                <ul class="wpjb-facet__section__list">
-                                    <?php foreach ($industry_terms as $industry_term) : ?>
-                                        <?php
-                                        $industry_id = esc_attr($industry_term->term_id);
-                                        $industry_name = esc_html($industry_term->name);
-                                        ?>
-                                        <li>
-                                            <label>
-                                                <input type="checkbox" value="<?php echo $industry_id; ?>" />
-                                                <?php echo $industry_name; ?>
-                                            </label>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </details>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ($category_terms) : ?>
-                        <div class="wpjb-facet__section">
-                            <details>
-                                <summary>
-                                    Category
-                                </summary>
-                                <ul class="wpjb-facet__section__list">
-                                    <?php foreach ($category_terms as $category_term) : ?>
-                                        <?php
-                                        $category_id = esc_attr($category_term->term_id);
-                                        $category_name = esc_html($category_term->name);
-                                        ?>
-                                        <li>
-                                            <label>
-                                                <input type="checkbox" value="<?php echo $category_id; ?>" />
-                                                <?php echo $category_name; ?>
-                                            </label>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </details>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ($location_terms) : ?>
-                        <div class="wpjb-facet__section">
-                            <details>
-                                <summary>
-                                    Location
-                                </summary>
-                                <ul class="wpjb-facet__section__list">
-                                    <?php foreach ($location_terms as $location_term) : ?>
-                                        <?php
-                                        $location_id = esc_attr($location_term->term_id);
-                                        $location_name = esc_html($location_term->name);
-                                        ?>
-                                        <li>
-                                            <label>
-                                                <input type="checkbox" value="<?php echo $location_id; ?>" />
-                                                <?php echo $location_name; ?>
-                                            </label>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </details>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ($type_terms) : ?>
-                        <div class="wpjb-facet__section">
-                            <details>
-                                <summary>
-                                    Employment Type
-                                </summary>
-                                <ul class="wpjb-facet__section__list">
-                                    <?php foreach ($type_terms as $type_term) : ?>
-                                        <?php
-                                        $type_id = esc_attr($type_term->term_id);
-                                        $type_name = esc_html($type_term->name);
-                                        ?>
-                                        <li>
-                                            <label>
-                                                <input type="checkbox" value="<?php echo $type_id; ?>" />
-                                                <?php echo $type_name; ?>
-                                            </label>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </details>
-                        </div>
-                    <?php endif; ?>
+                        <?php if ($industry_terms) : ?>
+                            <div class="wpjb-facet__section">
+                                <details>
+                                    <summary>
+                                        Industry
+                                    </summary>
+                                    <ul class="wpjb-facet__section__list">
+                                        <?php foreach ($industry_terms as $industry_term) : ?>
+                                            <?php
+                                            $industry_id = esc_attr($industry_term->term_id);
+                                            $industry_name = esc_html($industry_term->name);
+                                            ?>
+                                            <li>
+                                                <label>
+                                                    <input type="checkbox" value="<?php echo $industry_id; ?>" />
+                                                    <?php echo $industry_name; ?>
+                                                </label>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </details>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($category_terms) : ?>
+                            <div class="wpjb-facet__section">
+                                <details>
+                                    <summary>
+                                        Category
+                                    </summary>
+                                    <ul class="wpjb-facet__section__list">
+                                        <?php foreach ($category_terms as $category_term) : ?>
+                                            <?php
+                                            $category_id = esc_attr($category_term->term_id);
+                                            $category_name = esc_html($category_term->name);
+                                            ?>
+                                            <li>
+                                                <label>
+                                                    <input type="checkbox" value="<?php echo $category_id; ?>" />
+                                                    <?php echo $category_name; ?>
+                                                </label>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </details>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($location_terms) : ?>
+                            <div class="wpjb-facet__section">
+                                <details>
+                                    <summary>
+                                        Location
+                                    </summary>
+                                    <ul class="wpjb-facet__section__list">
+                                        <?php foreach ($location_terms as $location_term) : ?>
+                                            <?php
+                                            $location_id = esc_attr($location_term->term_id);
+                                            $location_name = esc_html($location_term->name);
+                                            ?>
+                                            <li>
+                                                <label>
+                                                    <input type="checkbox" value="<?php echo $location_id; ?>" />
+                                                    <?php echo $location_name; ?>
+                                                </label>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </details>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($type_terms) : ?>
+                            <div class="wpjb-facet__section">
+                                <details>
+                                    <summary>
+                                        Employment Type
+                                    </summary>
+                                    <ul class="wpjb-facet__section__list">
+                                        <?php foreach ($type_terms as $type_term) : ?>
+                                            <?php
+                                            $type_id = esc_attr($type_term->term_id);
+                                            $type_name = esc_html($type_term->name);
+                                            ?>
+                                            <li>
+                                                <label>
+                                                    <input type="checkbox" value="<?php echo $type_id; ?>" />
+                                                    <?php echo $type_name; ?>
+                                                </label>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </details>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -152,31 +152,34 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
 
                                 ?>
                                 <div id="archive">
-                                <div class="wpjb-card">
-                                    <div class="wpjb-card__hd">
-                                        <h3 class="wpjb-card__title">
-                                            <?php echo $job_title; ?>
-                                        </h3>
+                                    <div class="wpjb-card">
+                                        <div class="wpjb-card__hd">
+                                            <h3 class="wpjb-card__title">
+                                                <?php echo $job_title; ?>
+                                            </h3>
+                                        </div>
+                                        <div class="wpjb-card__meta">
+                                            <span class="wpjb-card__meta-item">
+                                                <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-calendar-days.svg'); ?>
+                                                <span>Posted <?php echo $job_date_published; ?></span>
+                                            </span>
+                                            <span class="wpjb-card__meta-item">
+                                                <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-clock.svg'); ?>
+                                                <span>Updated <?php echo $job_date_modified; ?></span>
+                                            </span>
+                                            <span class="wpjb-card__meta-item">
+                                                <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-location-dot.svg'); ?>
+                                                <span><?php echo $job_location_city; ?>, <?php echo $job_location_state; ?></span>
+                                            </span>
+                                            <span class="wpjb-card__meta-item">
+                                                <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-briefcase-blank.svg'); ?>
+                                                <span> <?php echo $job_employment_type; ?></span>
+                                            </span>
+                                        </div>
+                                        <button class="wpjb-utilityNav__btn">
+                                            More Info
+                                        </button>
                                     </div>
-                                    <div class="wpjb-card__meta">
-                                        <span class="wpjb-card__meta-item">
-                                            <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-calendar-days.svg'); ?>
-                                            <span>Posted <?php echo $job_date_published; ?></span>
-                                        </span>
-                                        <span class="wpjb-card__meta-item">
-                                            <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-clock.svg'); ?>
-                                            <span>Updated <?php echo $job_date_modified; ?></span>
-                                        </span>
-                                        <span class="wpjb-card__meta-item">
-                                            <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-location-dot.svg'); ?>
-                                            <span><?php echo $job_location_city; ?>, <?php echo $job_location_state; ?></span>
-                                        </span>
-                                        <span class="wpjb-card__meta-item">
-                                            <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-briefcase-blank.svg'); ?>
-                                            <span> <?php echo $job_employment_type; ?></span>
-                                        </span>
-                                    </div>
-                                </div>
                                 </div>
                             <?php endwhile; ?>
                         <?php else : ?>
