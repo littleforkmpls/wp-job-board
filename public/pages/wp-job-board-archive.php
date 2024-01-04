@@ -24,13 +24,14 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
             <div class="wpjb-grid__item">
                 <div class="wpjb-facet">
                     <div class="wpjb-facet__hd">
-                        <button class="wpjb-reset__btn">Clear Search Settings</button>
                         <input type="search" class="wpjb-search__text-input" id="wpjbSearchTextInput" placeholder="🔍 Search" />
+                        <button class="wpjb-btn__clearSettings">Clear Search Settings</button>
+                        <button class="wpjb-btn btn__filter" onclick="toggleFilters()">Filters +</button>
                     </div>
                     <div class="wpjb-facet__section-container">
                         <?php if ($industry_terms) : ?>
                             <div class="wpjb-facet__section">
-                                <details>
+                                <details open>
                                     <summary>
                                         Industry
                                     </summary>
@@ -53,7 +54,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                         <?php endif; ?>
                         <?php if ($category_terms) : ?>
                             <div class="wpjb-facet__section">
-                                <details>
+                                <details open>
                                     <summary>
                                         Category
                                     </summary>
@@ -76,7 +77,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                         <?php endif; ?>
                         <?php if ($location_terms) : ?>
                             <div class="wpjb-facet__section">
-                                <details>
+                                <details open>
                                     <summary>
                                         Location
                                     </summary>
@@ -99,7 +100,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                         <?php endif; ?>
                         <?php if ($type_terms) : ?>
                             <div class="wpjb-facet__section">
-                                <details>
+                                <details open>
                                     <summary>
                                         Employment Type
                                     </summary>
@@ -176,8 +177,18 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                                 <span> <?php echo $job_employment_type; ?></span>
                                             </span>
                                         </div>
-                                        <button class="wpjb-utilityNav__btn">
-                                            More Info
+                                        <div class="wbjb-card__sub-hd">
+                                            <h4>
+                                                About the job
+                                            </h4>
+                                        </div>
+                                        <div class="wpjb-card__bd">
+                                            <div class="wpjb-userContent">
+                                                <?php echo wp_trim_words($job_description, 55); ?>
+                                            </div>
+                                        </div>
+                                        <button class="wpjb-btn btn__moreInfo">
+                                            Full Job Description
                                         </button>
                                     </div>
                                 </div>

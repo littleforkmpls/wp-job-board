@@ -1,17 +1,17 @@
 (($) => {
-    'use strict';
+    "use strict";
 
     MicroModal.init({
-        onShow: modal => console.info(`${modal.id} is shown`),
-        onClose: modal => console.info(`${modal.id} is hidden`),
-        openTrigger: 'data-micromodal-trigger',
-        closeTrigger: 'data-micromodal-close',
-        openClass: 'wpjb-modal--isOpen',
+        onShow: (modal) => console.info(`${modal.id} is shown`),
+        onClose: (modal) => console.info(`${modal.id} is hidden`),
+        openTrigger: "data-micromodal-trigger",
+        closeTrigger: "data-micromodal-close",
+        openClass: "wpjb-modal--isOpen",
         disableScroll: true,
         disableFocus: false,
         awaitOpenAnimation: false,
         awaitCloseAnimation: false,
-        debugMode: true
+        debugMode: true,
     });
 
     // print function
@@ -34,10 +34,8 @@
 
     // Resume upload
     $(document).on("DOMContentLoaded", function () {
-
-
         const dragArea = document.querySelector(".wpjb-drag__fieldset");
-        const dragDropText = document.querySelector(".wpjb-drag__field-text");
+        const dragDropText = document.querySelector(".wpjb-drag__field-txt");
 
         let browseInput = document.getElementById("wpjb-contact__resume");
         let file;
@@ -45,14 +43,16 @@
         const fileErrorSpan = document.querySelector(".file-error");
 
         // confirm resume is attached on browse option
-
-        browseInput.addEventListener("change", function () {
-            console.log("file selected");
-            if (this.files.length > 0) {
-                dragArea.innerHTML = `✓ ${this.files[0].name} attached!`;
-            }
-        });
-
+        if (browseInput) {
+            browseInput.addEventListener("change", function () {
+                console.log("file selected");
+                if (this.files.length > 0) {
+                    dragArea.innerHTML = `✓ ${this.files[0].name} attached!`;
+                }
+            });
+        } else {
+            console.log("no browse input");
+        }
 
         // Drag and drop resume functionality
 
@@ -90,13 +90,17 @@
                 "application/text",
             ];
 
-            if (validExtensions.includes(fileType)) {
-                console.log("valid file type");
-                fileErrorSpan.style.opacity = "0";
-                dragArea.innerHTML = `✓ ${file.name} attached!`;
+            if (fileErrorSpan instanceof HTMLElement) {
+                if (validExtensions.includes(fileType)) {
+                    console.log("valid file type");
+                    fileErrorSpan.style.opacity = "0";
+                    dragArea.innerHTML = `✓ ${file.name} attached!`;
+                } else {
+                    console.log("invalid file type");
+                    fileErrorSpan.style.opacity = "1";
+                }
             } else {
-                console.log("invalid file type");
-                fileErrorSpan.style.opacity = "1";
+                console.log("no file error span");
             }
         });
     });
@@ -104,22 +108,29 @@
     // Move input label up when input is filled
     function showLabel(labelId, input) {
         const label = document.getElementById(labelId);
-        if (input.value.trim() !== '') {
-            label.classList.remove('hidden-label');
-            label.classList.add('visible-label');
-          } else {
-            label.classList.remove('visible-label');
-            label.classList.add('hidden-label');
-          }
-      }
+        if (input.value.trim() !== "") {
+            label.classList.remove("hidden-label");
+            label.classList.add("visible-label");
+        } else {
+            label.classList.remove("visible-label");
+            label.classList.add("hidden-label");
+        }
+    }
 
-    //Open and close dropdown by clicking anywhere on the details section
-    document.getElementById('wpjbFacetSection').addEventListener('click', function () {
-        var details = this.querySelector('details');
-        details.open = !details.open;
-    });
+    function toggleFilters() {
+        const facetSections = document.querySelectorAll(".wpjb-facet__section");
+        const button = document.querySelector(".btn__filter");
+
+        const hiddenSections = Array.from(facetSections).some(section => section.style.display === "none" || section.style.display === "");
+        facetSections.forEach(section => {
+            section.style.display = hiddenSections ? "grid" : "none";
+        });
+        button.textContent = hiddenSections ? "Filters -" : "Filters +";
+    }
+
 
     // public functions
+    window.toggleFilters = toggleFilters;
     window.showLabel = showLabel;
     window.printContent = printContent;
 })(jQuery);
