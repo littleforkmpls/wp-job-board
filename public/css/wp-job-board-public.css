@@ -157,8 +157,6 @@ body {
     position: relative;
 }
 
-
-
 #wpjb .wpjb-facet__hd {
     display: flex;
     justify-content: center;
@@ -177,17 +175,13 @@ body {
     position: relative;
     font-size: 0.8rem;
     margin: 0 auto 20px auto;
+    background-color: white;
     user-select: none;
-
-}
-
-#wpjb .wpjb-facet__section:hover {
-    background-color: rgb(220, 220, 220);
     cursor: pointer;
 }
 
 #wpjb .wpjb-facet__section__list {
-    background-color: rgb(255, 255, 255);
+    background-color: white;
     max-height: 300px;
     overflow-y: scroll;
 }
@@ -199,7 +193,6 @@ body {
 
 #wpjb .wpjb-facet__section__list li label:hover {
     background-color: rgb(200, 200, 200);
-    color: white;
 }
 
 #wpjb .wpjb-facet__section details summary {
@@ -208,6 +201,11 @@ body {
     align-items: center;
     overflow: hidden;
     margin: 0 5px;
+    background-color: white;
+}
+
+#wpjb .wpjb-facet__section details summary:hover {
+    opacity: 0.5;
 }
 
 #wpjb .wpjb-facet__section details summary::after {
