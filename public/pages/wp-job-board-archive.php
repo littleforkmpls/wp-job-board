@@ -25,6 +25,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                 <div class="wpjb-facet">
                     <div class="wpjb-facet__hd">
                         <input type="search" class="wpjb-search__text-input" id="wpjbSearchTextInput" placeholder="🔍 Search" />
+                        <input type="submit" class="wpjb-search__submit" id="wpjbSearchSubmit" value="Search" />
                         <button class="wpjb-btn__clearSettings">Clear Search Settings</button>
                         <button class="wpjb-btn btn__filter" onclick="toggleFilters()">Filters +</button>
                     </div>

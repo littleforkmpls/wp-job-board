@@ -253,9 +253,7 @@ body {
     }
 
     #wpjb .wpjb-facet__section details summary {
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
+
         font-size: 0.75rem;
     }
 }
@@ -289,6 +287,26 @@ body {
 #wpjb .wpjb-search__text-input::placeholder {
     font-size: 0.8rem;
 }
+
+#wpjb .wpjb-search__submit {
+    padding: 1px;
+    margin-bottom: 10px;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    border-bottom: 1px solid black;
+    color: black;
+    background-color: white;
+    cursor: pointer;
+    font-size: 0.75rem;
+    opacity: 0;
+}
+
+#wpjb .wpjb-search__submit:hover {
+    color: gray;
+}
+
+#wpjb .wpjb-search__text-input:focus + .wpjb-search__submit {opacity: 1;}
 
 @media screen and (max-width: 600px) {
     #wpjb .wpjb-search__text-input {
