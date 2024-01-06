@@ -595,9 +595,7 @@ body {
 }
 
 #wpjb .wpjb-drag__title {
-    width: 100%;
-    padding-left: 10px;
-    color: #757575;
+    color: black;
 }
 
 #wpjb .browse-label:focus-within {
@@ -619,11 +617,17 @@ body {
 
 #wpjb .hidden-label {
     opacity: 0;
+    padding-left: 10px;
+    color: #757575;
+    width: 100%;
     transition: opacity 0.3s ease;
 }
 
 #wpjb .visible-label {
     opacity: 1;
+    padding-left: 10px;
+    color: #757575;
+    width: 100%;
     transition: opacity 0.3s ease;
 }
 

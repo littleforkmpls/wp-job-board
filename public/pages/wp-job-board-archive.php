@@ -141,7 +141,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                 $job_meta = get_job_meta($post_id);
 
                                 $job_title                  = $job_meta->title;
-                                $job_description            = $job_meta->publicDescription;
+                                $job_description            = wp_trim_words($job_meta->publicDescription, 55);
                                 $job_employment_type        = $job_meta->employmentType;
                                 $job_location_city          = $job_meta->address->city;
                                 $job_location_state         = $job_meta->address->state;
@@ -185,7 +185,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                         </div>
                                         <div class="wpjb-card__bd">
                                             <div class="wpjb-userContent">
-                                                <?php echo wp_trim_words($job_description, 55); ?>
+                                                <?php echo $job_description; ?>
                                             </div>
                                         </div>
                                         <button class="wpjb-btn btn__moreInfo">

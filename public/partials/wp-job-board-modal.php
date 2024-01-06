@@ -21,7 +21,7 @@
                                 id="wpjb-contact__firstName"
                                 class="wpjb-field"
                                 placeholder="First Name"
-                                oninput="showLabel('firstNameLabel', this)"
+                                
                                 required
                                 inputmode="text"
                                 autocomplete="on"
@@ -37,7 +37,7 @@
                                 id="wpjb-contact__lastName"
                                 class="wpjb-field"
                                 placeholder="Last Name"
-                                oninput="showLabel('lastNameLabel', this)"
+
                                 required
                                 inputmode="text"
                                 autocomplete="on"
@@ -53,7 +53,7 @@
                                 id="wpjb-contact__email"
                                 class="wpjb-field"
                                 placeholder="Email"
-                                oninput="showLabel('emailLabel', this)"
+
                                 required
                                 inputmode="email"
                                 autocomplete="on"
@@ -69,7 +69,7 @@
                                 id="wpjb-contact__phone"
                                 class="wpjb-field"
                                 placeholder="Mobile Phone"
-                                oninput="showLabel('phoneLabel', this)"
+
                                 required
                                 inputmode="tel"
                                 autocomplete="on"
@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="wpjb-drag">
-                            <span class="label-txt-left">Upload your resume</span>
+                            <span class="wpjb-drag__title">Upload your resume</span>
                             <div class="wpjb-drag__fieldset">
                                 <span>
                                     <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-file-arrow-up.svg'); ?>
