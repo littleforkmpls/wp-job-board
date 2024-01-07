@@ -544,8 +544,20 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
             $this->throw_error('Must submit all data (First name, Last name, Phone number, Email address, and Resume');
         }
 
-        if (empty($resume['type']) || $resume['type'] !== 'application/pdf') {
-            $this->throw_error('Must submit a PDF of your resume');
+        $acceptedTypes = [
+            'application/pdf',
+            'application/doc',
+            'application/docx',
+            'application/txt',
+            'application/rtf',
+            'application/odt',
+            'application/html',
+            'application/text',
+        ];
+
+        // accept=".html, .text, .txt, .pdf, .doc, .docx, .rft, .odt"
+        if (empty($resume['type']) || !in_array($resume['type'], $acceptedTypes)) {
+            $this->throw_error('Must submit a valid file(.html, .text, .txt, .pdf, .doc, .docx, .rft, .odt) of your resume');
         }
 
         $job_order   = $this->get_job_order($wp_post_id, $job_order_id);
