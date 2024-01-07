@@ -17,12 +17,15 @@ class WP_Job_Board_Admin
      * client facing on the admin site.
      */
     public const SETTINGS_GROUP        = 'wp_job_board_settings_group';
+    public const SETTINGS_GROUP_CRON   = 'wp_job_board_settings_group_cron';
     public const SETTINGS_SECTION      = 'wp_job_board_settings_section';
+    public const SETTINGS_CRON_SECTION = 'wp_job_board_settings_cron_section';
     public const SETTING_CLIENT_ID     = 'wp_job_board_client_id';
     public const SETTING_CLIENT_SECRET = 'wp_job_board_client_secret';
     public const SETTING_API_USERNAME  = 'wp_job_board_api_username';
     public const SETTING_API_PASSWORD  = 'wp_job_board_api_password';
     public const SETTING_ENABLE_CRON   = 'wp_job_board_enable_cron';
+    public const SETTING_CRON_CADENCE  = 'wp_job_board_cron_cadence';
 
     /**
      * The following are handled in an Options Object(the first const)
@@ -141,9 +144,13 @@ class WP_Job_Board_Admin
             )
         );
         register_setting(
-            self::SETTINGS_GROUP,
+            self::SETTINGS_GROUP_CRON,
             self::SETTING_ENABLE_CRON,
             array()
+        );
+        register_setting(
+            self::SETTINGS_GROUP_CRON,
+            self::SETTING_CRON_CADENCE,
         );
     }
 
@@ -215,25 +222,42 @@ class WP_Job_Board_Admin
 
     public function add_cron()
     {
-        if (!get_option(WP_Job_Board_Admin::SETTING_ENABLE_CRON)) {
-            $timestamp = wp_next_scheduled(WP_Job_Board_Admin::CRON_SYNC_JOBS);
-            if ($timestamp) {
-                wp_unschedule_event($timestamp, WP_Job_Board_Admin::CRON_SYNC_JOBS);
-            }
-            return;
-        }
-        $schedules = wp_get_schedules();
+        // Get our data
+        $timestamp = wp_next_scheduled(WP_Job_Board_Admin::CRON_SYNC_JOBS);
+        $enabled = get_option(WP_Job_Board_Admin::SETTING_ENABLE_CRON);
+        $unset = false;
+        $cadence = get_option(WP_Job_Board_Admin::SETTING_CRON_CADENCE);
+        $should_happen = strtotime('now')+((int)str_replace('m', '', $cadence)*60);
 
-        if (($timestamp = wp_next_scheduled(WP_Job_Board_Admin::CRON_SYNC_JOBS)) === false) {
-            $scheduled = wp_schedule_event(time(), '30m', WP_Job_Board_Admin::CRON_SYNC_JOBS);
+        // If we are scheduled too far into the future, or we are not enabled mark to unset.
+        if ($timestamp) {
+            $unset = ($timestamp > $should_happen) || !$enabled;
+        }
+
+        // If we need to unset do so.
+        if ($unset) {
+            wp_clear_scheduled_hook(WP_Job_Board_Admin::CRON_SYNC_JOBS);
+        }
+
+        // If we need to schedule, do so.
+        if ($enabled && !$timestamp) {
+            $scheduled = wp_schedule_event($should_happen, $cadence, WP_Job_Board_Admin::CRON_SYNC_JOBS);
         }
     }
 
-    public function add_30m_interval($schedules)
+    public function add_cron_intervals($schedules)
     {
         $schedules['30m'] = array(
-            'interval' => '1800',
+            'interval' => 1800,
             'display'  => esc_html__('Every 30 minutes'),
+        );
+        $schedules['60m'] = array(
+            'interval' => 3600,
+            'display'  => esc_html__('Every 60 minutes'),
+        );
+        $schedules['120m'] = array(
+            'interval' => 7200,
+            'display'  => esc_html__('Every 120 minutes'),
         );
         return $schedules;
     }

@@ -56,67 +56,6 @@ add_settings_field(
         'name' => WP_Job_Board_Admin::SETTING_API_PASSWORD,
     )
 );
-
-add_settings_field(
-    WP_Job_Board_Admin::SETTING_ENABLE_CRON,
-    __('Enable Cron', 'wp_job_board'),
-    'render_checkbox_field',
-    WP_Job_Board_Admin::PAGE_SLUG,
-    WP_Job_Board_Admin::SETTINGS_SECTION,
-    array(
-        'name' => WP_Job_Board_Admin::SETTING_ENABLE_CRON,
-    )
-);
-
-function render_input_field($args)
-{
-    $defaults = array(
-        'type' => 'text',
-        'name' => '',
-    );
-
-    $args     = array_merge($defaults, $args);
-
-    if (empty($args['name'])) {
-        return;
-    }
-
-    $value = esc_attr(get_option($args['name']));
-    $type  = esc_attr($args['type']);
-    $name  = esc_attr($args['name']);
-
-    $output = "<input type='{$type}' name='{$name}' value='{$value}' class='regular-text' />";
-
-    if (!empty($args['description'])) {
-        $desc = wp_kses_post($args['description']);
-
-        $output .= "<p class='description'>{$desc}</p>";
-    }
-
-    echo $output;
-}
-
-function render_checkbox_field($args)
-{
-    $defaults = array(
-        'type' => 'checkbox',
-        'name' => '',
-    );
-
-    $args = array_merge($defaults, $args);
-
-    if (empty($args['name'])) {
-        return;
-    }
-
-    $name    = esc_attr($args['name']);
-    $checked = checked(1, get_option($args['name']), false);
-
-    $output = "<input type='checkbox' name='{$name}' value='1' {$checked} />";
-
-    echo $output;
-}
-
 ?>
 
 <form method="post" action="options.php">

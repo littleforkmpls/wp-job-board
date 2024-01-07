@@ -109,3 +109,95 @@ function get_filter_terms($taxonomy)
 
     return $terms;
 }
+
+/**
+ * Helper for rendering an input field in the admin
+ *
+ * @param $args
+ *
+ * @return void
+ */
+function render_input_field($args)
+{
+    $defaults = array(
+        'type' => 'text',
+        'name' => '',
+    );
+
+    $args     = array_merge($defaults, $args);
+
+    if (empty($args['name'])) {
+        return;
+    }
+
+    $value = esc_attr(get_option($args['name']));
+    $type  = esc_attr($args['type']);
+    $name  = esc_attr($args['name']);
+
+    $output = "<input type='{$type}' name='{$name}' value='{$value}' class='regular-text' />";
+
+    if (!empty($args['description'])) {
+        $desc = wp_kses_post($args['description']);
+
+        $output .= "<p class='description'>{$desc}</p>";
+    }
+
+    echo $output;
+}
+
+/**
+ * Helper for rendering a checkbox field in the admin
+ * @param $args
+ *
+ * @return void
+ */
+function render_checkbox_field($args)
+{
+    $defaults = array(
+        'type' => 'checkbox',
+        'name' => '',
+    );
+
+    $args = array_merge($defaults, $args);
+
+    if (empty($args['name'])) {
+        return;
+    }
+
+    $name    = esc_attr($args['name']);
+    $checked = checked(1, get_option($args['name']), false);
+
+    $output = "<input type='checkbox' name='{$name}' value='1' {$checked} />";
+
+    echo $output;
+}
+
+function render_choice_field($args)
+{
+    $defaults = array(
+        'type'    => 'checkbox',
+        'name'    => '',
+        'choices' => array(),
+    );
+
+    $args = array_merge($defaults, $args);
+
+    if (empty($args['name']) || empty($args['choices'])) {
+        return;
+    }
+
+    $name  = esc_attr($args['name']);
+    $value = esc_attr(get_option($args['name'], '30m'));
+
+    $output = "<select name='{$name}'>";
+
+    foreach ($args['choices'] as $key => $choice) {
+        $selected = $value === $key ? 'selected':'';
+        $output   .= "<option value='{$key}' {$selected}>{$choice}</option>";
+    }
+
+    $output .= '</select>';
+
+    echo $output;
+}
+
