@@ -135,7 +135,21 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
 
         global $wpdb;
 
-        $existing_job_orders_result = $wpdb->get_results("SELECT post_id, meta_value FROM wp_postmeta WHERE meta_key = 'wp_job_board_bh_id' AND meta_value IS NOT NULL");
+        if ($force === true) {
+            // We're forcing a reset, let's clear our stuff.
+            $wpdb->query($wpdb->prepare("DELETE a,b
+                                FROM      $wpdb->posts    a
+                                LEFT JOIN $wpdb->postmeta b ON a.ID = b.post_id
+                                WHERE a.post_type LIKE 'wjb_bh_%';"));
+
+            $wpdb->query($wpdb->prepare("DELETE a,b,c
+                                FROM      $wpdb->term_taxonomy      a
+                                LEFT JOIN $wpdb->term_relationships b ON a.term_taxonomy_id = b.term_taxonomy_id
+                                LEFT JOIN $wpdb->terms              c ON a.term_id = c.term_id
+                                WHERE a.taxonomy LIKE 'wjb_bh_%';"));
+        }
+
+        $existing_job_orders_result = $wpdb->get_results("SELECT post_id, meta_value FROM wp_postmeta WHERE meta_key = 'wjb_bh_id' AND meta_value IS NOT NULL");
         $existing_job_orders        = array();
 
         foreach ($existing_job_orders_result as $item) {
@@ -159,9 +173,9 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
                 'post_status'    => 'publish',
                 'comment_status' => 'closed',
                 'meta_input'     => array(
-                    'wp_job_board_bh_data'    => addslashes($bh_data), // we have to do this because wp strips slashes when saving
-                    'wp_job_board_bh_updated' => 1,
-                    'wp_job_board_bh_id'      => $job_order['id'],
+                    'wjb_bh_data'    => addslashes($bh_data), // we have to do this because wp strips slashes when saving
+                    'wjb_bh_updated' => 1,
+                    'wjb_bh_id'      => $job_order['id'],
                 ),
                 'tax_input' => array(
                     'wjb_bh_job_type_tax' => $job_order['employmentType'],
@@ -173,11 +187,11 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
 
             if (isset($existing_job_orders[$job_order['id']])) {
                 $post_data['ID'] = $existing_job_orders[$job_order['id']];
-                $post_bh_data    = get_post_meta($existing_job_orders[$job_order['id']], 'wp_job_board_bh_data', true);
+                $post_bh_data    = get_post_meta($existing_job_orders[$job_order['id']], 'wjb_bh_data', true);
 
                 // if our data is the same mark as updated and skip it.
                 if (!$force && $post_bh_data === $bh_data) {
-                    update_post_meta($existing_job_orders[$job_order['id']], 'wp_job_board_bh_updated', 1);
+                    update_post_meta($existing_job_orders[$job_order['id']], 'wjb_bh_updated', 1);
                     continue;
                 }
                 $log_data[] = array(
@@ -210,7 +224,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
         }
 
         // Trash our un-updated items
-        $result = $wpdb->get_results("SELECT pm2.meta_value FROM wp_postmeta pm1 JOIN wp_postmeta pm2 on pm1.post_id = pm2.post_id WHERE pm1.meta_key = 'wp_job_board_bh_updated' AND pm1.meta_value = 0 AND pm2.meta_key = 'wp_job_board_bh_data'");
+        $result = $wpdb->get_results("SELECT pm2.meta_value FROM wp_postmeta pm1 JOIN wp_postmeta pm2 on pm1.post_id = pm2.post_id WHERE pm1.meta_key = 'wjb_bh_updated' AND pm1.meta_value = 0 AND pm2.meta_key = 'wjb_bh_data'");
         $time   = time();
         foreach ($result as $item) {
             $bh_data    = json_decode($item->meta_value, true);
@@ -221,10 +235,10 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
                 'time'   => $time,
             );
         }
-        $result = $wpdb->get_results("UPDATE wp_posts SET post_status = 'trash' WHERE ID IN(SELECT post_id FROM wp_postmeta WHERE meta_key = 'wp_job_board_bh_updated' AND meta_value = 0);");
+        $result = $wpdb->get_results("UPDATE wp_posts SET post_status = 'trash' WHERE ID IN(SELECT post_id FROM wp_postmeta WHERE meta_key = 'wjb_bh_updated' AND meta_value = 0);");
 
         // mark everything as unupdated since we're done processing
-        $result = $wpdb->get_results("UPDATE wp_postmeta SET meta_value = 0 WHERE meta_key = 'wp_job_board_bh_updated'");
+        $result = $wpdb->get_results("UPDATE wp_postmeta SET meta_value = 0 WHERE meta_key = 'wjb_bh_updated'");
 
         $this->save_logs($log_data);
 
@@ -557,7 +571,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
     private function get_job_order(string|int $wp_post_id, string|int $job_order_id)
     {
         $post = get_post($wp_post_id);
-        $meta = get_post_meta($wp_post_id, 'wp_job_board_bh_data');
+        $meta = get_post_meta($wp_post_id, 'wjb_bh_data');
 
         if ($post->post_status !== 'publish') {
             $this->throw_error('Job has been closed');
@@ -593,7 +607,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
 
             $data = $result['data'][0];
 
-            update_post_meta($wp_post_id, 'wp_job_board_bh_data', json_encode($data, JSON_HEX_APOS | JSON_HEX_QUOT));
+            update_post_meta($wp_post_id, 'wjb_bh_data', json_encode($data, JSON_HEX_APOS | JSON_HEX_QUOT));
         }
 
         return $data;

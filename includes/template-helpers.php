@@ -12,7 +12,7 @@
  */
 function get_job_meta($id)
 {
-    $metadata = get_post_meta($id, 'wp_job_board_bh_data', true);
+    $metadata = get_post_meta($id, 'wjb_bh_data', true);
     $metadata_decoded = json_decode($metadata);
 
     return $metadata_decoded;

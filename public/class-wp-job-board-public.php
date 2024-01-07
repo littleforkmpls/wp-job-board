@@ -178,7 +178,7 @@ class WP_Job_Board_Public
     {
         global $post;
 
-        $bhData = get_post_meta($post->ID, 'wp_job_board_bh_data', true);
+        $bhData = get_post_meta($post->ID, 'wjb_bh_data', true);
         $data = json_decode($bhData, true);
         $data['publicDescription'] = htmlspecialchars($data['publicDescription']);
 
