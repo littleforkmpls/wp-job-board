@@ -15,13 +15,12 @@
                 <form>
                     <main class="wpjb-form__bd" id="modal-1-content">
                         <div class="wpjb-fieldset">
-                            <label id="firstNameLabel" for="wpjb-contact__firstName" aria-label="First Name" class="label-txt-left hidden-label">First Name</label>
+                            <label id="firstNameLabel" for="wpjb-contact__firstName" aria-label="First Name" class="hidden-label">First Name</label>
                             <input
                                 type="text"
                                 id="wpjb-contact__firstName"
                                 class="wpjb-field"
                                 placeholder="First Name"
-                                oninput="showLabel('firstNameLabel', this)"
                                 required
                                 inputmode="text"
                                 autocomplete="on"
@@ -31,13 +30,12 @@
                             />
                         </div>
                         <div class="wpjb-fieldset">
-                            <label id="lastNameLabel" for="wpjb-contact__lastName" aria-label="Last Name" class="label-txt-left hidden-label">Last Name</label>
+                            <label id="lastNameLabel" for="wpjb-contact__lastName" aria-label="Last Name" class="hidden-label">Last Name</label>
                             <input
                                 type="text"
                                 id="wpjb-contact__lastName"
                                 class="wpjb-field"
                                 placeholder="Last Name"
-                                oninput="showLabel('lastNameLabel', this)"
                                 required
                                 inputmode="text"
                                 autocomplete="on"
@@ -47,13 +45,12 @@
                             />
                         </div>
                         <div class="wpjb-fieldset">
-                            <label id="emailLabel" for="wpjb-contact__email" aria-label="Email" class="label-txt-left hidden-label">Email</label>
+                            <label id="emailLabel" for="wpjb-contact__email" aria-label="Email" class="hidden-label">Email</label>
                             <input
                                 type="email"
                                 id="wpjb-contact__email"
                                 class="wpjb-field"
                                 placeholder="Email"
-                                oninput="showLabel('emailLabel', this)"
                                 required
                                 inputmode="email"
                                 autocomplete="on"
@@ -63,13 +60,12 @@
                             />
                         </div>
                         <div class="wpjb-fieldset">
-                            <label id="phoneLabel" for="wpjb-contact__phone" aria-label="Mobile Phone" class="label-txt-left hidden-label">Mobile Phone</label>
+                            <label id="phoneLabel" for="wpjb-contact__phone" aria-label="Mobile Phone" class="hidden-label">Mobile Phone</label>
                             <input
                                 type="tel"
                                 id="wpjb-contact__phone"
                                 class="wpjb-field"
                                 placeholder="Mobile Phone"
-                                oninput="showLabel('phoneLabel', this)"
                                 required
                                 inputmode="tel"
                                 autocomplete="on"
