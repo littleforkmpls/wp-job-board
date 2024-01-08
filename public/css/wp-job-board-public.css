@@ -17,11 +17,11 @@ body {
 #wpjb .wpjb-grid {
     display: grid;
     gap: 20px;
-    grid-template-columns: 25vw 1fr;
+    grid-template-columns: 300px 1fr;
 }
 
 #wpjb .wpjb-grid__item:first-child {
-    width: 25vw;
+    /* width: 25vw; */
     grid-column: 1;
     /* overflow-y: scroll; */
 }
@@ -30,7 +30,7 @@ body {
     grid-column: 2;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
     #wpjb .wpjb-grid {
         grid-template-columns: 1fr;
     }
@@ -187,7 +187,7 @@ body {
     text-decoration: underline;
 }
 
-#wpjb .wpjb-facet__section__list li label::before {
+/* #wpjb .wpjb-facet__section__list li label::before {
     content: "";
     display: inline-block;
     border-radius: 3px;
@@ -196,16 +196,21 @@ body {
     margin-right: 10px;
     background-color: white;
     box-shadow: inset 4px 4px 4px rgb(220, 220, 220), inset -4px -4px 4px rgb(243, 243, 243);
-}
+} */
 
 #wpjb .wpjb-facet__section__list li input[type="checkbox"] {
-    display: none;
+    /* display: none; */
+    display: inline-block;
+    border-radius: 3px;
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
 }
 
-#wpjb .wpjb-facet__section__list li input[type="checkbox"]:checked+label::before {
+/* #wpjb .wpjb-facet__section__list li input[type="checkbox"]:checked+label::before {
     content: "";
     background-color: black;
-}
+} */
 
 #wpjb .wpjb-facet__section details summary {
     display: flex;
@@ -234,7 +239,7 @@ body {
 
 
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
 
     #wpjb .wpjb-facet__section {
         display: none;
@@ -258,7 +263,7 @@ body {
     }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
 
     #wpjb .wpjb-facet__section__list {
         columns: auto 2;
@@ -308,10 +313,10 @@ body {
 
 #wpjb .wpjb-search__text-input:focus + .wpjb-search__submit {opacity: 1;}
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
     #wpjb .wpjb-search__text-input {
         margin: 5px 0;
-        width: 25vw;
+        width: 200px;
         font-size: 0.75rem;
     }
 
@@ -383,7 +388,7 @@ body {
     border-top: none;
     border-right: none;
     border-bottom: 1px solid #858585;
-    color: #858585;
+    color: black;
     background-color: white;
     cursor: pointer;
     font-size: 0.75rem;
@@ -391,7 +396,7 @@ body {
 }
 
 #wpjb .wpjb-btn__clearSettings:hover {
-    opacity: 0.5;
+    color: #858585;
 }
 
 #wpjb .wpjb-btn {
@@ -427,7 +432,7 @@ body {
     text-transform: uppercase;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
 
     #wpjb .btn__filter {
         display: block;

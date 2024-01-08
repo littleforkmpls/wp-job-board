@@ -1,14 +1,15 @@
 (($) => {
     "use strict";
 
+    console.log("wp-job-board-public.js loaded");
+
     /** ******************* */
     /** MicroModal    */
     /** ******************* */
 
     // const modalOpen = document.querySelector("data-micromodal-trigger");
-    // const modalClose = document.querySelector("data-micromodal-close");
 
-    // if (!modalOpen) {
+    // if (!MicroModal.init()) {
     //     return;
     // }
 
@@ -25,7 +26,56 @@
         debugMode: true,
     });
 
+    /** ******************* */
+    /** Search Functions    */
+    /** ******************* */
+
+    const clearSearch = $(".wpjb-btn__clearSettings");
+    const searchSubmit = $(".wpjb-search__submit");
+
+    if (!clearSearch.length || !searchSubmit.length) {
+        return;
+    }
+
+    searchSubmit.on("click", function () {
+        console.log("search submit clicked");
+        clearSearch.css("opacity", "1");
+    });
+
+    clearSearch.on("click", function () {
+        console.log("clear search clicked");
+        clearSearch.css("opacity", "0");
+        //add more clear functionality here
+    });
+
     $(document).on("DOMContentLoaded", function () {
+        console.log("DOM content loaded");
+
+        /** ******************* */
+        /** Print Job Post      */
+        /** ******************* */
+
+        const printButton = $(".wpjb-utilityNav__btn");
+
+        printButton.on("click", function () {
+            console.log("print btn clicked!");
+
+            const content = $("#wpjb-card").html();
+            const printWindow = window.open("", "_blank");
+            printWindow.document.open();
+            printWindow.document.write(
+                "<html><head><title>Print</title></head><body>" +
+                    content +
+                    "</body></html>"
+            );
+            printWindow.document.close();
+            printWindow.print();
+
+            printWindow.onafterprint = function () {
+                printWindow.close();
+            };
+        });
+
         /** ******************* */
         /** Upload Resume       */
         /** ******************* */
@@ -101,90 +151,75 @@
         /** Search Functions    */
         /** ******************* */
 
-        const clearSearch = document.querySelector(".wpjb-btn__clearSettings");
-        const searchSubmit = document.querySelector(".wpjb-search__submit");
+        // const clearSearch = document.querySelector(".wpjb-btn__clearSettings");
+        // const searchSubmit = document.querySelector(".wpjb-search__submit");
 
-        if (!clearSearch || !searchSubmit) {
-            return;
-        }
+        // if (!clearSearch || !searchSubmit) {
+        //     return;
+        // }
 
-        searchSubmit.addEventListener("click", function () {
-            console.log("search submit clicked");
-            clearSearch.style.opacity = "1";
-        });
+        // searchSubmit.addEventListener("click", function () {
+        //     console.log("search submit clicked");
+        //     clearSearch.style.opacity = "1";
+        // });
 
-        clearSearch.addEventListener("click", function () {
-            console.log("clear search clicked");
-            clearSearch.style.opacity = "0";
-            //add more clear functionality here
-        });
-
-        /** ******************* */
-        /** Print Job Post      */
-        /** ******************* */
-
-        const printButton = document.querySelector(".wpjb-utilityNav__btn");
-
-        if (printButton) {
-            printButton.addEventListener("click", function () {
-                console.log("print btn clicked!");
-                const content = $("#wpjb-card").html();
-                const printWindow = window.open("", "_blank");
-                printWindow.document.open();
-                printWindow.document.write(
-                    "<html><head><title>Print</title></head><body>" +
-                        content +
-                        "</body></html>"
-                );
-                printWindow.document.close();
-                printWindow.print();
-                printWindow.onafterprint = function () {
-                    printWindow.close();
-                };
-            });
-        }
-
-        /** ******************* */
-        /** Form Labels         */
-        /** ******************* */
-
-        const fieldsets = document.querySelectorAll(".wpjb-fieldset");
-
-        function showLabel(input) {
-            const labelId = input.getAttribute("aria-labelledby");
-            const label = document.getElementById(labelId);
-
-            if (!label) {
-                console.error("Label not found for input:", input);
-                return;
-            }
-
-            if (input.value.trim() !== "") {
-                label.classList.remove("hidden-label");
-                label.classList.add("visible-label");
-            } else {
-                label.classList.remove("visible-label");
-                label.classList.add("hidden-label");
-            }
-        }
-
-        fieldsets.forEach((fieldset) => {
-            const input = fieldset.querySelector(".wpjb-field");
-
-            // Initial check on page load
-            showLabel(input);
-
-            // Add event listener
-            input.addEventListener("input", function () {
-                console.log("input changed", this.value);
-                showLabel(this);
-            });
-        });
+        // clearSearch.addEventListener("click", function () {
+        //     console.log("clear search clicked");
+        //     clearSearch.style.opacity = "0";
+        //     //add more clear functionality here
+        // });
     });
 
     /** ******************* */
     /** Form Labels         */
     /** ******************* */
+
+    //     const fieldsets = document.querySelectorAll(".wpjb-fieldset");
+
+    //     function showLabel(input) {
+    //         const labelId = input.getAttribute("aria-labelledby");
+    //         const label = document.getElementById(labelId);
+
+    //         if (!label) {
+    //             console.error("Label not found for input:", input);
+    //             return;
+    //         }
+
+    //         if (input.value.trim() !== "") {
+    //             label.classList.remove("hidden-label");
+    //             label.classList.add("visible-label");
+    //         } else {
+    //             label.classList.remove("visible-label");
+    //             label.classList.add("hidden-label");
+    //         }
+    //     }
+
+    //     fieldsets.forEach((fieldset) => {
+    //         const input = fieldset.querySelector(".wpjb-field");
+
+    //         // Initial check on page load
+    //         showLabel(input);
+
+    //         // Add event listener
+    //         input.addEventListener("input", function () {
+    //             console.log("input changed", this.value);
+    //             showLabel(this);
+    //         });
+    //     });
+    // });
+
+    /** ******************* */
+    /** Form Labels         */
+    /** ******************* */
+
+    function showLabel(labelId, input) {
+        const label = document.getElementById(labelId);
+        if (input.value.trim() !== "") {
+            label.style.opacity = "1";
+        } else {
+            label.style.opacity = "0";
+        }
+    }
 
     // function showLabel(labelId, input) {
     //     const label = document.getElementById(labelId);
@@ -238,6 +273,6 @@
 
     // public functions
     window.toggleFilters = toggleFilters;
-    // window.showLabel = showLabel;
-    // window.printContent = printContent;
+    window.showLabel = showLabel;
+    //window.printContent = printContent;
 })(jQuery);
