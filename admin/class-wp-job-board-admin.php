@@ -212,6 +212,18 @@ class WP_Job_Board_Admin
         }
     }
 
+    public function test_connection() {
+        try {
+            if (!$this->bullhorn) {
+                $this->bullhorn = new WP_Job_Board_Bullhorn_Manager($_POST);
+            }
+            $this->bullhorn->test_connection();
+            wp_send_json_success(array('message' => 'Connection was successful.',));
+        } catch (Throwable $exception) {
+            wp_send_json_error(array('message' => $exception->getMessage()));
+        }
+    }
+
     public function clear_logs()
     {
         global $wpdb;

@@ -97,13 +97,14 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
     /**
      * Constructor to set up our class.
      */
-    public function __construct()
+    public function __construct($temp_settings = array())
     {
-        $this->options           = get_option(WP_Job_Board_Admin::OPTION_ARRAY_KEY, array());
-        $this->api_username      = get_option(WP_Job_Board_Admin::SETTING_API_USERNAME);
-        $this->api_password      = get_option(WP_Job_Board_Admin::SETTING_API_PASSWORD);
-        $this->api_client_id     = get_option(WP_Job_Board_Admin::SETTING_CLIENT_ID);
-        $this->api_client_secret = get_option(WP_Job_Board_Admin::SETTING_CLIENT_SECRET);
+        $this->temp_settings     = $temp_settings;
+        $this->options           = $this->get_option(WP_Job_Board_Admin::OPTION_ARRAY_KEY, array());
+        $this->api_username      = $this->get_option(WP_Job_Board_Admin::SETTING_API_USERNAME);
+        $this->api_password      = $this->get_option(WP_Job_Board_Admin::SETTING_API_PASSWORD);
+        $this->api_client_id     = $this->get_option(WP_Job_Board_Admin::SETTING_CLIENT_ID);
+        $this->api_client_secret = $this->get_option(WP_Job_Board_Admin::SETTING_CLIENT_SECRET);
 
         if (
             ! $this->api_username
@@ -921,5 +922,22 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
         }
 
         return $result;
+    }
+
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function test_connection(): bool {
+        $corp_token = $this->get_corp_token();
+
+        return !empty($corp_token);
+    }
+
+    private function get_option(string $option_key, $default = null) {
+        if (isset($this->temp_settings[$option_key])) {
+            return $this->temp_settings[$option_key];
+        }
+        return get_option($option_key, $default);
     }
 }

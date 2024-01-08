@@ -2,7 +2,7 @@
 
 add_settings_section(
     WP_Job_Board_Admin::SETTINGS_CRON_SECTION,
-    'Cron Settings',
+    '',
     false,
     WP_Job_Board_Admin::PAGE_SLUG
 );
@@ -37,11 +37,25 @@ add_settings_field(
 $scheduled = wp_next_scheduled(WP_Job_Board_Admin::CRON_SYNC_JOBS);
 ?>
 
-<form method="post" action="options.php">
-    <?php
-    settings_fields(WP_Job_Board_Admin::SETTINGS_GROUP_CRON);
-    do_settings_sections(WP_Job_Board_Admin::PAGE_SLUG);
-    ?>
-    <?php submit_button(); ?>
-</form>
-<p>Next scheduled run: <?= $scheduled ? date('h:ia', $scheduled) : 'not scheduled' ?></p>
+<div class="wpjba-grid">
+    <div class="wpjba-grid__item">
+        <div class="wpjba-card">
+            <div class="wpjba-card__hd">
+                <h3 class="wpjba-p0 wpjba-m0">Cron Settings</h3>
+            </div>
+            <div class="wpjba-card__bd">
+                <p class="wpjba-p0 wpjba-m0">These options control the frequency we retrieve new Job Orders.</p>
+            </div>
+            <div class="wpjba-card__ft">
+                <form method="post" action="options.php">
+                    <?php
+                    settings_fields(WP_Job_Board_Admin::SETTINGS_GROUP_CRON);
+                    do_settings_sections(WP_Job_Board_Admin::PAGE_SLUG);
+                    ?>
+                    <?php submit_button(); ?>
+                </form>
+                <p><strong>Next scheduled run:</strong> <?= $scheduled ? date('h:ia', $scheduled) : 'not scheduled' ?></p>
+            </div>
+        </div>
+    </div>
+</div>
