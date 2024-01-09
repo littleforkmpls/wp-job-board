@@ -44,8 +44,8 @@
 
     function resetSearch() {
         const $url = new URL(window.location.href);
-        $url.searchParams.delete('s'); // Remove the 's' parameter
-        window.history.replaceState({}, '', $url);
+        $url.searchParams.delete("s");
+        window.history.replaceState({}, "", $url);
     }
 
     $searchSubmit.on("click", function () {
@@ -63,18 +63,21 @@
     });
 
     /** ******************* */
-/** Show Filters    */
-/** ******************* */
+    /** Show Filters        */
+    /** ******************* */
 
-$(".btn__filter").on("click", function() {
-    const facetSections = $(".wpjb-facet__section");
-    const hiddenSections = facetSections.toArray().some(
-        (section) =>
-            $(section).css("display") === "none" || $(section).css("display") === ""
-    );
-    facetSections.css("display", hiddenSections ? "grid" : "none");
-    $(this).text(hiddenSections ? "Filters -" : "Filters +");
-});
+    $(".btn__filter").on("click", function () {
+        const facetSections = $(".wpjb-facet__section");
+        const hiddenSections = facetSections
+            .toArray()
+            .some(
+                (section) =>
+                    $(section).css("display") === "none" ||
+                    $(section).css("display") === ""
+            );
+        facetSections.css("display", hiddenSections ? "grid" : "none");
+        $(this).text(hiddenSections ? "Filters -" : "Filters +");
+    });
 
     /** ******************* */
     /** Print Job Post      */
@@ -189,5 +192,4 @@ $(".btn__filter").on("click", function() {
             $fileErrorSpan.css("opacity", "1");
         }
     });
-
 })(jQuery);
