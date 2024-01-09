@@ -28,17 +28,37 @@
     /** Search Functions    */
     /** ******************* */
 
-    const $clearSearch = $(".wpjb-btn__clearSettings");
+    const $clearSearchBtn = $(".wpjb-btn__clearSettings");
     const $searchSubmit = $(".wpjb-search__submit");
+    const $searchInput = $("#wpjbSearchTextInput");
+
+    settingsBtnOpacity();
+
+    function settingsBtnOpacity() {
+        if ($searchInput.val().trim() !== "") {
+            $clearSearchBtn.css("opacity", "1");
+        } else {
+            $clearSearchBtn.css("opacity", "0");
+        }
+    }
+
+    function resetSearch() {
+        const $url = new URL(window.location.href);
+        $url.searchParams.delete('s'); // Remove the 's' parameter
+        window.history.replaceState({}, '', $url);
+    }
 
     $searchSubmit.on("click", function () {
         console.log("search submit clicked");
-        $clearSearch.css("opacity", "1");
+        settingsBtnOpacity();
     });
 
-    $clearSearch.on("click", function () {
+    $clearSearchBtn.on("click", function () {
         console.log("clear search clicked");
-        $clearSearch.css("opacity", "0");
+        $searchInput.val("");
+        $clearSearchBtn.css("opacity", "0");
+        resetSearch();
+        window.location.reload();
         //add more clear functionality here
     });
 
