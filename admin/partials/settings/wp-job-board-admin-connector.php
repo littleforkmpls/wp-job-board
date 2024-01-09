@@ -8,7 +8,7 @@
 
 add_settings_section(
     WP_Job_Board_Admin::SETTINGS_SECTION,
-    'Bullhorn Settings',
+    '',
     false,
     WP_Job_Board_Admin::PAGE_SLUG
 );
@@ -56,73 +56,43 @@ add_settings_field(
         'name' => WP_Job_Board_Admin::SETTING_API_PASSWORD,
     )
 );
-
-add_settings_field(
-    WP_Job_Board_Admin::SETTING_ENABLE_CRON,
-    __('Enable Cron', 'wp_job_board'),
-    'render_checkbox_field',
-    WP_Job_Board_Admin::PAGE_SLUG,
-    WP_Job_Board_Admin::SETTINGS_SECTION,
-    array(
-        'name' => WP_Job_Board_Admin::SETTING_ENABLE_CRON,
-    )
-);
-
-function render_input_field($args)
-{
-    $defaults = array(
-        'type' => 'text',
-        'name' => '',
-    );
-
-    $args     = array_merge($defaults, $args);
-
-    if (empty($args['name'])) {
-        return;
-    }
-
-    $value = esc_attr(get_option($args['name']));
-    $type  = esc_attr($args['type']);
-    $name  = esc_attr($args['name']);
-
-    $output = "<input type='{$type}' name='{$name}' value='{$value}' class='regular-text' />";
-
-    if (!empty($args['description'])) {
-        $desc = wp_kses_post($args['description']);
-
-        $output .= "<p class='description'>{$desc}</p>";
-    }
-
-    echo $output;
-}
-
-function render_checkbox_field($args)
-{
-    $defaults = array(
-        'type' => 'checkbox',
-        'name' => '',
-    );
-
-    $args = array_merge($defaults, $args);
-
-    if (empty($args['name'])) {
-        return;
-    }
-
-    $name    = esc_attr($args['name']);
-    $checked = checked(1, get_option($args['name']), false);
-
-    $output = "<input type='checkbox' name='{$name}' value='1' {$checked} />";
-
-    echo $output;
-}
-
 ?>
+<div class="wpjba-grid">
+    <div class="wpjba-grid__item">
+        <div class="wpjba-card">
+            <div class="wpjba-card__hd">
+                <h3 class="wpjba-p0 wpjba-m0">Bullhorn Settings</h3>
+            </div>
+            <div class="wpjba-card__bd">
+                <p class="wpjba-p0 wpjba-m0">These options can be found in your Bullhorn account.</p>
+            </div>
+            <div class="wpjba-card__ft">
+                <form id="wpjba-connection-form" method="post" action="options.php">
+                    <?php
+                    settings_fields(WP_Job_Board_Admin::SETTINGS_GROUP);
+                    do_settings_sections(WP_Job_Board_Admin::PAGE_SLUG);
+                    ?>
+                    <?php submit_button(); ?>
+                </form>
+            </div>
+        </div>
+    </div>
 
-<form method="post" action="options.php">
-    <?php
-        settings_fields(WP_Job_Board_Admin::SETTINGS_GROUP);
-        do_settings_sections(WP_Job_Board_Admin::PAGE_SLUG);
-    ?>
-    <?php submit_button(); ?>
-</form>
+    <div class="wpjba-grid__item">
+        <div class="wpjba-card">
+            <div class="wpjba-card__hd">
+                <h3 class="wpjba-p0 wpjba-m0">Test above settings</h3>
+            </div>
+            <div class="wpjba-card__bd">
+                <p class="wpjba-p0 wpjba-m0">Check if the above settings will connect to Bullhorn.</p>
+            </div>
+            <div class="wpjba-card__ft">
+                <button type="button" class="button button-primary" data-wpjb-ajax="test_connection"
+                        data-wpjb-ajax-form="wpjba-connection-form">
+                    Test Connection
+                </button>
+                <span class="spinner" aria-hidden="true"></span>
+            </div>
+        </div>
+    </div>
+</div>

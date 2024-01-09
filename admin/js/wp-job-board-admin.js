@@ -10,10 +10,15 @@
             // determine the ajax action & options
             let ajaxAction = element.getAttribute('data-wpjb-ajax');
             let ajaxOptions = element.getAttribute('data-wpjb-ajax-options');
+            let ajaxForm = element.getAttribute('data-wpjb-ajax-form')
 
             // setup data to be sent with ajax request
             let ajaxDataObject = {
-                action: ajaxAction
+                url: ajaxurl,
+                data: {
+                    action: ajaxAction
+                },
+                method: 'POST',
             }
 
             // if options are present
@@ -47,26 +52,34 @@
                 // disable the button from being pressed again while the sync is running
                 element.setAttribute('disabled', true);
 
+                // Special handling for form submissions
+                if (ajaxForm) {
+                    const form = document.getElementById(ajaxForm);
+                    const data = new FormData(form);
+                    data.append('action', ajaxAction);
+                    ajaxDataObject.data = data;
+                    ajaxDataObject.processData = false;
+                    ajaxDataObject.contentType = false;
+                }
+
                 // POST an ajax call to fire the sync
-                $.post(
-                    ajaxurl,
+                $.ajax(
                     ajaxDataObject,
-                    (response) => {
-                        let messageClass = 'notice-success';
+                ).then((response) => {
+                    let messageClass = 'notice-success';
 
-                        if (!response.success) {
-                            messageClass = 'notice-error';
-                        }
+                    if (!response.success) {
+                        messageClass = 'notice-error';
+                    }
 
-                        if (response.data?.message) {
-                            messageNode.innerHTML = `
+                    if (response.data?.message) {
+                        messageNode.innerHTML = `
                                 <div class="notice ${messageClass}">
                                     <p>${response.data.message}</p>
                                 </div>
                             `;
-                        }
                     }
-                ).fail((response) => {
+                }).fail((response) => {
                     messageNode.innerHTML = `
                         <div class="notice notice-error">
                             <p>An error occured. Please try again.</p>
