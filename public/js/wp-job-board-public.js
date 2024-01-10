@@ -67,16 +67,16 @@
     /** ******************* */
 
     $(".btn__filter").on("click", function () {
-        const facetSections = $(".wpjb-facet__section");
-        const hiddenSections = facetSections
+        const $facetSections = $(".wpjb-facet__section");
+        const $hiddenSections = $facetSections
             .toArray()
             .some(
                 (section) =>
                     $(section).css("display") === "none" ||
                     $(section).css("display") === ""
             );
-        facetSections.css("display", hiddenSections ? "grid" : "none");
-        $(this).text(hiddenSections ? "Filters -" : "Filters +");
+        $facetSections.css("display", $hiddenSections ? "grid" : "none");
+        $(this).text($hiddenSections ? "Filters -" : "Filters +");
     });
 
     /** ******************* */

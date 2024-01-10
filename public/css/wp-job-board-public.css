@@ -195,17 +195,6 @@ body {
     text-decoration: underline;
 }
 
-/* #wpjb .wpjb-facet__section__list li label::before {
-    content: "";
-    display: inline-block;
-    border-radius: 3px;
-    width: 16px;
-    height: 16px;
-    margin-right: 10px;
-    background-color: white;
-    box-shadow: inset 4px 4px 4px rgb(220, 220, 220), inset -4px -4px 4px rgb(243, 243, 243);
-} */
-
 #wpjb .wpjb-facet__section__list li input[type="checkbox"] {
     /* display: none; */
     display: inline-block;
@@ -214,11 +203,6 @@ body {
     height: 16px;
     margin-right: 10px;
 }
-
-/* #wpjb .wpjb-facet__section__list li input[type="checkbox"]:checked+label::before {
-    content: "";
-    background-color: black;
-} */
 
 #wpjb .wpjb-facet__section details summary {
     display: flex;
@@ -291,14 +275,31 @@ body {
     Search Input
 ----------------------------------------------------------------------------------*/
 
-#wpjb .wpjb-search__text-input {
+#wpjb .wpjb-search__container {
+
+    width: 100%;
+
+}
+
+#wpjb .wpjb-search__form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
     width: 100%;
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid #858585;
-    font-size: 0.8rem;
+    box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 2px;
+    /* border: 1px solid #858585; */
     margin-bottom: 5px;
+}
+
+#wpjb .wpjb-search__text-input {
+    border: none;
+    font-size: 1rem;
     cursor: pointer;
+    padding: 5px;
+    width: 100%;
 }
 
 #wpjb .wpjb-search__text-input:hover {
@@ -310,37 +311,31 @@ body {
 }
 
 #wpjb .wpjb-search__submit {
-    padding: 1px;
-    margin-bottom: 10px;
-    border-left: none;
-    border-top: none;
-    border-right: none;
-    border-bottom: 1px solid black;
-    color: black;
-    background-color: white;
-    cursor: pointer;
+    background-color: #0b2341;
+    color: white;
+    padding: 8px 14px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    border-radius: 5px;
     font-size: 0.75rem;
-    opacity: 0;
+    text-transform: capitalize;
+    font-weight: 600;
+    letter-spacing: .5px;
+    line-height: 1.2;
+    outline: 0;
+    border: 0;
+    height: auto;
+    transition: all ease .3s;
+    width: fit-content;
+    cursor: pointer;
 }
 
 #wpjb .wpjb-search__submit:hover {
-    color: gray;
+    background-color: gray;
 }
 
 #wpjb .wpjb-search__text-input:focus + .wpjb-search__submit {opacity: 1;}
-
-@media screen and (max-width: 800px) {
-    #wpjb .wpjb-search__text-input {
-        margin: 5px 0;
-        width: 200px;
-        font-size: 0.75rem;
-    }
-
-    #wpjb .wpjb-search__text-input::placeholder {
-        /* text-align: center; */
-        font-size: 0.75rem;
-    }
-}
 
 /*--------------------------------------------------------------
  Utility Nav
@@ -423,7 +418,7 @@ body {
     text-decoration: none;
     display: inline-block;
     text-align: center;
-    border-radius: 15px;
+    border-radius: 5px;
     font-size: 0.75rem;
     text-transform: capitalize;
     font-weight: 500;
@@ -443,10 +438,22 @@ body {
 
 #wpjb .btn__filter {
     display: none;
-    background-color: black;
+    background-color: #0b2341;
     color: white;
+    font-weight: 600;
     text-transform: uppercase;
 }
+
+/* #wpjb .btn__filter::after {
+    content: "\002B";
+    color: white;
+    padding-left: 5px;
+    font-size: 1rem;
+}
+#wpjb .btn__filter ::after {
+    color: white;
+    content: "\2212";
+} */
 
 @media screen and (max-width: 800px) {
 
