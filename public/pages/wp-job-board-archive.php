@@ -24,13 +24,13 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
             <div class="wpjb-grid__item">
                 <div class="wpjb-facet">
                     <div class="wpjb-facet__hd">
+                        <button class="wpjb-btn__clearSettings">🅇 Clear Search and Filter Settings</button>
                         <div class="wpjb-search__container">
-                        <form class="wpjb-search__form" method="get" action="<?php echo site_url("/jobs/") ?>">
-                        <input type="search" name="s" class="wpjb-search__text-input" id="wpjbSearchTextInput" placeholder="🔍"  value="<?php the_search_query(); ?>"/>
-                        <input type="submit" class="wpjb-search__submit" id="wpjbSearchSubmit" value="Search" />
-                        </form>
+                            <form class="wpjb-search__form" method="get" action="<?php echo site_url("/jobs/") ?>">
+                                <input type="search" name="s" class="wpjb-search__text-input" id="wpjbSearchTextInput" placeholder="" value="<?php the_search_query(); ?>" />
+                                <input type="submit" class="wpjb-search__submit" id="wpjbSearchSubmit" value="Search" />
+                            </form>
                         </div>
-                        <button class="wpjb-btn__clearSettings">Clear Search Settings</button>
                         <button class="wpjb-btn btn__filter">Filters +</button>
                     </div>
                     <div class="wpjb-facet__section-container">
@@ -145,7 +145,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                 $job_meta = get_job_meta($post_id);
 
                                 $job_title                  = $job_meta->title;
-                                $job_description            = wp_trim_words($job_meta->publicDescription, 55);
+                                $job_description            = wp_trim_words($job_meta->publicDescription, 45);
                                 $job_employment_type        = $job_meta->employmentType;
                                 $job_location_city          = $job_meta->address->city;
                                 $job_location_state         = $job_meta->address->state;
@@ -163,37 +163,33 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                             <h3 class="wpjb-card__title">
                                                 <?php echo $job_title; ?>
                                             </h3>
+                                            <span class="wpjb-card__meta-item__subtitle">
+                                                <?php echo $job_location_city; ?>, <?php echo $job_location_state; ?> (<?php echo $job_employment_type; ?>)
+                                            </span>
+                                            <div class="wpjb-card__meta">
+                                                <span class="wpjb-card__meta-item">
+                                                    <span>Updated <?php echo $job_date_modified; ?></span>
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div class="wpjb-card__meta">
-                                            <span class="wpjb-card__meta-item">
-                                                <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-calendar-days.svg'); ?>
-                                                <span>Posted <?php echo $job_date_published; ?></span>
-                                            </span>
-                                            <span class="wpjb-card__meta-item">
-                                                <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-clock.svg'); ?>
-                                                <span>Updated <?php echo $job_date_modified; ?></span>
-                                            </span>
-                                            <span class="wpjb-card__meta-item">
-                                                <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-location-dot.svg'); ?>
-                                                <span><?php echo $job_location_city; ?>, <?php echo $job_location_state; ?></span>
-                                            </span>
-                                            <span class="wpjb-card__meta-item">
-                                                <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-briefcase-blank.svg'); ?>
-                                                <span> <?php echo $job_employment_type; ?></span>
-                                            </span>
-                                        </div>
-                                        <div class="wbjb-card__sub-hd">
+
+
+
+                                        <!-- <div class="wbjb-card__sub-hd">
                                             <h4>
                                                 About the job
                                             </h4>
-                                        </div>
+                                        </div> -->
                                         <div class="wpjb-card__bd">
                                             <div class="wpjb-userContent">
                                                 <?php echo $job_description; ?>
                                             </div>
                                         </div>
+
+
+
                                         <button class="wpjb-btn btn__moreInfo">
-                                            Full Job Description
+                                            View Full Details
                                         </button>
                                     </div>
                                 </div>

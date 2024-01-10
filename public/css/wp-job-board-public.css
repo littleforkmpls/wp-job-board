@@ -59,10 +59,10 @@ body {
     display: grid;
     gap: 20px;
     position: relative;
+    border: 1px solid #858585;
     border-radius: 5px;
-    box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 2px;
+    /* box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 2px; */
     padding: 20px;
-    /* margin: 20px; */
 }
 
 #wpjb #archive .wpjb-card {
@@ -90,6 +90,12 @@ body {
     font-weight: 500;
 }
 
+#wpjb .wpjb-card__meta-item__subtitle {
+    font-size: 0.8rem;
+    font-weight: 300;
+
+}
+
 .wpjb-card__description {
     font-size: 1rem;
     text-wrap: balance;
@@ -115,12 +121,14 @@ body {
 
 #wpjb .wpjb-card__meta {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
     gap: 10px;
 }
 
 #wpjb #archive .wpjb-card__meta {
-    gap: 5px;
+    display: flex;
+    margin-top: 5px;
+    gap: 20px;
 }
 
 #wpjb .wpjb-card__meta-item {
@@ -132,7 +140,8 @@ body {
 }
 
 #wpjb #archive .wpjb-card__meta-item {
-    font-size: .7rem;
+    font-size: .65rem;
+    font-weight: 500;
 }
 
 #wpjb #archive .wpjb-userContent {
@@ -166,6 +175,7 @@ body {
     display: grid;
     position: relative;
     /* width: 25vw; */
+    border: 1px solid #858585;
     border-radius: 5px;
     padding: 5px;
     position: relative;
@@ -174,7 +184,7 @@ body {
     background-color: white;
     user-select: none;
     cursor: pointer;
-    box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 2px;
+    /* box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 2px; */
 
 }
 
@@ -229,8 +239,6 @@ body {
     content: "\2212";
 }
 
-
-
 @media screen and (max-width: 800px) {
 
     #wpjb .wpjb-facet__section {
@@ -271,15 +279,20 @@ body {
     }
 
 }
+
 /*----------------------------------------------------------------------------------
-    Search Input
+    Pagination
 ----------------------------------------------------------------------------------*/
 
-#wpjb .wpjb-search__container {
-
-    width: 100%;
-
+#wpjb .wpjb-results__title {
+    font-size: .8rem;
 }
+
+/*----------------------------------------------------------------------------------
+    Search
+----------------------------------------------------------------------------------*/
+
+#wpjb .wpjb-search__container {width: 100%;}
 
 #wpjb .wpjb-search__form {
     display: flex;
@@ -287,11 +300,11 @@ body {
     align-items: center;
     background-color: white;
     width: 100%;
-    padding: 5px;
-    border-radius: 5px;
+    padding: 2px;
+    border-radius: 6px;
     /* box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 2px; */
     border: 1px solid #858585;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
 }
 
 #wpjb .wpjb-search__text-input {
@@ -314,10 +327,11 @@ body {
     background-color: #0b2341;
     color: white;
     padding: 6px 12px;
+    margin-right: 1px; /* not sure why this was needed for it to look right */
     text-decoration: none;
     display: inline-block;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 4px;
     font-size: 0.75rem;
     text-transform: capitalize;
     font-weight: 600;
@@ -336,6 +350,24 @@ body {
 }
 
 #wpjb .wpjb-search__text-input:focus + .wpjb-search__submit {opacity: 1;}
+
+#wpjb .wpjb-btn__clearSettings {
+    padding: 1px;
+    margin-bottom: 20px;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    border-bottom: 1px solid #858585;
+    color: black;
+    background-color: white;
+    cursor: pointer;
+    font-size: .8rem;
+    opacity: 0;
+}
+
+#wpjb .wpjb-btn__clearSettings:hover {
+    color: red;
+}
 
 /*--------------------------------------------------------------
  Utility Nav
@@ -390,24 +422,6 @@ body {
 #wpjb .wpjb-btn__back:hover {
     opacity: 0.5;
     cursor: pointer;
-}
-
-#wpjb .wpjb-btn__clearSettings {
-    padding: 1px;
-    margin-bottom: 10px;
-    border-left: none;
-    border-top: none;
-    border-right: none;
-    border-bottom: 1px solid #858585;
-    color: black;
-    background-color: white;
-    cursor: pointer;
-    font-size: 0.75rem;
-    opacity: 0;
-}
-
-#wpjb .wpjb-btn__clearSettings:hover {
-    color: #858585;
 }
 
 #wpjb .wpjb-btn {
