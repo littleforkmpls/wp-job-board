@@ -139,6 +139,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                     <div class="wpjb-results__bd">
                         <?php if (have_posts()) : ?>
                             <?php while (have_posts()) : ?>
+
                                 <?php
                                 the_post();
                                 $post_id  = get_the_ID();
@@ -187,15 +188,23 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                         </div>
 
                                         <button class="wpjb-btn btn__moreInfo">
-                                            <a href="<?php echo $permalink = get_permalink($post_id);?>">View Full Details </a>
+                                            <a href="<?php echo $permalink = get_permalink($post_id); ?>">View Full Details </a>
                                         </button>
                                     </div>
                                 </div>
                             <?php endwhile; ?>
+
+                            <?php //twentytwelve_content_nav('nav-below');
+                            ?>
+                            <?php echo the_posts_pagination(array(
+                                'type' => 'list'
+                            )); ?>
+
                         <?php else : ?>
                             No jobs found.
                         <?php endif; ?>
                     </div>
+
                 </div>
             </div>
         </div>
