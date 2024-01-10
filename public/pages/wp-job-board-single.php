@@ -37,7 +37,7 @@ $job_date_modified_iso8601  = !empty($job_meta->dateLastModified) ? get_iso8601_
         <div class="wpjb-single__preface">
             <button class="wpjb-btn__back">
                 <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-arrow-left.svg'); ?>
-                <span>Back to All Jobs</span>
+                <span><a href="javascript:history.back();">Back to All Jobs</a></span>
             </button>
         </div>
         <div class="wpjb-single__content">

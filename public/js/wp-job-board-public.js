@@ -80,6 +80,15 @@
     });
 
     /** ******************* */
+    /**  Back to all btn    */
+    /** ******************* */
+
+    // $(".wpjb-btn__back").on("click", function() {
+    //     console.log("back btn clicked");
+    //     window.history.back();
+    // });
+
+    /** ******************* */
     /** Print Job Post      */
     /** ******************* */
 

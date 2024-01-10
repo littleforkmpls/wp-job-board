@@ -186,10 +186,8 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                             </div>
                                         </div>
 
-
-
                                         <button class="wpjb-btn btn__moreInfo">
-                                            View Full Details
+                                            <a href="<?php echo $permalink = get_permalink($post_id);?>">View Full Details </a>
                                         </button>
                                     </div>
                                 </div>
