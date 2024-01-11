@@ -80,36 +80,62 @@
     });
 
     /** ******************* */
-    /**  Back to all btn    */
+    /**  Checkboxes         */
     /** ******************* */
 
-    // $(".wpjb-btn__back").on("click", function() {
-    //     console.log("back btn clicked");
-    //     window.history.back();
-    // });
+    const $employmentTypes = [
+        { url: "/job-type/contract/", value: 5 },
+        { url: "/job-type/contract-to-hire/", value: 11 },
+        { url: "/job-type/direct-hire/", value: 8 },
+        { url: "/job-type/royalty/", value: 33 },
+    ];
+
+    const $currentUrlPath = window.location.pathname;
+
+    console.log("employment types:", $employmentTypes);
+
+    // $employmentTypes.forEach((type) => {
+    //     if ($currentUrlPath === type.url) {
+    //         console.log('employment type:', type.value);
+    //         let $typeCheckbox = $(`input[value="${type.value}"]`);
+    //         if ($typeCheckbox.length) {
+    //             $typeCheckbox.prop("checked", true);
+    //         }
+    //     }
+
+    for (let i = 0; i < $employmentTypes.length; i++) {
+        const type = $employmentTypes[i];
+        if ($currentUrlPath === type.url) {
+            console.log("employment type:", type.value);
+            let $typeCheckbox = $(`input[value="${type.value}"]`);
+            if ($typeCheckbox.length) {
+                $typeCheckbox.prop("checked", true);
+            }
+        }
+    }
 
     /** ******************* */
     /** Print Job Post      */
     /** ******************* */
 
-    const printButton = $(".wpjb-utilityNav__btn");
+    const $printButton = $(".wpjb-utilityNav__btn");
 
-    printButton.on("click", function () {
+    $printButton.on("click", function () {
         console.log("print btn clicked!");
 
-        const content = $("#wpjb-card").html();
-        const printWindow = window.open("", "_blank");
-        printWindow.document.open();
-        printWindow.document.write(
+        const $content = $("#wpjb-card").html();
+        const $printWindow = window.open("", "_blank");
+        $printWindow.document.open();
+        $printWindow.document.write(
             "<html><head><title>Print</title></head><body>" +
-                content +
+                $content +
                 "</body></html>"
         );
-        printWindow.document.close();
-        printWindow.print();
+        $printWindow.document.close();
+        $printWindow.print();
 
-        printWindow.onafterprint = function () {
-            printWindow.close();
+        $printWindow.onafterprint = function () {
+            $printWindow.close();
         };
     });
 

@@ -16,6 +16,7 @@ $category_terms = get_filter_terms('wjb_bh_job_category_tax');
 $location_terms = get_filter_terms('wjb_bh_job_location_tax');
 $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
 
+
 ?>
 
 <div id="wpjb">
@@ -119,6 +120,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                                 <label>
                                                     <input type="checkbox" value="<?php echo $type_id; ?>" />
                                                     <?php echo $type_name; ?>
+                                                    <?php echo $type_id; ?>
                                                 </label>
                                             </li>
                                         <?php endforeach; ?>
