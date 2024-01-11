@@ -11,13 +11,7 @@ global $wp_query;
 
 $results_count  = $wp_query->found_posts;
 
-$industry_terms = get_filter_terms('wjb_bh_job_industry_tax');
-$category_terms = get_filter_terms('wjb_bh_job_category_tax');
-$location_terms = get_filter_terms('wjb_bh_job_location_tax');
-$type_terms     = get_filter_terms('wjb_bh_job_type_tax');
 $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_object()->term_taxonomy_id : 0;
-
-
 ?>
 
 <div id="wpjb">
@@ -36,126 +30,38 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
                         <button class="wpjb-btn btn__filter">Filters +</button>
                     </div>
                     <div class="wpjb-facet__section-container">
-                        <?php if ($industry_terms) : ?>
-                            <div class="wpjb-facet__section">
-                                <details open>
-                                    <summary>
-                                        Industry
-                                    </summary>
-                                    <ul class="wpjb-facet__section__list">
-                                        <?php foreach ($industry_terms as $industry_term) :?>
-                                            <?php
-                                            $industry_id = esc_attr($industry_term->term_id);
-                                            $industry_name = esc_html($industry_term->name);
-                                            $is_checked = ($current_term_id == $industry_id) ? true : false;
-                                            ?>
-                                            <li>
-                                                <label>
-                                                    <input
-                                                        type="checkbox"
-                                                        value="<?php echo $industry_id; ?>"
-                                                        <?php if ($is_checked) : ?>
-                                                        checked="checked"
-                                                        <?php endif; ?>
-                                                        />
-                                                    <?php echo $industry_name; ?>
-                                                </label>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </details>
-                            </div>
-                        <?php endif; ?>
-                        <?php if ($category_terms) : ?>
-                            <div class="wpjb-facet__section">
-                                <details open>
-                                    <summary>
-                                        Category
-                                    </summary>
-                                    <ul class="wpjb-facet__section__list">
-                                        <?php foreach ($category_terms as $category_term) : ?>
-                                            <?php
-                                            $category_id = esc_attr($category_term->term_id);
-                                            $category_name = esc_html($category_term->name);
-                                            $is_checked = ($current_term_id == $category_id) ? true : false;
-                                            ?>
-                                            <li>
-                                                <label>
-                                                    <input
-                                                        type="checkbox"
-                                                        value="<?php echo $category_id; ?>"
-                                                        <?php if ($is_checked) : ?>
-                                                        checked="checked"
-                                                        <?php endif; ?>
-                                                        />
-                                                    <?php echo $category_name; ?>
-                                                </label>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </details>
-                            </div>
-                        <?php endif; ?>
-                        <?php if ($location_terms) : ?>
-                            <div class="wpjb-facet__section">
-                                <details open>
-                                    <summary>
-                                        Location
-                                    </summary>
-                                    <ul class="wpjb-facet__section__list">
-                                        <?php foreach ($location_terms as $location_term) : ?>
-                                            <?php
-                                            $location_id = esc_attr($location_term->term_id);
-                                            $location_name = esc_html($location_term->name);
-                                            $is_checked = ($current_term_id == $location_id) ? true : false;
-                                            ?>
-                                            <li>
-                                                <label>
-                                                    <input
-                                                        type="checkbox"
-                                                        value="<?php echo $location_id; ?>"
-                                                        <?php if ($is_checked) : ?>
-                                                        checked="checked"
-                                                        <?php endif; ?>
-                                                        />
-                                                    <?php echo $location_name; ?>
-                                                </label>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </details>
-                            </div>
-                        <?php endif; ?>
-                        <?php if ($type_terms) : ?>
-                            <div class="wpjb-facet__section">
-                                <details open>
-                                    <summary>
-                                        Employment Type
-                                    </summary>
-                                    <ul class="wpjb-facet__section__list">
-                                        <?php foreach ($type_terms as $type_term) : ?>
-                                            <?php
-                                            $type_id = esc_attr($type_term->term_id);
-                                            $type_name = esc_html($type_term->name);
-                                            $is_checked = ($current_term_id == $type_id) ? true : false;
-                                            ?>
-                                            <li>
-                                                <label>
-                                                    <input
-                                                        type="checkbox"
-                                                        value="<?php echo $type_id; ?>"
-                                                        <?php if ($is_checked) : ?>
-                                                        checked="checked"
-                                                        <?php endif; ?>
-                                                        />
-                                                    <?php echo $type_name; ?>
-                                                </label>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </details>
-                            </div>
-                        <?php endif; ?>
+                        <div class="wpjb-facet__section">
+                            <details open>
+                                <summary>
+                                    Industry
+                                </summary>
+                                <?php echo get_taxonomy_filters('wjb_bh_job_industry_tax', $current_term_id); ?>
+                            </details>
+                        </div>
+                        <div class="wpjb-facet__section">
+                            <details open>
+                                <summary>
+                                    Category
+                                </summary>
+                                <?php echo get_taxonomy_filters('wjb_bh_job_category_tax', $current_term_id); ?>
+                            </details>
+                        </div>
+                        <div class="wpjb-facet__section">
+                            <details open>
+                                <summary>
+                                    Location
+                                </summary>
+                                <?php echo get_taxonomy_filters('wjb_bh_job_location_tax', $current_term_id); ?>
+                            </details>
+                        </div>
+                        <div class="wpjb-facet__section">
+                            <details open>
+                                <summary>
+                                    Employment Type
+                                </summary>
+                                <?php echo get_taxonomy_filters('wjb_bh_job_type_tax', $current_term_id); ?>
+                            </details>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -169,7 +75,6 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
                     <div class="wpjb-results__bd">
                         <?php if (have_posts()) : ?>
                             <?php while (have_posts()) : ?>
-
                                 <?php
                                 the_post();
                                 $post_id  = get_the_ID();
@@ -204,13 +109,6 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
                                             </div>
                                         </div>
 
-
-
-                                        <!-- <div class="wbjb-card__sub-hd">
-                                            <h4>
-                                                About the job
-                                            </h4>
-                                        </div> -->
                                         <div class="wpjb-card__bd">
                                             <div class="wpjb-userContent">
                                                 <?php echo $job_description; ?>
@@ -224,8 +122,6 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
                                 </div>
                             <?php endwhile; ?>
                             <div class="wpjb-pagination">
-                                <?php //twentytwelve_content_nav('nav-below');
-                                ?>
                                 <?php echo the_posts_pagination(array(
                                     'type' => 'list'
                                 )); ?>

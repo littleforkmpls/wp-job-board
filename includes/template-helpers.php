@@ -87,12 +87,16 @@ function get_iso8601_date($timestamp, $milliseconds = true)
 }
 
 /**
- * Helper for getting full list of terms for job filters
+ * Helper for generating a set of checkboxes for all terms within a specific taxonomy
  *
- * @return array
+ * @return string HTML
  */
-function get_filter_terms($taxonomy)
+function get_taxonomy_filters($taxonomy = false, $current_term_id = 0)
 {
+    if (empty($taxonomy)) {
+        return;
+    }
+
     $terms = get_terms(
         array(
             'taxonomy'   => $taxonomy,
@@ -102,12 +106,30 @@ function get_filter_terms($taxonomy)
         )
     );
 
-    // if get_terms returns an error or no terms return an empty string
     if (is_wp_error($terms) || (count($terms) < 1 )) {
-        $terms = '';
+        return;
     }
 
-    return $terms;
+    $output = '<ul class="wpjb-facet__section__list">';
+
+    foreach ($terms as $term) {
+        $term_id        = esc_attr($term->term_id);
+        $term_name      = esc_html($term->name);
+        $term_checked   = ($current_term_id == $term_id) ? 'checked' : '';
+
+        $output .= "
+            <li>
+                <label>
+                    <input type='checkbox' value='{$term_id}' {$term_checked} />
+                    {$term_name}
+                </label>
+            </li>
+        ";
+    }
+
+    $output .= '</ul>';
+
+    return $output;
 }
 
 /**
@@ -172,6 +194,12 @@ function render_checkbox_field($args)
     echo $output;
 }
 
+/**
+ * Helper for rendering a choice field in the admin
+ * @param $args
+ *
+ * @return void
+ */
 function render_choice_field($args)
 {
     $defaults = array(
@@ -192,7 +220,7 @@ function render_choice_field($args)
     $output = "<select name='{$name}'>";
 
     foreach ($args['choices'] as $key => $choice) {
-        $selected = $value === $key ? 'selected':'';
+        $selected = $value === $key ? 'selected' : '';
         $output   .= "<option value='{$key}' {$selected}>{$choice}</option>";
     }
 
@@ -200,4 +228,3 @@ function render_choice_field($args)
 
     echo $output;
 }
-
