@@ -15,6 +15,7 @@ $industry_terms = get_filter_terms('wjb_bh_job_industry_tax');
 $category_terms = get_filter_terms('wjb_bh_job_category_tax');
 $location_terms = get_filter_terms('wjb_bh_job_location_tax');
 $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
+$current_taxonomy_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_object()->term_taxonomy_id : 0;
 
 
 ?>
@@ -49,9 +50,8 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                             ?>
                                             <li>
                                                 <label>
-                                                    <input type="checkbox" value="<?php echo $industry_id; ?>" />
+                                                    <input type="checkbox" value="<?php echo $industry_id; ?>" <?php if ($industry_id == $current_taxonomy_id) echo 'checked'; ?> />
                                                     <?php echo $industry_name; ?>
-                                                    <?php echo $industry_id; ?>
                                                 </label>
                                             </li>
                                         <?php endforeach; ?>
@@ -73,9 +73,8 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                             ?>
                                             <li>
                                                 <label>
-                                                    <input type="checkbox" value="<?php echo $category_id; ?>" />
+                                                    <input type="checkbox" value="<?php echo $category_id; ?>" <?php if ($category_id == $current_taxonomy_id) echo 'checked'; ?> />
                                                     <?php echo $category_name; ?>
-                                                    <?php echo $category_id; ?>
                                                 </label>
                                             </li>
                                         <?php endforeach; ?>
@@ -97,7 +96,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                             ?>
                                             <li>
                                                 <label>
-                                                    <input type="checkbox" value="<?php echo $location_id; ?>" />
+                                                    <input type="checkbox" value="<?php echo $location_id; ?>" <?php if ($location_id == $current_taxonomy_id) echo 'checked'; ?> />
                                                     <?php echo $location_name; ?>
                                                     <?php echo $location_id; ?>
                                                 </label>
@@ -121,7 +120,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                             ?>
                                             <li>
                                                 <label>
-                                                    <input type="checkbox" value="<?php echo $type_id; ?>" />
+                                                    <input type="checkbox" value="<?php echo $type_id; ?>" <?php if ($type_id == $current_taxonomy_id) echo 'checked'; ?> />
                                                     <?php echo $type_name; ?>
                                                     <?php echo $type_id; ?>
                                                 </label>

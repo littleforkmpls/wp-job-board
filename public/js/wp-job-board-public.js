@@ -80,48 +80,6 @@
     });
 
     /** ******************* */
-    /**  Checkboxes         */
-    /** ******************* */
-
-    const $employmentIndustries = [
-        { url: "/job-industry/marine/", value: 76 },
-        { url: "/job-industry/light-industrial/", value: 77 },
-        { url: "/job-industry/professional-and-technical/", value: 78 },
-        { url: "/job-industry/skilled-trades/", value: 79 },
-    ];
-
-    const $employmentTypes = [
-        { url: "/job-type/contract/", value: 5 },
-        { url: "/job-type/contract-to-hire/", value: 11 },
-        { url: "/job-type/direct-hire/", value: 8 },
-        { url: "/job-type/royalty/", value: 33 },
-    ];
-
-    const $currentUrlPath = window.location.pathname;
-
-    console.log("employment types:", $employmentTypes);
-
-    for (let $employmentType of $employmentTypes) {
-        if ($currentUrlPath === $employmentType.url) {
-            console.log('employment type:', $employmentType.value);
-            const $typeCheckbox = $(`input[value="${$employmentType.value}"]`);
-            if ($typeCheckbox.length) {
-                $typeCheckbox.prop("checked", true);
-            }
-        }
-    }
-
-    for (let $employmentIndustry of $employmentIndustries) {
-        if ($currentUrlPath === $employmentIndustry.url) {
-            console.log('employment industry:', $employmentIndustry.value);
-            const $industryCheckbox = $(`input[value="${$employmentIndustry.value}"]`);
-            if ($industryCheckbox.length) {
-                $industryCheckbox.prop("checked", true);
-            }
-        }
-    }
-
-    /** ******************* */
     /** Print Job Post      */
     /** ******************* */
 
