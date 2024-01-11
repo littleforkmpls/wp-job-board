@@ -83,6 +83,13 @@
     /**  Checkboxes         */
     /** ******************* */
 
+    const $employmentIndustries = [
+        { url: "/job-industry/marine/", value: 76 },
+        { url: "/job-industry/light-industrial/", value: 77 },
+        { url: "/job-industry/professional-and-technical/", value: 78 },
+        { url: "/job-industry/skilled-trades/", value: 79 },
+    ];
+
     const $employmentTypes = [
         { url: "/job-type/contract/", value: 5 },
         { url: "/job-type/contract-to-hire/", value: 11 },
@@ -104,16 +111,15 @@
         }
     }
 
-    // for (let i = 0; i < $employmentTypes.length; i++) {
-    //     const type = $employmentTypes[i];
-    //     if ($currentUrlPath === type.url) {
-    //         console.log("employment type:", type.value);
-    //         let $typeCheckbox = $(`input[value="${type.value}"]`);
-    //         if ($typeCheckbox.length) {
-    //             $typeCheckbox.prop("checked", true);
-    //         }
-    //     }
-    // }
+    for (let $employmentIndustry of $employmentIndustries) {
+        if ($currentUrlPath === $employmentIndustry.url) {
+            console.log('employment industry:', $employmentIndustry.value);
+            const $industryCheckbox = $(`input[value="${$employmentIndustry.value}"]`);
+            if ($industryCheckbox.length) {
+                $industryCheckbox.prop("checked", true);
+            }
+        }
+    }
 
     /** ******************* */
     /** Print Job Post      */

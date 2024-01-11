@@ -51,6 +51,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                                 <label>
                                                     <input type="checkbox" value="<?php echo $industry_id; ?>" />
                                                     <?php echo $industry_name; ?>
+                                                    <?php echo $industry_id; ?>
                                                 </label>
                                             </li>
                                         <?php endforeach; ?>
@@ -74,6 +75,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                                 <label>
                                                     <input type="checkbox" value="<?php echo $category_id; ?>" />
                                                     <?php echo $category_name; ?>
+                                                    <?php echo $category_id; ?>
                                                 </label>
                                             </li>
                                         <?php endforeach; ?>
@@ -97,6 +99,7 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                                 <label>
                                                     <input type="checkbox" value="<?php echo $location_id; ?>" />
                                                     <?php echo $location_name; ?>
+                                                    <?php echo $location_id; ?>
                                                 </label>
                                             </li>
                                         <?php endforeach; ?>
@@ -195,12 +198,13 @@ $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
                                     </div>
                                 </div>
                             <?php endwhile; ?>
-
-                            <?php //twentytwelve_content_nav('nav-below');
-                            ?>
-                            <?php echo the_posts_pagination(array(
-                                'type' => 'list'
-                            )); ?>
+                            <div class="wpjb-pagination">
+                                <?php //twentytwelve_content_nav('nav-below');
+                                ?>
+                                <?php echo the_posts_pagination(array(
+                                    'type' => 'list'
+                                )); ?>
+                            </div>
 
                         <?php else : ?>
                             No jobs found.
