@@ -94,25 +94,26 @@
 
     console.log("employment types:", $employmentTypes);
 
-    // $employmentTypes.forEach((type) => {
-    //     if ($currentUrlPath === type.url) {
-    //         console.log('employment type:', type.value);
-    //         let $typeCheckbox = $(`input[value="${type.value}"]`);
-    //         if ($typeCheckbox.length) {
-    //             $typeCheckbox.prop("checked", true);
-    //         }
-    //     }
-
-    for (let i = 0; i < $employmentTypes.length; i++) {
-        const type = $employmentTypes[i];
-        if ($currentUrlPath === type.url) {
-            console.log("employment type:", type.value);
-            let $typeCheckbox = $(`input[value="${type.value}"]`);
+    for (let $employmentType of $employmentTypes) {
+        if ($currentUrlPath === $employmentType.url) {
+            console.log('employment type:', $employmentType.value);
+            const $typeCheckbox = $(`input[value="${$employmentType.value}"]`);
             if ($typeCheckbox.length) {
                 $typeCheckbox.prop("checked", true);
             }
         }
     }
+
+    // for (let i = 0; i < $employmentTypes.length; i++) {
+    //     const type = $employmentTypes[i];
+    //     if ($currentUrlPath === type.url) {
+    //         console.log("employment type:", type.value);
+    //         let $typeCheckbox = $(`input[value="${type.value}"]`);
+    //         if ($typeCheckbox.length) {
+    //             $typeCheckbox.prop("checked", true);
+    //         }
+    //     }
+    // }
 
     /** ******************* */
     /** Print Job Post      */
