@@ -15,7 +15,7 @@ $industry_terms = get_filter_terms('wjb_bh_job_industry_tax');
 $category_terms = get_filter_terms('wjb_bh_job_category_tax');
 $location_terms = get_filter_terms('wjb_bh_job_location_tax');
 $type_terms     = get_filter_terms('wjb_bh_job_type_tax');
-$current_taxonomy_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_object()->term_taxonomy_id : 0;
+$current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_object()->term_taxonomy_id : 0;
 
 
 ?>
@@ -43,14 +43,21 @@ $current_taxonomy_id = !empty(get_queried_object()->term_taxonomy_id) ? get_quer
                                         Industry
                                     </summary>
                                     <ul class="wpjb-facet__section__list">
-                                        <?php foreach ($industry_terms as $industry_term) : ?>
+                                        <?php foreach ($industry_terms as $industry_term) :?>
                                             <?php
                                             $industry_id = esc_attr($industry_term->term_id);
                                             $industry_name = esc_html($industry_term->name);
+                                            $is_checked = ($current_term_id == $industry_id) ? true : false;
                                             ?>
                                             <li>
                                                 <label>
-                                                    <input type="checkbox" value="<?php echo $industry_id; ?>" <?php if ($industry_id == $current_taxonomy_id) echo 'checked'; ?> />
+                                                    <input
+                                                        type="checkbox"
+                                                        value="<?php echo $industry_id; ?>"
+                                                        <?php if ($is_checked) : ?>
+                                                        checked="checked"
+                                                        <?php endif; ?>
+                                                        />
                                                     <?php echo $industry_name; ?>
                                                 </label>
                                             </li>
@@ -70,10 +77,17 @@ $current_taxonomy_id = !empty(get_queried_object()->term_taxonomy_id) ? get_quer
                                             <?php
                                             $category_id = esc_attr($category_term->term_id);
                                             $category_name = esc_html($category_term->name);
+                                            $is_checked = ($current_term_id == $category_id) ? true : false;
                                             ?>
                                             <li>
                                                 <label>
-                                                    <input type="checkbox" value="<?php echo $category_id; ?>" <?php if ($category_id == $current_taxonomy_id) echo 'checked'; ?> />
+                                                    <input
+                                                        type="checkbox"
+                                                        value="<?php echo $category_id; ?>"
+                                                        <?php if ($is_checked) : ?>
+                                                        checked="checked"
+                                                        <?php endif; ?>
+                                                        />
                                                     <?php echo $category_name; ?>
                                                 </label>
                                             </li>
@@ -93,12 +107,18 @@ $current_taxonomy_id = !empty(get_queried_object()->term_taxonomy_id) ? get_quer
                                             <?php
                                             $location_id = esc_attr($location_term->term_id);
                                             $location_name = esc_html($location_term->name);
+                                            $is_checked = ($current_term_id == $location_id) ? true : false;
                                             ?>
                                             <li>
                                                 <label>
-                                                    <input type="checkbox" value="<?php echo $location_id; ?>" <?php if ($location_id == $current_taxonomy_id) echo 'checked'; ?> />
+                                                    <input
+                                                        type="checkbox"
+                                                        value="<?php echo $location_id; ?>"
+                                                        <?php if ($is_checked) : ?>
+                                                        checked="checked"
+                                                        <?php endif; ?>
+                                                        />
                                                     <?php echo $location_name; ?>
-                                                    <?php echo $location_id; ?>
                                                 </label>
                                             </li>
                                         <?php endforeach; ?>
@@ -117,12 +137,18 @@ $current_taxonomy_id = !empty(get_queried_object()->term_taxonomy_id) ? get_quer
                                             <?php
                                             $type_id = esc_attr($type_term->term_id);
                                             $type_name = esc_html($type_term->name);
+                                            $is_checked = ($current_term_id == $type_id) ? true : false;
                                             ?>
                                             <li>
                                                 <label>
-                                                    <input type="checkbox" value="<?php echo $type_id; ?>" <?php if ($type_id == $current_taxonomy_id) echo 'checked'; ?> />
+                                                    <input
+                                                        type="checkbox"
+                                                        value="<?php echo $type_id; ?>"
+                                                        <?php if ($is_checked) : ?>
+                                                        checked="checked"
+                                                        <?php endif; ?>
+                                                        />
                                                     <?php echo $type_name; ?>
-                                                    <?php echo $type_id; ?>
                                                 </label>
                                             </li>
                                         <?php endforeach; ?>
