@@ -80,18 +80,24 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
                                 $post_id  = get_the_ID();
                                 $job_meta = get_job_meta($post_id);
 
-                                $job_title                  = $job_meta->title;
-                                $job_description            = wp_trim_words($job_meta->publicDescription, 45);
-                                $job_employment_type        = $job_meta->employmentType;
-                                $job_location_city          = $job_meta->address->city;
-                                $job_location_state         = $job_meta->address->state;
-                                $job_location_postal_code   = $job_meta->address->zip;
-                                $job_location_country_code  = $job_meta->address->countryCode;
-                                $job_date_published         = get_formatted_date($job_meta->dateLastPublished);
-                                $job_date_modified          = get_relative_date($job_meta->dateLastModified);
-                                $job_date_published_iso8601 = get_iso8601_date($job_meta->dateLastPublished);
-                                $job_date_modified_iso8601  = get_iso8601_date($job_meta->dateLastModified);
-
+                                /*
+                                 * Setup values for template usage
+                                 *
+                                 * Note:
+                                 * since dateLastPublished can be null AND dateLastModified cannot
+                                 * dateLastModified is used as fallback for dateLastPublished null scenarios
+                                 */
+                                $job_title                  = !empty($job_meta->title) ? $job_meta->title : get_the_title();
+                                $job_description            = !empty($job_meta->publicDescription) ? wp_trim_words($job_meta->publicDescription, 45) : 'No job description provided.';
+                                $job_employment_type        = !empty($job_meta->employmentType) ? $job_meta->employmentType : '';
+                                $job_location_city          = !empty($job_meta->address->city) ? $job_meta->address->city : '';
+                                $job_location_state         = !empty($job_meta->address->state) ? $job_meta->address->state : '';
+                                $job_location_postal_code   = !empty($job_meta->address->zip) ? $job_meta->address->zip : '';
+                                $job_location_country_code  = !empty($job_meta->address->countryCode) ? $job_meta->address->countryCode : '';
+                                $job_date_published         = !empty($job_meta->dateLastPublished) ? get_formatted_date($job_meta->dateLastPublished) : get_formatted_date($job_meta->dateLastModified);
+                                $job_date_published_iso8601 = !empty($job_meta->dateLastPublished) ? get_iso8601_date($job_meta->dateLastPublished) : get_formatted_date($job_meta->dateLastModified);
+                                $job_date_modified          = !empty($job_meta->dateLastModified) ? get_relative_date($job_meta->dateLastModified) : '';
+                                $job_date_modified_iso8601  = !empty($job_meta->dateLastModified) ? get_iso8601_date($job_meta->dateLastModified) : '';
                                 ?>
                                 <div id="archive">
                                     <div class="wpjb-card">
