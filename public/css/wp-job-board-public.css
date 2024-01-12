@@ -331,9 +331,9 @@ body {
 
 #wpjb .wpjb-pagination {
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%);
 }
 
 #wpjb nav.pagination {

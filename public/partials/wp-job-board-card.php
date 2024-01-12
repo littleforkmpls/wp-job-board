@@ -39,6 +39,6 @@
     </div>
     <div class="wpjb-card__divider"></div>
     <div class="wpjb-btn__container">
-        <button data-micromodal-trigger="modal-apply" class="btn">Apply</button>
+        <button data-micromodal-trigger="modal-apply" class="wpjb-btn">Apply</button>
     </div>
 </div>

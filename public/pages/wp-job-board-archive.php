@@ -127,6 +127,7 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
                                     </div>
                                 </div>
                             <?php endwhile; ?>
+
                             <div class="wpjb-pagination">
                                 <?php echo the_posts_pagination(array(
                                     'type' => 'list'
