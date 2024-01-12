@@ -6,7 +6,6 @@
 /*--------------------------------------------------------------
     General
 ---------------------------------------------------------------*/
-
 body {
     font-family: inherit;
 }
@@ -50,6 +49,13 @@ body {
         top: 0;
         width: 100%;
     } */
+}
+
+/*--------------------------------------------------------------
+ Single
+---------------------------------------------------------------*/
+.wpjb-single__preface {
+    margin-bottom: 20px;
 }
 
 /*--------------------------------------------------------------
@@ -508,8 +514,8 @@ body {
 /*----------------------------------------------------------------------------------
  Buttons
 ----------------------------------------------------------------------------------*/
-#wpjb .wpjb-btn__back {
-    display: flex;
+#wpjb .wpjb-back {
+    display: inline-flex;
     align-items: center;
     background-color: transparent;
     padding: 2px 0;
@@ -522,27 +528,26 @@ body {
     font-size: 0.80rem;
     font-weight: 500;
     /* this matches the current icon better */
-    margin-bottom: 20px;
 }
 
-#wpjb .wpjb-btn__back:hover span {
+#wpjb .wpjb-back:hover span {
     font-weight: 500;
     /* this matches the current icon better */
 }
 
-#wpjb .wpjb-btn__back:hover span {
+#wpjb .wpjb-back:hover span {
     margin-left: 5px;
 }
 
-#wpjb .wpjb-btn__back svg {
+#wpjb .wpjb-back svg {
     margin: 0 5px
 }
 
-#wpjb .wpjb-btn__back:hover svg {
+#wpjb .wpjb-back:hover svg {
     margin: 0 5px 0 0;
 }
 
-#wpjb .wpjb-btn__back:hover {
+#wpjb .wpjb-back:hover {
     opacity: 0.5;
     cursor: pointer;
 }

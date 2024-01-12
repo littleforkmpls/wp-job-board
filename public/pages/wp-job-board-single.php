@@ -30,15 +30,23 @@ $job_date_published_iso8601 = !empty($job_meta->dateLastPublished) ? get_iso8601
 $job_date_modified          = !empty($job_meta->dateLastModified) ? get_relative_date($job_meta->dateLastModified) : '';
 $job_date_modified_iso8601  = !empty($job_meta->dateLastModified) ? get_iso8601_date($job_meta->dateLastModified) : '';
 
+if (wp_get_referer()) {
+    $previous_page_link = wp_get_referer();
+} else {
+    $previous_page_link = 'javascript:history.back();';
+}
+
 ?>
 
 <div id="wpjb">
     <div class="wpjb-single">
         <div class="wpjb-single__preface">
-            <button class="wpjb-btn__back">
+            <a href="<?php echo $previous_page_link; ?>" class="wpjb-back">
                 <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-arrow-left.svg'); ?>
-                <span><a href="javascript:history.back();">Back to All Jobs</a></span>
-            </button>
+                <span>
+                    Back to All Jobs
+                </span>
+            </a>
         </div>
         <div class="wpjb-single__content">
             <?php require_once plugin_dir_path(__DIR__) . 'partials/wp-job-board-card.php'; ?>
