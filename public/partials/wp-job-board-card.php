@@ -4,29 +4,24 @@
             <?php echo $job_title; ?>
         </h1>
     </div>
+
+    <span class="wpjb-card__meta-item__subtitle">
+        <span><?php echo $job_location_city; ?>, <?php echo $job_location_state; ?> | <?php echo $job_employment_type; ?></span>
+    </span>
     <div class="wpjb-card__meta">
         <span class="wpjb-card__meta-item">
-            <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-calendar-days.svg'); ?>
+        <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-calendar-days.svg'); ?>
+
             <span>Posted <?php echo $job_date_published; ?></span>
         </span>
         <span class="wpjb-card__meta-item">
-            <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-clock.svg'); ?>
-            <span>Updated <?php echo $job_date_modified; ?></span>
-        </span>
-        <span class="wpjb-card__meta-item">
-            <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-location-dot.svg'); ?>
-            <span><?php echo $job_location_city; ?>, <?php echo $job_location_state; ?></span>
-        </span>
-        <span class="wpjb-card__meta-item">
-            <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-briefcase-blank.svg'); ?>
-            <span> <?php echo $job_employment_type; ?></span>
+        <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-clock.svg'); ?>
+
+            <span class="wpjb-card__meta-item__update">Updated <?php echo $job_date_modified; ?></span>
         </span>
     </div>
-    <div class="wbjb-card__sub-hd">
-        <h3 class="wpjb-card__sub-title">
-            About the job
-        </h3>
-    </div>
+    <!-- <hr class="wpjb-card__divider" /> -->
+    <div class="wpjb-card__divider-top"></div>
     <div class="wpjb-card__bd">
         <div class="wpjb-userContent">
             <?php echo $job_description; ?>
@@ -37,11 +32,12 @@
             <button class="wpjb-utilityNav__btn">
                 <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-envelope.svg'); ?>
             </button>
-            <button class="wpjb-utilityNav__btn" >
+            <button class="wpjb-utilityNav__btn">
                 <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-printer.svg'); ?>
             </button>
         </div>
     </div>
+    <div class="wpjb-card__divider"></div>
     <div class="wpjb-btn__container">
         <button data-micromodal-trigger="modal-apply" class="btn">Apply</button>
     </div>

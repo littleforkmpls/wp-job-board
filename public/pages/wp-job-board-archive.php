@@ -99,14 +99,14 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
                                 $job_date_modified          = !empty($job_meta->dateLastModified) ? get_relative_date($job_meta->dateLastModified) : '';
                                 $job_date_modified_iso8601  = !empty($job_meta->dateLastModified) ? get_iso8601_date($job_meta->dateLastModified) : '';
                                 ?>
-                                <div id="archive">
+                                <div class="wpjb-archive">
                                     <div class="wpjb-card">
                                         <div class="wpjb-card__hd">
                                             <h3 class="wpjb-card__title">
                                                 <?php echo $job_title; ?>
                                             </h3>
                                             <span class="wpjb-card__meta-item__subtitle">
-                                                <?php echo $job_location_city; ?>, <?php echo $job_location_state; ?> (<?php echo $job_employment_type; ?>)
+                                                <?php echo $job_location_city; ?>, <?php echo $job_location_state; ?> | <?php echo $job_employment_type; ?>
                                             </span>
                                             <div class="wpjb-card__meta">
                                                 <span class="wpjb-card__meta-item">

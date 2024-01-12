@@ -57,7 +57,7 @@ body {
 ---------------------------------------------------------------*/
 #wpjb .wpjb-card {
     display: grid;
-    gap: 20px;
+    /* gap: 20px; */
     position: relative;
     border: 1px solid #858585;
     border-radius: 5px;
@@ -65,7 +65,7 @@ body {
     padding: 20px;
 }
 
-#wpjb #archive .wpjb-card {
+#wpjb .wpjb-archive .wpjb-card {
     /* width: 50vw; */
     margin: 20px 0;
 }
@@ -80,20 +80,23 @@ body {
     font-weight: 500;
 }
 
-#wpjb #archive .wpjb-card__title {
+#wpjb .wpjb-archive .wpjb-card__title {
     font-size: 1.25rem;
     font-weight: 500;
 }
 
-#wpjb .wpjb-card__sub-title {
+/* #wpjb .wpjb-card__sub-title {
     font-size: 1.25rem;
     font-weight: 500;
-}
+} */
 
 #wpjb .wpjb-card__meta-item__subtitle {
-    font-size: 0.8rem;
-    font-weight: 300;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
 
+#wpjb .wpjb-archive .wpjb-card__meta-item__subtitle {
+    font-size: 0.75rem;
 }
 
 .wpjb-card__description {
@@ -119,33 +122,64 @@ body {
     opacity: 0.5;
 }
 
-#wpjb .wpjb-card__meta {
+/* #wpjb .wpjb-card__meta {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
     gap: 10px;
-}
+} */
 
-#wpjb #archive .wpjb-card__meta {
+#wpjb .wpjb-card__meta {
     display: flex;
-    margin-top: 5px;
-    gap: 20px;
+    flex-direction: column;
+    gap: 5px;
 }
 
-#wpjb .wpjb-card__meta-item {
+/* #wpjb .wpjb-card__meta-item {
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
     font-size: 13px;
     gap: 10px;
+} */
+
+#wpjb .wpjb-card__meta-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: .75rem;
+    margin-bottom: 5px;
 }
 
-#wpjb #archive .wpjb-card__meta-item {
+#wpjb .wpjb-archive .wpjb-card__meta-item {
     font-size: .65rem;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+#wpjb .wpjb-card__meta-item__update {
+    font-size: 0.75rem;
     font-weight: 500;
 }
 
-#wpjb #archive .wpjb-userContent {
+#wpjb .wpjb-card__divider-top {
+    margin: 40px 0 20px 0;
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background-image: -webkit-linear-gradient(left, #85858500, #858585, #85858500);
+}
+
+#wpjb .wpjb-card__divider {
+    margin: 20px 0;
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background-image: -webkit-linear-gradient(left, #85858500, #858585, #85858500);
+}
+
+#wpjb .wpjb-archive .wpjb-userContent {
     font-size: .8rem;
+    margin: 20px 0;
 }
 
 @media screen and (max-width: 400px) {
