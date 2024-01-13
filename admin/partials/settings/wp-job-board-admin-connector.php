@@ -64,7 +64,7 @@ add_settings_field(
                 <h3 class="wpjba-p0 wpjba-m0">Bullhorn Connector</h3>
             </div>
             <div class="wpjba-card__bd">
-                <p class="wpjba-p0 wpjba-m0">Add credentials supplied by Bullhorn to connect to the platform.</p>
+                <p class="wpjba-p0 wpjba-m0">Add Bullborn REST API credentials to connect to the platform.</p>
             </div>
             <div class="wpjba-card__ft">
                 <form id="wpjba-connection-form" method="post" action="options.php">

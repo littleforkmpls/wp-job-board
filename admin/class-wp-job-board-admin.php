@@ -218,7 +218,7 @@ class WP_Job_Board_Admin
                 $this->bullhorn = new WP_Job_Board_Bullhorn_Manager($_POST);
             }
             $this->bullhorn->test_connection();
-            wp_send_json_success(array('message' => 'Connection was successful.',));
+            wp_send_json_success(array('message' => 'Connected successfully.',));
         } catch (Throwable $exception) {
             wp_send_json_error(array('message' => $exception->getMessage()));
         }
