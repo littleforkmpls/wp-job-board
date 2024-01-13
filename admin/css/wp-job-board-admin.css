@@ -146,10 +146,19 @@ pre.wp_job_board_meta_sample {
     border: none;
     background-color: #1d2327;
     color: #f0f0f1;
-    font-family:ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 14px;
     font-weight: normal;
     line-height: 1.4;
     white-space: pre-wrap;
     word-break: break-all;
+}
+
+/* ---------------------- Button Group ---------------------- */
+#wp_job_board_admin .wpjba-btnGroup {
+    margin-top: 20px;
+    padding-top: 10px;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem;
 }
