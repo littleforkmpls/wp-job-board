@@ -160,15 +160,25 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
         $count = 0;
 
         foreach ($jobs as $job_order) {
-            // $job_order['publicDescription'] = addslashes($job_order['publicDescription']);
             $bh_data   = json_encode($job_order);
-            $clean_title = sanitize_title($job_order['title'] . '-' . $job_order['id']);
+
+            $bh_job_id              = $job_order['id'];
+            $bh_job_title           = $job_order['title'];
+            $bh_clean_title         = sanitize_title($bh_job_title . '-' . $bh_job_id);
+            $bh_job_employmentType  = !empty($job_order['employmentType']) ? $job_order['employmentType'] : '';
+            $bh_job_state           = !empty($job_order['address']['state']) ? $job_order['address']['state'] : '';
+            $bh_job_country_code    = !empty($job_order['address']['countryCode']) ? $job_order['address']['countryCode'] : '';
+            $bh_job_location        = !empty($bh_job_state) ? $this->get_mapped_state($bh_job_state) : '';
+            $bh_job_industry        = !empty($job_order['correlatedCustomText8']) ? $this->get_mapped_industry($job_order['correlatedCustomText8']) : '';
+            $bh_job_catgory         = !empty($job_order['publishedCategory']['name']) ? $job_order['publishedCategory']['name'] : '';
+
             if (!$bh_data) {
-                error_log('Problem encoding job(' . $clean_title . '): ' . json_last_error_msg());
+                error_log('Problem encoding job(' . $bh_clean_title . '): ' . json_last_error_msg());
             }
+
             $post_data = array(
-                'post_title'     => $job_order['title'],
-                'post_name'      => $clean_title,
+                'post_title'     => $bh_job_title,
+                'post_name'      => $bh_clean_title,
                 'post_type'      => 'wjb_bh_job_order',
                 'post_content'   => '',
                 'post_status'    => 'publish',
@@ -176,36 +186,36 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
                 'meta_input'     => array(
                     'wjb_bh_data'    => addslashes($bh_data), // we have to do this because wp strips slashes when saving
                     'wjb_bh_updated' => 1,
-                    'wjb_bh_id'      => $job_order['id'],
+                    'wjb_bh_id'      => $bh_job_id,
                 ),
                 'tax_input' => array(
-                    'wjb_bh_job_type_tax' => $job_order['employmentType'],
-                    'wjb_bh_job_location_tax' => $this->get_mapped_state($job_order['address']['state']),
-                    'wjb_bh_job_industry_tax' => $this->get_mapped_industry($job_order['correlatedCustomText8']),
-                    'wjb_bh_job_category_tax' => $job_order['publishedCategory']['name'],
+                    'wjb_bh_job_type_tax' => $bh_job_employmentType,
+                    'wjb_bh_job_location_tax' => $bh_job_location,
+                    'wjb_bh_job_industry_tax' => $bh_job_industry,
+                    'wjb_bh_job_category_tax' => $bh_job_catgory,
                 )
             );
 
-            if (isset($existing_job_orders[$job_order['id']])) {
-                $post_data['ID'] = $existing_job_orders[$job_order['id']];
-                $post_bh_data    = get_post_meta($existing_job_orders[$job_order['id']], 'wjb_bh_data', true);
+            if (isset($existing_job_orders[$bh_job_id])) {
+                $post_data['ID'] = $existing_job_orders[$bh_job_id];
+                $post_bh_data    = get_post_meta($existing_job_orders[$bh_job_id], 'wjb_bh_data', true);
 
                 // if our data is the same mark as updated and skip it.
                 if (!$force && $post_bh_data === $bh_data) {
-                    update_post_meta($existing_job_orders[$job_order['id']], 'wjb_bh_updated', 1);
+                    update_post_meta($existing_job_orders[$bh_job_id], 'wjb_bh_updated', 1);
                     continue;
                 }
                 $log_data[] = array(
-                    'bh_id'  => $job_order['id'],
+                    'bh_id'  => $bh_job_id,
                     'action' => 'Updated' . ($force ? ' (Manually)' : ''),
-                    'title'  => $job_order['title'],
+                    'title'  => $bh_job_title,
                     'time'   => time(),
                 );
             } else {
                 $log_data[] = array(
-                    'bh_id'  => $job_order['id'],
+                    'bh_id'  => $bh_job_id,
                     'action' => 'Created',
-                    'title'  => $job_order['title'],
+                    'title'  => $bh_job_title,
                     'time'   => time(),
                 );
             }
@@ -220,7 +230,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
             }
 
             if (!$result || $result instanceof WP_Error) {
-                $this->throw_error('Could not insert Job Order ' . $job_order['id'] . ($result ? ' - ' . $result->get_error_message() : ''));
+                $this->throw_error('Could not insert Job Order ' . $bh_job_id . ($result ? ' - ' . $result->get_error_message() : ''));
             }
         }
 
