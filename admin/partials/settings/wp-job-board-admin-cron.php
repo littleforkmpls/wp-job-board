@@ -44,7 +44,7 @@ $scheduled = wp_next_scheduled(WP_Job_Board_Admin::CRON_SYNC_JOBS);
                 <h3 class="wpjba-p0 wpjba-m0">Cron Settings</h3>
             </div>
             <div class="wpjba-card__bd">
-                <p class="wpjba-p0 wpjba-m0">These options control the frequency we retrieve new Job Orders.</p>
+                <p class="wpjba-p0 wpjba-m0">Configure the frequency new Job Orders are synced from the plaform.</p>
             </div>
             <div class="wpjba-card__ft">
                 <form method="post" action="options.php">
