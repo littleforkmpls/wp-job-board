@@ -61,10 +61,10 @@ add_settings_field(
     <div class="wpjba-grid__item">
         <div class="wpjba-card">
             <div class="wpjba-card__hd">
-                <h3 class="wpjba-p0 wpjba-m0">Bullhorn Settings</h3>
+                <h3 class="wpjba-p0 wpjba-m0">Bullhorn Connector</h3>
             </div>
             <div class="wpjba-card__bd">
-                <p class="wpjba-p0 wpjba-m0">These options can be found in your Bullhorn account.</p>
+                <p class="wpjba-p0 wpjba-m0">Add credentials supplied by Bullhorn to connect to the platform.</p>
             </div>
             <div class="wpjba-card__ft">
                 <form id="wpjba-connection-form" method="post" action="options.php">
