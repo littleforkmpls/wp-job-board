@@ -97,12 +97,19 @@ class WP_Job_Board_API_Manager_Base
         throw new Error("WP Job Board - {$class} - Message: {$message}");
     }
 
-    protected function get_mapped_state(string $state): string
+    protected function get_mapped_location(string $state, string $country_code): string
     {
         $abbrev = strtoupper($state);
+        $country_code = strtoupper($country_code);
+
+        if ($country_code !== 'US' && $country_code !== 'USA') {
+            return 'International';
+        }
+
         if (isset(self::$state_map[$abbrev])) {
             return self::$state_map[$abbrev];
         }
+
         return $state;
     }
 

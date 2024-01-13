@@ -168,7 +168,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
             $bh_job_employmentType  = !empty($job_order['employmentType']) ? $job_order['employmentType'] : '';
             $bh_job_state           = !empty($job_order['address']['state']) ? $job_order['address']['state'] : '';
             $bh_job_country_code    = !empty($job_order['address']['countryCode']) ? $job_order['address']['countryCode'] : '';
-            $bh_job_location        = !empty($bh_job_state) ? $this->get_mapped_state($bh_job_state) : '';
+            $bh_job_location        = !empty($bh_job_state) ? $this->get_mapped_location($bh_job_state, $bh_job_country_code) : '';
             $bh_job_industry        = !empty($job_order['correlatedCustomText8']) ? $this->get_mapped_industry($job_order['correlatedCustomText8']) : '';
             $bh_job_catgory         = !empty($job_order['publishedCategory']['name']) ? $job_order['publishedCategory']['name'] : '';
 
