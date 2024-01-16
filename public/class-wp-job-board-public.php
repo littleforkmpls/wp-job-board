@@ -145,7 +145,7 @@ class WP_Job_Board_Public
                 'menu_position'         => 85,
                 'public'                => true,
                 'show_in_admin_bar'     => false,
-                'show_in_rest'          => false,
+                'show_in_rest'          => true,
                 'rewrite'               => array('slug' => 'jobs'),
                 'hierarchical'          => false,
                 'has_archive'           => true,
