@@ -145,7 +145,7 @@ class WP_Job_Board_Public
                 'menu_position'         => 85,
                 'public'                => true,
                 'show_in_admin_bar'     => false,
-                'show_in_rest'          => false,
+                'show_in_rest'          => true,
                 'rewrite'               => array('slug' => 'jobs'),
                 'hierarchical'          => false,
                 'has_archive'           => true,
@@ -225,6 +225,7 @@ class WP_Job_Board_Public
                 ),
                 'show_ui'           => true,
                 'show_admin_column' => true,
+                'show_in_rest'      => true,
                 'query_var'         => true,
                 'rewrite'           => ['slug' => 'job-type']
             )
@@ -257,6 +258,7 @@ class WP_Job_Board_Public
                 ),
                 'show_ui'           => true,
                 'show_admin_column' => true,
+                'show_in_rest'      => true,
                 'query_var'         => true,
                 'rewrite'           => ['slug' => 'job-location']
             )
@@ -289,6 +291,7 @@ class WP_Job_Board_Public
                 ),
                 'show_ui'           => true,
                 'show_admin_column' => true,
+                'show_in_rest'      => true,
                 'query_var'         => true,
                 'rewrite'           => ['slug' => 'job-category']
             )
@@ -321,6 +324,7 @@ class WP_Job_Board_Public
                 ),
                 'show_ui'           => true,
                 'show_admin_column' => true,
+                'show_in_rest'      => true,
                 'query_var'         => true,
                 'rewrite'           => ['slug' => 'job-industry']
             )

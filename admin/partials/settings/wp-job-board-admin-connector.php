@@ -61,37 +61,42 @@ add_settings_field(
     <div class="wpjba-grid__item">
         <div class="wpjba-card">
             <div class="wpjba-card__hd">
-                <h3 class="wpjba-p0 wpjba-m0">Bullhorn Settings</h3>
+                <h3 class="wpjba-p0 wpjba-m0">Bullhorn Connector</h3>
             </div>
             <div class="wpjba-card__bd">
-                <p class="wpjba-p0 wpjba-m0">These options can be found in your Bullhorn account.</p>
+                <p class="wpjba-p0 wpjba-m0">Add Bullborn REST API credentials to connect to the platform.</p>
             </div>
             <div class="wpjba-card__ft">
                 <form id="wpjba-connection-form" method="post" action="options.php">
                     <?php
-                    settings_fields(WP_Job_Board_Admin::SETTINGS_GROUP);
-                    do_settings_sections(WP_Job_Board_Admin::PAGE_SLUG);
+                        settings_fields(WP_Job_Board_Admin::SETTINGS_GROUP);
+                        do_settings_sections(WP_Job_Board_Admin::PAGE_SLUG);
                     ?>
-                    <?php submit_button(); ?>
+                    <div class="wpjba-btnGroup">
+                        <div class="wpjba-btnGroup__item">
+                            <?php
+                                submit_button(
+                                    'Save Changes',
+                                    'primary',
+                                    'submit',
+                                    false,
+                                    null
+                                );
+                            ?>
+                        </div>
+                        <div class="wpjba-btnGroup__item">
+                            <button
+                                type="button"
+                                class="button button-secondary"
+                                data-wpjb-ajax="test_connection"
+                                data-wpjb-ajax-form="wpjba-connection-form"
+                            >
+                                Test Connection
+                            </button>
+                            <span class="spinner" aria-hidden="true"></span>
+                        </div>
+                    </div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="wpjba-grid__item">
-        <div class="wpjba-card">
-            <div class="wpjba-card__hd">
-                <h3 class="wpjba-p0 wpjba-m0">Test above settings</h3>
-            </div>
-            <div class="wpjba-card__bd">
-                <p class="wpjba-p0 wpjba-m0">Check if the above settings will connect to Bullhorn.</p>
-            </div>
-            <div class="wpjba-card__ft">
-                <button type="button" class="button button-primary" data-wpjb-ajax="test_connection"
-                        data-wpjb-ajax-form="wpjba-connection-form">
-                    Test Connection
-                </button>
-                <span class="spinner" aria-hidden="true"></span>
             </div>
         </div>
     </div>
