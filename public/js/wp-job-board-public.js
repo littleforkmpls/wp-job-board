@@ -192,4 +192,26 @@
             $fileErrorSpan.css("opacity", "1");
         }
     });
+
+    /** ******************* */
+    /** Filter Jobs         */
+    /** ******************* */
+
+    $('.wpjb-facet__section__list').on('click', 'input[type="checkbox"]', function () {
+    $('.wpjb-facet__section__list').removeClass('active');
+    $(this).addClass('active');
+
+    $.ajax({
+        url: '/wp-admin/admin-ajax.php',
+        type: 'POST',
+        data: {
+            action: 'filter_jobs',
+            filter: $(this).val(),
+        },
+        success: function (res) {
+            $('#wpjb-card').html(res);
+        },
+    });
+
+    });
 })(jQuery);

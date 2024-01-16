@@ -328,12 +328,23 @@ body {
 /*----------------------------------------------------------------------------------
     Pagination
 ----------------------------------------------------------------------------------*/
-
+/*
 #wpjb .wpjb-pagination {
     position: absolute;
-    bottom: 10px;
+    bottom: 5px;
     left: 50%;
     transform: translate(-50%);
+} */
+
+
+#wpjb .wpjb-pagination {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #wpjb nav.pagination {
