@@ -197,21 +197,97 @@
     /** Filter Jobs         */
     /** ******************* */
 
-    $('.wpjb-facet__section__list').on('click', 'input[type="checkbox"]', function () {
-    $('.wpjb-facet__section__list').removeClass('active');
-    $(this).addClass('active');
+    // const $industry = [];
+    // const $location = [];
+    // const $type = [];
+    // const $category = [];
 
-    $.ajax({
-        url: '/wp-admin/admin-ajax.php',
-        type: 'POST',
-        data: {
-            action: 'filter_jobs',
-            filter: $(this).val(),
-        },
-        success: function (res) {
-            $('#wpjb-card').html(res);
-        },
+    // $(".wpjb-facet__section__list").on(
+    //     "click",
+    //     'input[type="checkbox"]',
+    //     function () {
+    //         $industry.push(this.value);
+    //         $location.push(this.value);
+    //         $type.push(this.value);
+    //         $category.push(this.value);
+
+    //         $.ajax({
+    //             //url: '/wp-admin/admin-ajax.php',
+    //             url: wpjb_ajax.ajax_url,
+    //             type: "POST",
+    //             data: {
+    //                 action: "filter_jobs",
+    //                 industry: $industry,
+    //                 location: $location,
+    //                 type: $type,
+    //                 category: $category,
+    //             },
+    //             success: function (res) {
+    //                 console.log('response data is:',res);
+    //                 if (res && res.data && res.data.html !== undefined) {
+    //                     $(".wpjb-results__bd").html(res.data.html);
+    //                 } else {
+    //                     $(".wpjb-results__bd").html('<p>No jobs found or error loading jobs.</p>');
+    //                 }
+    //             },
+    //         });
+    //     });
+
+    const filterJobs = () => {
+        let industry = [];
+        let location = [];
+        let type = [];
+        let category = [];
+
+        // Example of collecting industry checkboxes
+        $('input[name="wjb_bh_job_industry_tax[]"]:checked').each(function() {
+            industry.push($(this).val());
+        });
+
+        $('input[name="wjb_bh_job_location_tax[]"]:checked').each(function() {
+            location.push($(this).val());
+        });
+
+        $('input[name="wjb_bh_job_type_tax[]"]:checked').each(function() {
+            type.push($(this).val());
+        });
+
+        $('input[name="wjb_bh_job_category_tax[]"]:checked').each(function() {
+            category.push($(this).val());
+        });
+
+
+        console.log({ industry, category, location, type,  });
+
+
+        $.ajax({
+            url: wpjb_ajax.ajax_url,
+            type: "POST",
+            data: {
+                action: "filter_jobs",
+                industry: industry,
+                location: location,
+                type: type,
+                category: category,
+            },
+            success: function(res) {
+                console.log("response data is:", res);
+                if (res && res.data && res.data.html !== undefined) {
+                    $(".wpjb-results__bd").html("<p>Success but no html!</p>", res.data.html);
+                } else {
+                    $(".wpjb-results__bd").html(
+                        "<p>No jobs found or error loading jobs.</p>"
+                    );
+                }
+            },
+        });
+    };
+
+    $(".wpjb-facet__section__list").on("click", 'input[type="checkbox"]', function() {
+        filterJobs();
     });
 
-    });
 })(jQuery);
+
+
+

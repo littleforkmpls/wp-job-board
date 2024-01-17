@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -52,6 +53,9 @@ class WP_Job_Board_Public
     {
         $this->wp_job_board = $wp_job_board;
         $this->version      = $version;
+
+        add_action('wp_ajax_nopriv_filter_jobs', array($this, 'ajax_filter_jobs'));
+        add_action('wp_ajax_filter_jobs', array($this, 'ajax_filter_jobs'));
     }
 
     /**
@@ -92,6 +96,11 @@ class WP_Job_Board_Public
             filemtime(plugin_dir_path(__FILE__) . 'js/micromodal.min.js'),
             true
         );
+
+        $translation_array = array(
+            'ajax_url' => admin_url('admin-ajax.php')
+        );
+        wp_localize_script($this->wp_job_board, 'wpjb_ajax', $translation_array);
     }
 
     /**
@@ -367,5 +376,71 @@ class WP_Job_Board_Public
         } catch (Throwable $exception) {
             wp_send_json_error(array('message' => $exception->getMessage(), 'trace' => $exception->getTrace()));
         }
+    }
+
+
+    public function ajax_filter_jobs()
+    {
+        $industry = isset($_POST['industry']) ? $_POST['industry'] : array();
+        $location = isset($_POST['location']) ? $_POST['location'] : array();
+        $category = isset($_POST['category']) ? $_POST['category'] : array();
+        $type = isset($_POST['type']) ? $_POST['type'] : array();
+
+        $tax_query = array('relation' => 'AND');
+        if (!empty($industry)) {
+            $tax_query[] = array(
+                'taxonomy' => 'wjb_bh_job_industry_tax',
+                'field' => 'term_id',
+                'terms' => $industry,
+                'operator' => 'IN'
+            );
+        }
+        if (!empty($location)) {
+            $tax_query[] = array(
+                'taxonomy' => 'wjb_bh_job_location_tax',
+                'field' => 'term_id',
+                'terms' => $location,
+                'operator' => 'IN'
+            );
+        }
+        if (!empty($category)) {
+            $tax_query[] = array(
+                'taxonomy' => 'wjb_bh_job_category_tax',
+                'field' => 'term_id',
+                'terms' => $category,
+                'operator' => 'IN'
+            );
+        }
+        if (!empty($type)) {
+            $tax_query[] = array(
+                'taxonomy' => 'wjb_bh_job_type_tax',
+                'field' => 'term_id',
+                'terms' => $type,
+                'operator' => 'IN'
+            );
+        }
+
+        $args = array(
+            'post_type' => 'wjb_bh_job_order',
+            'posts_per_page' => -1,
+            'tax_query' => $tax_query
+        );
+
+        $query = new WP_Query($args);
+        error_log(print_r($query, true));
+        $jobs = '';
+
+        if ($query->have_posts()) {
+            ob_start();
+            include(get_template_directory() . './partials/wp-job-board-archive-card.php');
+            $jobs = ob_get_clean();
+        } else {
+            $jobs = '<h2>No Jobs Found</h2>';
+        }
+
+        // $jobs = ob_get_clean();
+        // wp_reset_postdata();
+
+        wp_send_json_success(array('html' => $jobs));
     }
 }

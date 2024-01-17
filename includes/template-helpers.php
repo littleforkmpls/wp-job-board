@@ -117,10 +117,12 @@ function get_taxonomy_filters($taxonomy = false, $current_term_id = 0)
         $term_name      = esc_html($term->name);
         $term_checked   = ($current_term_id == $term_id) ? 'checked' : '';
 
+        $checkbox_name = $taxonomy . '[]';
+
         $output .= "
             <li>
                 <label>
-                    <input type='checkbox' value='{$term_id}' {$term_checked} />
+                    <input type='checkbox' name='{$checkbox_name}' value='{$term_id}' {$term_checked} />
                     {$term_name}
                 </label>
             </li>
