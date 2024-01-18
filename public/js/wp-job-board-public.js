@@ -224,7 +224,7 @@
     //             },
     //             success: function (res) {
     //                 console.log('response data is:',res);
-    //                 if (res && res.data && res.data.html !== undefined) {
+    //                 if (res !== undefined) {
     //                     $(".wpjb-results__bd").html(res.data.html);
     //                 } else {
     //                     $(".wpjb-results__bd").html('<p>No jobs found or error loading jobs.</p>');
@@ -259,6 +259,7 @@
 
         console.log({ industry, category, location, type,  });
 
+        // add loading divs here
 
         $.ajax({
             url: wpjb_ajax.ajax_url,
@@ -273,7 +274,8 @@
             success: function(res) {
                 console.log("response data is:", res);
                 if (res && res.data && res.data.html !== undefined) {
-                    $(".wpjb-results__bd").html("<p>Success but no html!</p>", res.data.html);
+                    $(".wpjb-results__bd").html(res.data.html);
+                    //remove loading divs here
                 } else {
                     $(".wpjb-results__bd").html(
                         "<p>No jobs found or error loading jobs.</p>"

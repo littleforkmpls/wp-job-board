@@ -381,18 +381,19 @@ class WP_Job_Board_Public
 
     public function ajax_filter_jobs()
     {
+
         $industry = isset($_POST['industry']) ? $_POST['industry'] : array();
         $location = isset($_POST['location']) ? $_POST['location'] : array();
         $category = isset($_POST['category']) ? $_POST['category'] : array();
         $type = isset($_POST['type']) ? $_POST['type'] : array();
 
-        $tax_query = array('relation' => 'AND');
+        $tax_query = array('relation' => 'AND'); // use AND operator to combine conditions
         if (!empty($industry)) {
             $tax_query[] = array(
                 'taxonomy' => 'wjb_bh_job_industry_tax',
-                'field' => 'term_id',
+                'field' => 'term_id', // can be 'term_id', 'slug' or 'name'
                 'terms' => $industry,
-                'operator' => 'IN'
+                'operator' => 'IN' // IN = "inclusive", retrieve posts matching terms in $industry
             );
         }
         if (!empty($location)) {
@@ -422,25 +423,27 @@ class WP_Job_Board_Public
 
         $args = array(
             'post_type' => 'wjb_bh_job_order',
-            'posts_per_page' => -1,
-            'tax_query' => $tax_query
+            'posts_per_page' => 10,
+            'tax_query' => $tax_query // use tax_query from above to filter terms
         );
 
-        $query = new WP_Query($args);
-        error_log(print_r($query, true));
-        $jobs = '';
+        $query = new WP_Query($args); // new instance of WP_Query class
 
+
+        ob_start(); // output buffer to capture HTML before sending it to the browser
         if ($query->have_posts()) {
-            ob_start();
-            include(get_template_directory() . './partials/wp-job-board-archive-card.php');
-            $jobs = ob_get_clean();
+            while ($query->have_posts()) {
+                $query->the_post();
+                //get_template_directory() . '/partials/wp-job-board-archive-card.php';
+                include plugin_dir_path(__DIR__) . 'public/partials/wp-job-board-archive-card.php';
+                // echo  get_the_title();
+
+            }
         } else {
-            $jobs = '<h2>No Jobs Found</h2>';
+            echo '<h2>No Jobs Found</h2>';
         }
+        $jobs = ob_get_clean(); //capture HTML from output buffer and store in $jobs variable
 
-        // $jobs = ob_get_clean();
-        // wp_reset_postdata();
-
-        wp_send_json_success(array('html' => $jobs));
+        wp_send_json_success(array('html' => $jobs)); //display HTML in browser
     }
 }

@@ -128,7 +128,7 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
                                 </div>
                             <?php endwhile; ?>
 
-                            
+
 
                         <?php else : ?>
                             No jobs found.
