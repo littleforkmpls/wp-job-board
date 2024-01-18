@@ -429,21 +429,19 @@ class WP_Job_Board_Public
 
         $query = new WP_Query($args); // new instance of WP_Query class
 
+        $results_count  = $query->found_posts;
 
         ob_start(); // output buffer to capture HTML before sending it to the browser
         if ($query->have_posts()) {
             while ($query->have_posts()) {
                 $query->the_post();
-                //get_template_directory() . '/partials/wp-job-board-archive-card.php';
                 include plugin_dir_path(__DIR__) . 'public/partials/wp-job-board-archive-card.php';
-                // echo  get_the_title();
-
             }
         } else {
             echo '<h2>No Jobs Found</h2>';
         }
         $jobs = ob_get_clean(); //capture HTML from output buffer and store in $jobs variable
 
-        wp_send_json_success(array('html' => $jobs)); //display HTML in browser
+        wp_send_json_success(array('html' => $jobs, 'count' => $results_count)); //display HTML in browser
     }
 }

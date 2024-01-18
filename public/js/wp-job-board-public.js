@@ -197,73 +197,31 @@
     /** Filter Jobs         */
     /** ******************* */
 
-    // const $industry = [];
-    // const $location = [];
-    // const $type = [];
-    // const $category = [];
-
-    // $(".wpjb-facet__section__list").on(
-    //     "click",
-    //     'input[type="checkbox"]',
-    //     function () {
-    //         $industry.push(this.value);
-    //         $location.push(this.value);
-    //         $type.push(this.value);
-    //         $category.push(this.value);
-
-    //         $.ajax({
-    //             //url: '/wp-admin/admin-ajax.php',
-    //             url: wpjb_ajax.ajax_url,
-    //             type: "POST",
-    //             data: {
-    //                 action: "filter_jobs",
-    //                 industry: $industry,
-    //                 location: $location,
-    //                 type: $type,
-    //                 category: $category,
-    //             },
-    //             success: function (res) {
-    //                 console.log('response data is:',res);
-    //                 if (res !== undefined) {
-    //                     $(".wpjb-results__bd").html(res.data.html);
-    //                 } else {
-    //                     $(".wpjb-results__bd").html('<p>No jobs found or error loading jobs.</p>');
-    //                 }
-    //             },
-    //         });
-    //     });
-
     const filterJobs = () => {
         let industry = [];
         let location = [];
         let type = [];
         let category = [];
 
-        // Example of collecting industry checkboxes
-        $('input[name="wjb_bh_job_industry_tax[]"]:checked').each(function() {
+        $('input[name="wjb_bh_job_industry_tax[]"]:checked').each(function () {
             industry.push($(this).val());
         });
 
-        $('input[name="wjb_bh_job_location_tax[]"]:checked').each(function() {
+        $('input[name="wjb_bh_job_location_tax[]"]:checked').each(function () {
             location.push($(this).val());
         });
 
-        $('input[name="wjb_bh_job_type_tax[]"]:checked').each(function() {
+        $('input[name="wjb_bh_job_type_tax[]"]:checked').each(function () {
             type.push($(this).val());
         });
 
-        $('input[name="wjb_bh_job_category_tax[]"]:checked').each(function() {
+        $('input[name="wjb_bh_job_category_tax[]"]:checked').each(function () {
             category.push($(this).val());
         });
 
-
-        console.log({ industry, category, location, type,  });
-
-        // add loading classes here
-
+        // screen loading classes
         $(".wpjb-card").addClass("loader");
         $(".wpjb-archive").addClass("disabled");
-
 
         $.ajax({
             url: wpjb_ajax.ajax_url,
@@ -275,16 +233,20 @@
                 type: type,
                 category: category,
             },
-            success: function(res) {
+            success: function (res) {
                 console.log("response data is:", res);
                 if (res && res.data && res.data.html !== undefined) {
-
                     //timeout for testing purposes
-                    setTimeout(function() {
-                    $(".wpjb-card").removeClass("loader");
-                    $(".wpjb-archive").removeClass("disabled");
-                    $(".wpjb-results__bd").html(res.data.html);
-                }, 1000);
+                    setTimeout(function () {
+                        $(".wpjb-card").removeClass("loader");
+                        $(".wpjb-archive").removeClass("disabled");
+                        $(".wpjb-results__bd").html(res.data.html);
+                        if (res.data.count !== undefined) {
+                            $(".wpjb-results__title").text(
+                                res.data.count + " Open Positions"
+                            );
+                        }
+                    }, 700);
                 } else {
                     $(".wpjb-results__bd").html(
                         "<p>No jobs found or error loading jobs.</p>"
@@ -294,11 +256,11 @@
         });
     };
 
-    $(".wpjb-facet__section__list").on("click", 'input[type="checkbox"]', function() {
-        filterJobs();
-    });
-
+    $(".wpjb-facet__section__list").on(
+        "click",
+        'input[type="checkbox"]',
+        function () {
+            filterJobs();
+        }
+    );
 })(jQuery);
-
-
-

@@ -200,10 +200,13 @@ body {
     border: 1px solid #858585;
     border-radius: 5px;
     padding: 20px;
+    opacity: 1;
+    transition: opacity 0.5s ease;
 }
 
   #wpjb .wpjb-card.loader * {
-    visibility: hidden;
+    /* visibility: hidden; */
+    opacity: 0;
 }
 
 #wpjb .loader {
