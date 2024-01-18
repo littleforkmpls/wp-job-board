@@ -61,15 +61,13 @@ body {
 /*--------------------------------------------------------------
  Card
 ---------------------------------------------------------------*/
-#wpjb .wpjb-card {
+/* #wpjb .wpjb-card {
     display: grid;
-    /* gap: 20px; */
     position: relative;
     border: 1px solid #858585;
     border-radius: 5px;
-    /* box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 2px; */
     padding: 20px;
-}
+} */
 
 #wpjb .wpjb-archive .wpjb-card {
     /* width: 50vw; */
@@ -195,6 +193,38 @@ body {
         /* prevents card from overflowing */
     }
 }
+
+#wpjb .wpjb-card {
+    display: grid;
+    position: relative;
+    border: 1px solid #858585;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+  #wpjb .wpjb-card.loader * {
+    visibility: hidden;
+}
+
+#wpjb .loader {
+    background:
+      linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
+      #f2f2f2;
+    background-size:300% 100%;
+    animation: l1 1s infinite linear;
+
+  }
+  @keyframes l1 {
+    0% {background-position: right}
+  }
+
+  #wpjb .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+
+
 
 /*----------------------------------------------------------------------------------
     Facets

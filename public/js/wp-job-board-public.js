@@ -259,7 +259,11 @@
 
         console.log({ industry, category, location, type,  });
 
-        // add loading divs here
+        // add loading classes here
+
+        $(".wpjb-card").addClass("loader");
+        $(".wpjb-archive").addClass("disabled");
+
 
         $.ajax({
             url: wpjb_ajax.ajax_url,
@@ -274,8 +278,13 @@
             success: function(res) {
                 console.log("response data is:", res);
                 if (res && res.data && res.data.html !== undefined) {
+
+                    //timeout for testing purposes
+                    setTimeout(function() {
+                    $(".wpjb-card").removeClass("loader");
+                    $(".wpjb-archive").removeClass("disabled");
                     $(".wpjb-results__bd").html(res.data.html);
-                    //remove loading divs here
+                }, 1000);
                 } else {
                     $(".wpjb-results__bd").html(
                         "<p>No jobs found or error loading jobs.</p>"
