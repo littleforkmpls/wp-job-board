@@ -45,7 +45,8 @@
     function resetSearch() {
         const $url = new URL(window.location.href);
         $url.searchParams.delete("s");
-        window.history.replaceState({}, "", $url);
+        // window.history.replaceState({}, "", $url);
+        filterJobs();
     }
 
     $searchSubmit.on("click", function () {
@@ -58,8 +59,7 @@
         $searchInput.val("");
         $clearSearchBtn.css("opacity", "0");
         resetSearch();
-        window.location.reload();
-        //add more clear functionality here
+        window.location.href = '/jobs';
     });
 
     /** ******************* */
@@ -197,11 +197,38 @@
     /** Filter Jobs         */
     /** ******************* */
 
+    let currentPage = 1;
+
+    const updatePagination = (maxNumPages, currentPage) => {
+        const paginationContainer = $('.pagination');
+        paginationContainer.empty();
+
+        // Example of adding prev link
+        if(currentPage > 1) {
+            paginationContainer.append('<li><a href="#" data-page="' + (currentPage - 1) + '">Previous</a></li>');
+        }
+
+        // Add page number links - this is a simplified example
+        for(let i = 1; i <= maxNumPages; i++) {
+            paginationContainer.append('<li><a href="#" data-page="' + i + '">' + i + '</a></li>');
+        }
+
+        // Example of adding next link
+        if(currentPage < maxNumPages) {
+            paginationContainer.append('<li><a href="#" data-page="' + (currentPage + 1) + '">Next</a></li>');
+        }
+    };
+
+
+
     const filterJobs = () => {
         let industry = [];
         let location = [];
         let type = [];
         let category = [];
+        let search = $("#wpjbSearchTextInput").val();
+        // currentPage = 1;
+
 
         $('input[name="wjb_bh_job_industry_tax[]"]:checked').each(function () {
             industry.push($(this).val());
@@ -223,6 +250,8 @@
         $(".wpjb-card").addClass("loader");
         $(".wpjb-archive").addClass("disabled");
 
+        console.log("currentPage in Ajax:", currentPage);
+
         $.ajax({
             url: wpjb_ajax.ajax_url,
             type: "POST",
@@ -232,8 +261,13 @@
                 location: location,
                 type: type,
                 category: category,
+                search: search,
+                page: currentPage,
+
             },
+
             success: function (res) {
+
                 console.log("response data is:", res);
                 if (res && res.data && res.data.html !== undefined) {
                     //timeout for testing purposes
@@ -241,6 +275,11 @@
                         $(".wpjb-card").removeClass("loader");
                         $(".wpjb-archive").removeClass("disabled");
                         $(".wpjb-results__bd").html(res.data.html);
+
+                        if (res.data && res.data.max_num_pages && res.data.current_page) {
+                            updatePagination(res.data.max_num_pages, res.data.current_page);
+                        }
+
                         if (res.data.count !== undefined) {
                             $(".wpjb-results__title").text(
                                 res.data.count + " Open Positions"
@@ -263,4 +302,22 @@
             filterJobs();
         }
     );
+
+    $('.pagination').on('click', 'a', function(e) {
+        e.preventDefault();
+        const page = $(this).data('page');
+        currentPage = page;
+        filterJobs();
+    });
+
+    const applyFilters = () => {
+        currentPage = 1; // Reset to first page when applying new filters
+        filterJobs();
+    };
+
+    $(".wpjb-facet__section__list").on("click", 'input[type="checkbox"]', function () {
+        applyFilters();
+    });
+
+
 })(jQuery);

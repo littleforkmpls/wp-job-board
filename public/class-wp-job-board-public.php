@@ -381,11 +381,15 @@ class WP_Job_Board_Public
 
     public function ajax_filter_jobs()
     {
-
+        $search = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : '';
         $industry = isset($_POST['industry']) ? $_POST['industry'] : array();
         $location = isset($_POST['location']) ? $_POST['location'] : array();
         $category = isset($_POST['category']) ? $_POST['category'] : array();
         $type = isset($_POST['type']) ? $_POST['type'] : array();
+        $display_count = 2;
+        $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+        $offset = ($page - 1) * $display_count;
+
 
         $tax_query = array('relation' => 'AND'); // use AND operator to combine conditions
         if (!empty($industry)) {
@@ -423,13 +427,17 @@ class WP_Job_Board_Public
 
         $args = array(
             'post_type' => 'wjb_bh_job_order',
-            'posts_per_page' => 10,
-            'tax_query' => $tax_query // use tax_query from above to filter terms
+            // 'posts_per_page' => 10,
+            'tax_query' => $tax_query, // use tax_query from above to filter terms
+            's' => $search,
+            'paged' => $page,
+            'offset' => $offset
         );
 
         $query = new WP_Query($args); // new instance of WP_Query class
 
-        $results_count  = $query->found_posts;
+        $results_count = $query->found_posts;
+        $max_num_pages = $query->max_num_pages;
 
         ob_start(); // output buffer to capture HTML before sending it to the browser
         if ($query->have_posts()) {
@@ -442,6 +450,11 @@ class WP_Job_Board_Public
         }
         $jobs = ob_get_clean(); //capture HTML from output buffer and store in $jobs variable
 
-        wp_send_json_success(array('html' => $jobs, 'count' => $results_count)); //display HTML in browser
+        wp_send_json_success(array(
+            'html' => $jobs,
+            'count' => $results_count,
+            'max_num_pages' => $max_num_pages,
+            'current_page' => $page
+        )); //display HTML in browser
     }
 }

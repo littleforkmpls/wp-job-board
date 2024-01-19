@@ -138,10 +138,9 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
                 </div>
             </div>
         </div>
-        <div class="wpjb-pagination">
-            <?php echo the_posts_pagination(array(
-                'type' => 'list'
-            )); ?>
-        </div>
+        <ul class="pagination">
+                            
+        </ul>
+
     </div>
 </div>

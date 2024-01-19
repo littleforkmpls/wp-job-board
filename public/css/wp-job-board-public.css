@@ -205,7 +205,6 @@ body {
 }
 
   #wpjb .wpjb-card.loader * {
-    /* visibility: hidden; */
     opacity: 0;
 }
 
