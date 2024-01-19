@@ -138,8 +138,17 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
                 </div>
             </div>
         </div>
+        <ul class="pagination-regular">
+            <li id="previous-posts">
+                <?php previous_posts_link('<< Previous Posts', $wp_query->max_num_pages); ?>
+            </li>
+            <li id="next-posts">
+                <?php next_posts_link('Next Posts >>', $wp_query->max_num_pages); ?>
+            </li>
+        </ul>
+
         <ul class="pagination">
-                            
+
         </ul>
 
     </div>

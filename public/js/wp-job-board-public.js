@@ -310,14 +310,4 @@
         filterJobs();
     });
 
-    const applyFilters = () => {
-        currentPage = 1; // Reset to first page when applying new filters
-        filterJobs();
-    };
-
-    $(".wpjb-facet__section__list").on("click", 'input[type="checkbox"]', function () {
-        applyFilters();
-    });
-
-
 })(jQuery);
