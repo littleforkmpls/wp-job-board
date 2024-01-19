@@ -138,18 +138,16 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
                 </div>
             </div>
         </div>
-        <ul class="pagination-regular">
+        <ul class="all-posts">
             <li id="previous-posts">
-                <?php previous_posts_link('<< Previous Posts', $wp_query->max_num_pages); ?>
+                <?php previous_posts_link('<< Previous Jobs', $wp_query->max_num_pages); ?>
             </li>
             <li id="next-posts">
-                <?php next_posts_link('Next Posts >>', $wp_query->max_num_pages); ?>
+                <?php next_posts_link('More Jobs >>', $wp_query->max_num_pages); ?>
             </li>
         </ul>
 
-        <ul class="pagination">
-
-        </ul>
+        <ul class="wpjb-pagination"></ul>
 
     </div>
 </div>

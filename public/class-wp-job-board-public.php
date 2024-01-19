@@ -455,6 +455,6 @@ class WP_Job_Board_Public
             'count' => $results_count,
             'max_num_pages' => $max_num_pages,
             'current_page' => $page
-        )); //display HTML in browser
+        )); 
     }
 }

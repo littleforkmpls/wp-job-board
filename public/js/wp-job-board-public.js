@@ -59,7 +59,7 @@
         $searchInput.val("");
         $clearSearchBtn.css("opacity", "0");
         resetSearch();
-        window.location.href = '/jobs';
+        window.location.href = "/jobs";
     });
 
     /** ******************* */
@@ -194,32 +194,74 @@
     });
 
     /** ******************* */
-    /** Filter Jobs         */
+    /** Filter Pagination   */
     /** ******************* */
 
-    let currentPage = 1;
+    let $currentPage = 1;
 
-    const updatePagination = (maxNumPages, currentPage) => {
-        const paginationContainer = $('.pagination');
-        paginationContainer.empty();
+    const updatePagination = ($maxNumPages, $currentPage) => {
+        const $paginationContainer = $(".wpjb-pagination");
+        $paginationContainer.empty();
 
-        // Example of adding prev link
-        if(currentPage > 1) {
-            paginationContainer.append('<li><a href="#" data-page="' + (currentPage - 1) + '">Previous</a></li>');
+        // Previous Link
+        if ($currentPage > 1) {
+            $paginationContainer.append(
+                '<li><a href="#" data-page="' +
+                    ($currentPage - 1) +
+                    '">Previous</a></li>'
+            );
         }
 
-        // Add page number links - this is a simplified example
-        for(let i = 1; i <= maxNumPages; i++) {
-            paginationContainer.append('<li><a href="#" data-page="' + i + '">' + i + '</a></li>');
+        // First page
+        let $firstPage = $('<li><a href="#" data-page="1">1</a></li>');
+        if ($currentPage === 1) {
+            $firstPage.addClass("current-index");
+        }
+        $paginationContainer.append($firstPage);
+
+        // Ellipsis and pages logic
+        if ($currentPage > 3) {
+            $paginationContainer.append("<li><span>...</span></li>");
+        }
+        for (
+            let i = Math.max(2, $currentPage - 1);
+            i <= Math.min($currentPage + 1, $maxNumPages - 1);
+            i++
+        ) {
+            let li = $('<li><a href="#" data-page="' + i + '">' + i + "</a></li>");
+            if ($currentPage === i) {
+                li.addClass("current-index");
+            }
+            $paginationContainer.append(li);
+        }
+        if ($currentPage < $maxNumPages - 2) {
+            $paginationContainer.append("<li><span>...</span></li>");
         }
 
-        // Example of adding next link
-        if(currentPage < maxNumPages) {
-            paginationContainer.append('<li><a href="#" data-page="' + (currentPage + 1) + '">Next</a></li>');
+        // Last page
+        if ($maxNumPages > 1) {
+            $paginationContainer.append(
+                '<li><a href="#" data-page="' +
+                    $maxNumPages +
+                    '">' +
+                    $maxNumPages +
+                    "</a></li>"
+            );
+        }
+
+        // Next Link
+        if ($currentPage < $maxNumPages) {
+            $paginationContainer.append(
+                '<li><a href="#" data-page="' +
+                    ($currentPage + 1) +
+                    '">Next</a></li>'
+            );
         }
     };
 
-
+    /** ******************* */
+    /** Filter Jobs         */
+    /** ******************* */
 
     const filterJobs = () => {
         let industry = [];
@@ -227,8 +269,10 @@
         let type = [];
         let category = [];
         let search = $("#wpjbSearchTextInput").val();
-        // currentPage = 1;
 
+        $clearSearchBtn.css("opacity", "1");
+
+        $(".all-posts").css("display", "none");
 
         $('input[name="wjb_bh_job_industry_tax[]"]:checked').each(function () {
             industry.push($(this).val());
@@ -250,7 +294,7 @@
         $(".wpjb-card").addClass("loader");
         $(".wpjb-archive").addClass("disabled");
 
-        console.log("currentPage in Ajax:", currentPage);
+        console.log("$currentPage in Ajax:", $currentPage);
 
         $.ajax({
             url: wpjb_ajax.ajax_url,
@@ -262,12 +306,10 @@
                 type: type,
                 category: category,
                 search: search,
-                page: currentPage,
-
+                page: $currentPage,
             },
 
             success: function (res) {
-
                 console.log("response data is:", res);
                 if (res && res.data && res.data.html !== undefined) {
                     //timeout for testing purposes
@@ -276,8 +318,15 @@
                         $(".wpjb-archive").removeClass("disabled");
                         $(".wpjb-results__bd").html(res.data.html);
 
-                        if (res.data && res.data.max_num_pages && res.data.current_page) {
-                            updatePagination(res.data.max_num_pages, res.data.current_page);
+                        if (
+                            res.data &&
+                            res.data.max_num_pages &&
+                            res.data.current_page
+                        ) {
+                            updatePagination(
+                                res.data.max_num_pages,
+                                res.data.current_page
+                            );
                         }
 
                         if (res.data.count !== undefined) {
@@ -303,11 +352,10 @@
         }
     );
 
-    $('.pagination').on('click', 'a', function(e) {
+    $(".wpjb-pagination").on("click", "a", function (e) {
         e.preventDefault();
-        const page = $(this).data('page');
-        currentPage = page;
+        const page = $(this).data("page");
+        $currentPage = page;
         filterJobs();
     });
-
 })(jQuery);

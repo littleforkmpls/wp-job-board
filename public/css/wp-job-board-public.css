@@ -360,99 +360,52 @@ body {
 /*----------------------------------------------------------------------------------
     Pagination
 ----------------------------------------------------------------------------------*/
-/*
-#wpjb .wpjb-pagination {
-    position: absolute;
-    bottom: 5px;
-    left: 50%;
-    transform: translate(-50%);
-} */
 
 
-#wpjb .wpjb-pagination {
-    position: relative;
-    bottom: auto;
-    left: auto;
-    transform: none;
+
+#wpjb .wpjb-pagination  {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
-#wpjb nav.pagination {
-    position: relative;
-    display: block;
-}
-
-#wpjb .nav-links {
-    position: relative;
-}
-
-#wpjb .nav-links ul {
-    margin: 0;
-    padding: 0,
-}
-
-#wpjb .nav-links ul li {
-    list-style: none;
+#wpjb .wpjb-pagination li {
     margin: 0 20px 0 0;
     padding: 0;
     float: left;
 }
 
-#wpjb .nav-links ul li span.current {
-    padding: 5px 6px;
-    background: #777;
-    /* border: 1px solid #777; */
-    display: block;
-    line-height: 1;
-    border-radius: 4px;
-    color: #fff;
-}
-
-#wpjb .nav-links ul li a {
+#wpjb .wpjb-pagination li  {
     padding: 5px 6px;
     background: #ddd;
     color: black;
     text-decoration: none;
     font-size: .8rem;
-    /* border: 1px solid #ccc; */
     border-radius: 3px;
     display: block;
     line-height: 1;
     cursor: pointer;
 }
+#wpjb .wpjb-pagination li.current-index{
+    background: #444444;
+    color: #fff;
+    border-radius: 4px;
+}
 
-#wpjb .nav-links ul li a:hover {
+#wpjb .wpjb-pagination li:hover {
     background: #999;
     border-color: #888;
     color: #fff;
 }
 
-@media screen and (max-width: 800px) {
-
-    #wpjb .wpjb-pagination {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        transform: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    #wpjb .nav-links ul li {
-        margin: 0 10px 0 0;
-    }
-
-}
-
-@media screen and (max-width: 400px) {
-
-    #wpjb .nav-links ul li {
-        margin: 0 5px 0 0;
-    }
-
+.all-posts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    gap: 20px;
 }
 
 /*----------------------------------------------------------------------------------
@@ -471,7 +424,6 @@ body {
     width: 100%;
     padding: 2px;
     border-radius: 6px;
-    /* box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 2px; */
     border: 1px solid #858585;
     margin-bottom: 20px;
 }
