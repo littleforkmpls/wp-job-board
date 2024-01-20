@@ -138,13 +138,26 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
                 </div>
             </div>
         </div>
+
         <ul class="all-posts">
-            <li id="previous-posts">
-                <?php previous_posts_link('<< Previous Jobs', $wp_query->max_num_pages); ?>
-            </li>
-            <li id="next-posts">
-                <?php next_posts_link('More Jobs >>', $wp_query->max_num_pages); ?>
-            </li>
+            <?php
+            $big = 999999999; // need an unlikely integer
+
+            echo paginate_links(array(
+                'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                'format' => '?paged=%#%',
+                'current' => max(1, get_query_var('paged')),
+                'total' => $wp_query->max_num_pages,
+                'end_size' => 1,
+                'mid_size' => 1,
+                'prev_next' => true,
+                'prev_text' => __('Previous'),
+                'next_text' => __('Next'),
+                'type' => 'plain',
+                'add_args' => false,
+                'add_fragment' => '',
+            ));
+            ?>
         </ul>
 
         <ul class="wpjb-pagination"></ul>
