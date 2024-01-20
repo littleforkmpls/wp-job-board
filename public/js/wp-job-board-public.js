@@ -32,6 +32,10 @@
     const $searchSubmit = $(".wpjb-search__submit");
     const $searchInput = $("#wpjbSearchTextInput");
 
+    if ($searchInput.length === 0) {
+        return;
+    }
+
     settingsBtnOpacity();
 
     function settingsBtnOpacity() {
@@ -109,21 +113,28 @@
     /** ******************* */
 
     $("[id^='wpjb-contact__']").on("input", function () {
-        const inputId = $(this).attr("id");
-        const labelId = $("label[for='" + inputId + "']").attr("id");
-        console.log("input ID:", inputId);
-        console.log("Associated label ID:", labelId);
-        showLabel(labelId, this);
+
+        const currentInputValue = $(this).val();
+        console.log("Current input value:", currentInputValue);
+
+        const $inputId = $(this).attr("id");
+        const $labelId = $("label[for='" + $inputId + "']").attr("id");
+        console.log("input ID:", $inputId);
+        console.log("Associated $label ID:", $labelId);
+        showLabel($labelId, this);
     });
 
-    function showLabel(labelId, input) {
-        const label = $("#" + labelId);
-        const inputVal = $(input).val().trim();
+    function showLabel($labelId, $input) {
+        const $label = $("#" + $labelId);
+        const $inputVal = $($input).val().trim();
 
-        if (inputVal !== "") {
-            label.css("opacity", "1");
+        console.log("Label element found:", $label.length > 0);
+        console.log("Input value:", $inputVal);
+
+        if ($inputVal !== "") {
+            $label.css("opacity", "1");
         } else {
-            label.css("opacity", "0");
+            $label.css("opacity", "0");
         }
     }
 
@@ -228,7 +239,9 @@
             i <= Math.min($currentPage + 1, $maxNumPages - 1);
             i++
         ) {
-            let li = $('<li><a href="#" data-page="' + i + '">' + i + "</a></li>");
+            let li = $(
+                '<li><a href="#" data-page="' + i + '">' + i + "</a></li>"
+            );
             if ($currentPage === i) {
                 li.addClass("current-index");
             }
