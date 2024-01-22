@@ -32,39 +32,37 @@
     const $searchSubmit = $(".wpjb-search__submit");
     const $searchInput = $("#wpjbSearchTextInput");
 
-    if ($searchInput.length === 0) {
-        return;
-    }
-
-    settingsBtnOpacity();
-
-    function settingsBtnOpacity() {
-        if ($searchInput.val().trim() !== "") {
-            $clearSearchBtn.css("opacity", "1");
-        } else {
-            $clearSearchBtn.css("opacity", "0");
-        }
-    }
-
-    function resetSearch() {
-        const $url = new URL(window.location.href);
-        $url.searchParams.delete("s");
-        // window.history.replaceState({}, "", $url);
-        filterJobs();
-    }
-
-    $searchSubmit.on("click", function () {
-        console.log("search submit clicked");
+    if ($searchInput.length !== 0) {
         settingsBtnOpacity();
-    });
 
-    $clearSearchBtn.on("click", function () {
-        console.log("clear search clicked");
-        $searchInput.val("");
-        $clearSearchBtn.css("opacity", "0");
-        resetSearch();
-        window.location.href = "/jobs";
-    });
+        function settingsBtnOpacity() {
+            if ($searchInput.val().trim() !== "") {
+                $clearSearchBtn.css("opacity", "1");
+            } else {
+                $clearSearchBtn.css("opacity", "0");
+            }
+        }
+
+        function resetSearch() {
+            const $url = new URL(window.location.href);
+            $url.searchParams.delete("s");
+            // window.history.replaceState({}, "", $url);
+            filterJobs();
+        }
+
+        $searchSubmit.on("click", function () {
+            console.log("search submit clicked");
+            settingsBtnOpacity();
+        });
+
+        $clearSearchBtn.on("click", function () {
+            console.log("clear search clicked");
+            $searchInput.val("");
+            $clearSearchBtn.css("opacity", "0");
+            resetSearch();
+            window.location.href = "/jobs";
+        });
+    }
 
     /** ******************* */
     /** Show Filters        */
@@ -113,7 +111,6 @@
     /** ******************* */
 
     $("[id^='wpjb-contact__']").on("input", function () {
-
         const currentInputValue = $(this).val();
         console.log("Current input value:", currentInputValue);
 
@@ -211,7 +208,7 @@
     let $currentPage = 1;
 
     const updatePagination = ($maxNumPages, $currentPage) => {
-        const $paginationContainer = $(".wpjb-pagination");
+        const $paginationContainer = $(".wpjb-pagination__filtered");
         $paginationContainer.empty();
 
         // Previous Link
@@ -285,7 +282,7 @@
 
         $clearSearchBtn.css("opacity", "1");
 
-        $(".all-posts").css("display", "none");
+        $(".wpjb-pagination").css("display", "none");
 
         $('input[name="wjb_bh_job_industry_tax[]"]:checked').each(function () {
             industry.push($(this).val());
@@ -365,7 +362,7 @@
         }
     );
 
-    $(".wpjb-pagination").on("click", "a", function (e) {
+    $(".wpjb-pagination__filtered").on("click", "a", function (e) {
         e.preventDefault();
         const page = $(this).data("page");
         $currentPage = page;

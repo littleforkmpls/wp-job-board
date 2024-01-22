@@ -120,10 +120,9 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
                                                 <?php echo $job_description; ?>
                                             </div>
                                         </div>
-
-                                        <button class="wpjb-btn btn__moreInfo">
-                                            <a href="<?php echo $permalink = get_permalink($post_id); ?>">View Full Details </a>
-                                        </button>
+                                        <a href="<?php echo $permalink = get_permalink($post_id); ?>" class="wpjb-btn btn__moreInfo">
+                                            View Full Details
+                                        </a>
                                     </div>
                                 </div>
                             <?php endwhile; ?>
@@ -139,7 +138,7 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
             </div>
         </div>
 
-        <ul class="all-posts">
+        <ul class="wpjb-pagination">
             <?php
             $big = 999999999; // need an unlikely integer
 
@@ -160,7 +159,7 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
             ?>
         </ul>
 
-        <ul class="wpjb-pagination"></ul>
+        <ul class="wpjb-pagination__filtered"></ul>
 
     </div>
 </div>
