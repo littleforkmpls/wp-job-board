@@ -111,13 +111,13 @@
     /** ******************* */
 
     $("[id^='wpjb-contact__']").on("input", function () {
-        const currentInputValue = $(this).val();
-        console.log("Current input value:", currentInputValue);
+        // const currentInputValue = $(this).val();
+        // console.log("Current input value:", currentInputValue);
 
         const $inputId = $(this).attr("id");
         const $labelId = $("label[for='" + $inputId + "']").attr("id");
-        console.log("input ID:", $inputId);
-        console.log("Associated $label ID:", $labelId);
+        // console.log("input ID:", $inputId);
+        // console.log("Associated $label ID:", $labelId);
         showLabel($labelId, this);
     });
 
@@ -125,8 +125,8 @@
         const $label = $("#" + $labelId);
         const $inputVal = $($input).val().trim();
 
-        console.log("Label element found:", $label.length > 0);
-        console.log("Input value:", $inputVal);
+        // console.log("Label element found:", $label.length > 0);
+        // console.log("Input value:", $inputVal);
 
         if ($inputVal !== "") {
             $label.css("opacity", "1");
@@ -142,13 +142,14 @@
     const $dragArea = $(".wpjb-drag__fieldset");
     const $dragDropText = $(".wpjb-drag__field-txt");
     let $browseInput = $("#wpjb-contact__resume");
-    let $file;
-    const $fileErrorSpan = $(".wpjb-drag__file-error");
+    let $droppedFile = null;
+    //let $droppedFile;
+    const $droppedFileErrorSpan = $(".wpjb-drag__file-error");
 
     // confirm resume is attached on browse option
 
     $browseInput.on("change", function () {
-        console.log("file selected");
+        console.log("file selected with browse:", this.files[0]);
         if ($(this).prop("files").length > 0) {
             $dragArea.html = `✓ ${this.files[0].name} attached!`;
         }
@@ -173,12 +174,12 @@
     $dragArea.on("drop", (event) => {
         console.log("file dropped");
         event.preventDefault();
-        //$file = event.dataTransfer.files[0];
-        $file = event.originalEvent.dataTransfer.files[0];
-        console.log($file);
+        //$droppedFile = event.dataTransfer.files[0];
+        $droppedFile = event.originalEvent.dataTransfer.files[0];
+        console.log("droppedFile in drop event:", $droppedFile);
 
-        let $fileType = $file.type;
-        console.log($fileType);
+        let $droppedFileType = $droppedFile.type;
+        console.log("droppedFileType:", $droppedFileType);
 
         let $validExtensions = [
             "application/pdf",
@@ -191,15 +192,66 @@
             "application/text",
         ];
 
-        if ($validExtensions.includes($fileType)) {
+        if ($validExtensions.includes($droppedFileType)) {
             console.log("valid file type");
-            $fileErrorSpan.css("opacity", "0");
-            $dragArea.html(`✓ ${$file.name} attached!`);
+            $droppedFileErrorSpan.css("opacity", "0");
+            $dragArea.html(`✓ ${$droppedFile.name} attached!`);
         } else {
             console.log("invalid file type");
-            $fileErrorSpan.css("opacity", "1");
+            $droppedFileErrorSpan.css("opacity", "1");
         }
     });
+
+    /** ******************* */
+    /** Submit Resume       */
+    /** ******************* */
+
+    $("#wpjb-form__resume").submit(function (e) {
+        e.preventDefault();
+
+        console.log("Submit resume clicked!");
+        console.log("$droppedFile in submit:", $droppedFile);
+
+        const $formData = new FormData(this);
+        $formData.append("first_name", $("#wpjb-contact__firstName").val());
+        $formData.append("last_name", $("#wpjb-contact__lastName").val());
+        $formData.append("email", $("#wpjb-contact__email").val());
+        $formData.append("phone", $("#wpjb-contact__phone").val());
+        //$formData.append("resume", $droppedFile);
+        //$formData.append("resume", $("#wpjb-contact__resume").files[0]);
+        $formData.append("job_order_id", $("#job_order_id").val());
+        $formData.append("wp_post_id", $("#wp_post_id").val());
+
+        if ($droppedFile) {
+            $formData.append("resume", $droppedFile);
+            //console.log("droppedFile in if statement:", $droppedFile);
+        } else {
+            let $fileInput = $("#wpjb-contact__resume")[0];
+            if ($fileInput.files.length > 0) {
+                $formData.append("resume", $fileInput.files[0]);
+            }
+        }
+
+        console.log("droppedFile:", $droppedFile);
+
+        sendResumeData($formData);
+    });
+
+    function sendResumeData($formData) {
+        $.ajax({
+            url: "/wp-json/wp-job-board/v1/submit-resume",
+            type: "POST",
+            data: $formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log("Success:", data);
+            },
+            error: function (error) {
+                console.error("Error on submit resume:", error);
+            },
+        });
+    }
 
     /** ******************* */
     /** Filter Pagination   */
