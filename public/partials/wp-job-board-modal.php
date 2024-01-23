@@ -55,7 +55,7 @@
                         <input type="hidden" id="wp_post_id" name="wp_post_id" value="<?php echo esc_attr($post_id); ?>" />
                     </main>
                     <footer class="wpjb-form__ft">
-                        <input type="submit" class="btn btn__submit" value="Submit" />
+                        <input type="submit" class="wpjb-btn btn__submit" value="Submit" />
                     </footer>
                 </form>
             </div>
