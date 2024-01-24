@@ -51,7 +51,7 @@
                                 <span class="wpjb-drag__file-type">Supported file types: html,text,txt,pdf,doc,docx,rtf,odt </span>
                             </div>
                         </div>
-                        <input type="hidden" id="job_order_id" name="job_order_id" value="<?php echo esc_attr($job_title); ?>" />
+                        <input type="hidden" id="job_order_id" name="job_order_id" value="<?php echo esc_attr($job_id); ?>" />
                         <input type="hidden" id="wp_post_id" name="wp_post_id" value="<?php echo esc_attr($post_id); ?>" />
                     </main>
                     <footer class="wpjb-form__ft">

@@ -381,6 +381,7 @@ class WP_Job_Board_Public
 
     public function ajax_filter_jobs()
     {
+
         $search = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : '';
         $industry = isset($_POST['industry']) ? $_POST['industry'] : array();
         $location = isset($_POST['location']) ? $_POST['location'] : array();
@@ -389,7 +390,6 @@ class WP_Job_Board_Public
         $display_count = 2;
         $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
         $offset = ($page - 1) * $display_count;
-
 
         $tax_query = array('relation' => 'AND'); // use AND operator to combine conditions
         if (!empty($industry)) {
@@ -455,6 +455,6 @@ class WP_Job_Board_Public
             'count' => $results_count,
             'max_num_pages' => $max_num_pages,
             'current_page' => $page
-        )); 
+        ));
     }
 }

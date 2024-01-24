@@ -217,8 +217,6 @@
         $formData.append("last_name", $("#wpjb-contact__lastName").val());
         $formData.append("email", $("#wpjb-contact__email").val());
         $formData.append("phone", $("#wpjb-contact__phone").val());
-        //$formData.append("resume", $droppedFile);
-        //$formData.append("resume", $("#wpjb-contact__resume").files[0]);
         $formData.append("job_order_id", $("#job_order_id").val());
         $formData.append("wp_post_id", $("#wp_post_id").val());
 
@@ -326,6 +324,7 @@
     /** ******************* */
 
     const filterJobs = () => {
+        console.log("filterJobs fired");
         let industry = [];
         let location = [];
         let type = [];
@@ -420,4 +419,84 @@
         $currentPage = page;
         filterJobs();
     });
+
+    /** ********************** */
+    /** Store filtered results */
+    /** ********************** */
+
+
+
+    // loadFilters();
+
+    // function saveFilteredResults() {
+    //     console.log("saving filtered results");
+    //     const $filteredResults = {
+    //     search: $("#wpjbSearchTextInput").val(),
+    //     industry: $('input[name="wjb_bh_job_industry_tax[]"]:checked').map(function() { return this.value; }).get(),
+    //     location: $('input[name="wjb_bh_job_location_tax[]"]:checked').map(function() { return this.value; }).get(),
+    //     type: $('input[name="wjb_bh_job_type_tax[]"]:checked').map(function() { return this.value; }).get(),
+    //     category: $('input[name="wjb_bh_job_category_tax[]"]:checked').map(function() { return this.value; }).get(),
+    //     };
+    //     console.log("filtered results:", $filteredResults);
+    //     localStorage.setItem("filteredResults", JSON.stringify($filteredResults));
+    // }
+
+    // $('input[type="checkbox"], input[type="text"]').on('change', function() {
+    //     saveFilteredResults();
+    // });
+
+    // function applyCheckboxFilters(filterName, values) {
+    //     if (values && values.length > 0) {
+    //         values.forEach((value) => {
+    //             $(
+    //                 'input[name="wjb_bh_job_' +
+    //                     filterName +
+    //                     '_tax[]"][value="' +
+    //                     value +
+    //                     '"]'
+    //             ).prop("checked", true);
+    //         });
+    //     }
+    // }
+
+    // function loadFilters() {
+    //     console.log("loading filters fired");
+    // if (localStorage.getItem("filteredResults")) {
+    //     const $savedResults = JSON.parse(localStorage.getItem("filteredResults"));
+    //     console.log("saved results:", $savedResults);
+
+    //     $("#wpjbSearchTextInput").val($savedResults.search);
+    //     applyCheckboxFilters("industry", $savedResults.industry);
+    //     applyCheckboxFilters("location", $savedResults.location);
+    //     applyCheckboxFilters("type", $savedResults.type);
+    //     applyCheckboxFilters("category", $savedResults.category);
+
+    //     if ($savedResults) {
+    //         console.log("filtering jobs");
+    //         filterJobs();
+    //     }
+    // }
+    // }
+
+    // //save filtered results all the time?
+    // window.onbeforeunload = function() {
+    //     saveFilteredResults();
+    // };
+
+    // $('.wpjb-back').on('click', function() {
+    //     goBackToJobs();
+    // });
+
+    // // Rest of your code...
+
+    // function goBackToJobs() {
+    //     if (localStorage.getItem("filteredResults")) {
+    //         window.location.href = '/jobs/';
+    //     } else {
+    //         // Fallback if no filters are saved
+    //         window.location.href = 'javascript:history.back();';
+    //     }
+    // }
+
+    //clear local storage??
 })(jQuery);

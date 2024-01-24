@@ -18,6 +18,7 @@ if (empty($job_meta)) {
  * since dateLastPublished can be null AND dateLastModified cannot
  * dateLastModified is used as fallback for dateLastPublished null scenarios
  */
+$job_id                     = !empty($job_meta->id) ? $job_meta->id : '0';
 $job_title                  = !empty($job_meta->title) ? $job_meta->title : get_the_title();
 $job_description            = !empty($job_meta->publicDescription) ? $job_meta->publicDescription : 'No job description provided.';
 $job_employment_type        = !empty($job_meta->employmentType) ? $job_meta->employmentType : '';
