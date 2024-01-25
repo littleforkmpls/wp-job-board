@@ -31,6 +31,7 @@
     const $clearSearchBtn = $(".wpjb-btn__clearSettings");
     const $searchSubmit = $(".wpjb-search__submit");
     const $searchInput = $("#wpjbSearchTextInput");
+    const $searchForm = $(".wpjb-search__form");
 
     if ($searchInput.length !== 0) {
         settingsBtnOpacity();
@@ -50,8 +51,10 @@
             filterJobs();
         }
 
-        $searchSubmit.on("click", function () {
-            console.log("search submit clicked");
+        $searchForm.on("submit", function (e) {
+            console.log("search form submit clicked");
+            e.preventDefault();
+            filterJobs();
             settingsBtnOpacity();
         });
 
@@ -61,6 +64,7 @@
             $clearSearchBtn.css("opacity", "0");
             resetSearch();
             window.location.href = "/jobs";
+            filterJobs();
         });
     }
 
@@ -331,6 +335,7 @@
         let category = [];
         let search = $("#wpjbSearchTextInput").val();
 
+        //add a check for search and filters
         $clearSearchBtn.css("opacity", "1");
 
         $(".wpjb-pagination").css("display", "none");
