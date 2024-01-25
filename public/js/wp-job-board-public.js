@@ -224,14 +224,15 @@
         $formData.append("job_order_id", $("#job_order_id").val());
         $formData.append("wp_post_id", $("#wp_post_id").val());
 
+        if ($browseInput[0].files.length > 0) {
+            $formData.append("resume", $browseInput[0].files[0]);
+        }
+
         if ($droppedFile) {
             $formData.append("resume", $droppedFile);
             //console.log("droppedFile in if statement:", $droppedFile);
-        } else {
-            let $fileInput = $("#wpjb-contact__resume")[0];
-            if ($fileInput.files.length > 0) {
-                $formData.append("resume", $fileInput.files[0]);
-            }
+        } else if ($browseInput[0].files.length > 0) {
+            $formData.append("resume", $browseInput[0].files[0]);
         }
 
         console.log("droppedFile:", $droppedFile);
@@ -248,9 +249,12 @@
             processData: false,
             success: function (data) {
                 console.log("Success:", data);
+                alert("Resume submitted successfully!");
+                MicroModal.close("modal-apply");
             },
             error: function (error) {
                 console.error("Error on submit resume:", error);
+                alert("Error submitting resume. Please try again.");
             },
         });
     }
