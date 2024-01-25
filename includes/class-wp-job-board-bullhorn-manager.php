@@ -94,6 +94,8 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
         'title',
     );
 
+    private array $temp_settings = array();
+
     /**
      * Constructor to set up our class.
      */
