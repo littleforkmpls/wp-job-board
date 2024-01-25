@@ -155,7 +155,7 @@
     $browseInput.on("change", function () {
         console.log("file selected with browse:", this.files[0]);
         if ($(this).prop("files").length > 0) {
-            $dragArea.html = `✓ ${this.files[0].name} attached!`;
+            $dragArea.html( `✓ ${this.files[0].name} attached!`);
         }
     });
 
