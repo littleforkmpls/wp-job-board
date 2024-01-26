@@ -25,9 +25,13 @@ $current_term_id = !empty(get_queried_object()->term_taxonomy_id) ? get_queried_
                             <form class="wpjb-search__form" method="get" action="<?php echo site_url("/jobs/") ?>">
                                 <input type="search" name="s" class="wpjb-search__text-input" id="wpjbSearchTextInput" placeholder="" value="<?php the_search_query(); ?>" />
                                 <input type="submit" class="wpjb-search__submit" id="wpjbSearchSubmit" value="Search" />
-
                         </div>
-                        <button class="wpjb-btn btn__filter">Filters +</button>
+                        <div class="wpjb-search__filter">
+                            <button class="wpjb-btn btn__filter">Filters <span class="btn__filter--plus">+</span></button>
+                            <h2 class="wpjb-results__title--small">
+                                <?php echo $results_count; ?> Open Positions
+                            </h2>
+                        </div>
                     </div>
                     <div class="wpjb-facet__section-container">
                         <div class="wpjb-facet__section">

@@ -28,19 +28,18 @@
     /** Search Functions    */
     /** ******************* */
 
-    const $clearSearchBtn = $(".wpjb-btn__clearSettings");
-    const $searchSubmit = $(".wpjb-search__submit");
+    const $clearSettingsBtn = $(".wpjb-btn__clearSettings");
     const $searchInput = $("#wpjbSearchTextInput");
     const $searchForm = $(".wpjb-search__form");
 
     if ($searchInput.length !== 0) {
-        settingsBtnOpacity();
+        clearSettingsBtnOpacity();
 
-        function settingsBtnOpacity() {
+        function clearSettingsBtnOpacity() {
             if ($searchInput.val().trim() !== "") {
-                $clearSearchBtn.css("opacity", "1");
+                $clearSettingsBtn.addClass("wpjb-btn__clearSettings--visible");
             } else {
-                $clearSearchBtn.css("opacity", "0");
+                $clearSettingsBtn.removeClass("wpjb-btn__clearSettings--visible");
             }
         }
 
@@ -55,13 +54,13 @@
             console.log("search form submit clicked");
             e.preventDefault();
             filterJobs();
-            settingsBtnOpacity();
+            clearSettingsBtnOpacity();
         });
 
-        $clearSearchBtn.on("click", function () {
+        $clearSettingsBtn.on("click", function () {
             console.log("clear search clicked");
             $searchInput.val("");
-            $clearSearchBtn.css("opacity", "0");
+            $clearSettingsBtn.removeClass("wpjb-btn__clearSettings--visible");
             resetSearch();
             window.location.href = "/jobs";
             filterJobs();
@@ -82,7 +81,7 @@
                     $(section).css("display") === ""
             );
         $facetSections.css("display", $hiddenSections ? "grid" : "none");
-        $(this).text($hiddenSections ? "Filters -" : "Filters +");
+        $(this).html($hiddenSections ? `Filters <span class="btn__filter--minus">-</span>` : `Filters <span class="btn__filter--plus">+</span>`);
     });
 
     /** ******************* */
@@ -340,7 +339,7 @@
         let search = $("#wpjbSearchTextInput").val();
 
         //add a check for search and filters
-        $clearSearchBtn.css("opacity", "1");
+        $clearSettingsBtn.addClass("wpjb-btn__clearSettings--visible");
 
         $(".wpjb-pagination").css("display", "none");
 
