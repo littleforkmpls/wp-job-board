@@ -399,7 +399,7 @@
                         }
 
                         if (res.data.count !== undefined) {
-                            $(".wpjb-results__title").text(
+                            $(".wpjb-results__title, .wpjb-results__title--small").text(
                                 res.data.count + " Open Positions"
                             );
                         }
@@ -431,8 +431,6 @@
     /** ********************** */
     /** Store filtered results */
     /** ********************** */
-
-
 
     // loadFilters();
 
