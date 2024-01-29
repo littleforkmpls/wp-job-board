@@ -504,5 +504,5 @@
     //     }
     // }
 
-    //clear local storage??
+    // //clear local storage??
 })(jQuery);
