@@ -11,7 +11,29 @@
                         <?php the_title(); ?>
                     </h2>
                 </header>
-                <span class="wpjb-form__meta-data"><?php echo $job_location_city; ?>, <?php echo $job_location_state; ?> | <?php echo $job_employment_type; ?></span>
+                <span class="wpjb-form__meta-data">
+                    <?php
+                    if (!empty($job_location_city)) {
+                        echo trim($job_location_city);
+                    }
+
+                    if (!empty($job_location_city) && !empty($job_location_state)) {
+                        echo ', ';
+                    }
+
+                    if (!empty($job_location_state)) {
+                        echo trim($job_location_state);
+                    }
+
+                    if ((!empty($job_location_city) || !empty($job_location_state)) && !empty($job_employment_type)) {
+                        echo ' | ';
+                    }
+
+                    if (!empty($job_employment_type)) {
+                        echo trim($job_employment_type);
+                    }
+                    ?>
+                </span>
                 <form id="wpjb-form__resume">
                     <main class="wpjb-form__bd" id="modal-1-content">
                         <div class="wpjb-fieldset">
