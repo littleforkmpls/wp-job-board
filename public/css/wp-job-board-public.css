@@ -727,7 +727,7 @@ body {
 }
 
 #wpjb .wpjb-rotate__ninety {
-    transform: rotate(90deg);
+    transform: scaleY(-1) rotate(90deg);
 }
 
 #wpjb .wpjb-drag {
