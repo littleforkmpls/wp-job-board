@@ -1,8 +1,6 @@
 (($) => {
     "use strict";
 
-    console.log("wp-job-board-public.js loaded");
-
     /** ******************* */
     /** MicroModal          */
     /** ******************* */
@@ -21,6 +19,157 @@
             awaitOpenAnimation: false,
             awaitCloseAnimation: false,
             debugMode: true,
+        });
+    }
+
+    /** ******************************** */
+    /** Print Job Post (from modal form) */
+    /** ******************************** */
+
+    const $printButton = $(".wpjb-btn__print");
+
+    $printButton.on("click", function () {
+        console.log("print btn clicked!");
+
+        const $content = $("#wpjb-card").html();
+        const $printWindow = window.open("", "_blank");
+        $printWindow.document.open();
+        $printWindow.document.write(
+            "<html><head><title>Print</title></head><body>" +
+                $content +
+                "</body></html>"
+        );
+        $printWindow.document.close();
+        $printWindow.print();
+
+        $printWindow.onafterprint = function () {
+            $printWindow.close();
+        };
+    });
+
+    /** ******************* */
+    /** Form Label Opacity  */
+    /** ******************* */
+
+    $("[id^='wpjb-contact__']").on("input", function () {
+        const $inputId = $(this).attr("id");
+        const $labelId = $("label[for='" + $inputId + "']").attr("id");
+        showLabel($labelId, this);
+    });
+
+    function showLabel($labelId, $input) {
+        const $label = $("#" + $labelId);
+        const $inputVal = $($input).val().trim();
+
+        if ($inputVal !== "") {
+            $label.css("opacity", "1");
+        } else {
+            $label.css("opacity", "0");
+        }
+    }
+
+    /** ******************* */
+    /** Upload Resume       */
+    /** ******************* */
+
+    const $dragArea = $(".wpjb-drag__fieldset");
+    const $dragDropText = $(".wpjb-drag__field-txt");
+    let $browseInput = $("#wpjb-contact__resume");
+    let $droppedFile = null;
+    const $droppedFileErrorSpan = $(".wpjb-drag__file-error");
+
+    // confirm resume is attached on browse option
+
+    $browseInput.on("change", function () {
+        if ($(this).prop("files").length > 0) {
+            $dragArea.html( `✓ ${this.files[0].name} attached!`);
+        }
+    });
+
+    // Drag and drop resume functionality
+
+    $dragArea.on("dragover", (event) => {
+        event.preventDefault();
+        $dragDropText.text("Release to Upload File");
+        $dragArea.addClass("active");
+    });
+
+    $dragArea.on("dragleave", (event) => {
+        event.preventDefault();
+        $dragDropText.text("Drag & Drop");
+        $dragArea.removeClass("active");
+    });
+
+    $dragArea.on("drop", (event) => {
+        event.preventDefault();
+        $droppedFile = event.originalEvent.dataTransfer.files[0];
+
+        let $droppedFileType = $droppedFile.type;
+
+        let $validExtensions = [
+            "application/pdf",
+            "application/doc",
+            "application/docx",
+            "application/txt",
+            "application/rtf",
+            "application/odt",
+            "application/html",
+            "application/text",
+        ];
+
+        if ($validExtensions.includes($droppedFileType)) {
+            $droppedFileErrorSpan.css("opacity", "0");
+            $dragArea.html(`✓ ${$droppedFile.name} attached!`);
+        } else {
+            $droppedFileErrorSpan.css("opacity", "1");
+        }
+    });
+
+    /** ******************* */
+    /** Submit Resume       */
+    /** ******************* */
+
+    $("#wpjb-form__resume").submit(function (e) {
+        e.preventDefault();
+
+        const $formData = new FormData(this);
+        $formData.append("first_name", $("#wpjb-contact__firstName").val());
+        $formData.append("last_name", $("#wpjb-contact__lastName").val());
+        $formData.append("email", $("#wpjb-contact__email").val());
+        $formData.append("phone", $("#wpjb-contact__phone").val());
+        $formData.append("job_order_id", $("#job_order_id").val());
+        $formData.append("wp_post_id", $("#wp_post_id").val());
+
+        if ($browseInput[0].files.length > 0) {
+            $formData.append("resume", $browseInput[0].files[0]);
+        }
+
+        if ($droppedFile) {
+            $formData.append("resume", $droppedFile);
+        } else if ($browseInput[0].files.length > 0) {
+            $formData.append("resume", $browseInput[0].files[0]);
+        }
+
+
+        sendResumeData($formData);
+    });
+
+    function sendResumeData($formData) {
+        $.ajax({
+            url: "/wp-json/wp-job-board/v1/submit-resume",
+            type: "POST",
+            data: $formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log("Success:", data);
+                alert("Resume submitted successfully!");
+                MicroModal.close("modal-apply");
+            },
+            error: function (error) {
+                console.error("Error on submit resume:", error);
+                alert("Error submitting resume. Please try again.");
+            },
         });
     }
 
@@ -46,7 +195,6 @@
         function resetSearch() {
             const $url = new URL(window.location.href);
             $url.searchParams.delete("s");
-            // window.history.replaceState({}, "", $url);
             filterJobs();
         }
 
@@ -85,178 +233,104 @@
     });
 
     /** ******************* */
-    /** Print Job Post      */
+    /** Filter Jobs         */
     /** ******************* */
 
-    const $printButton = $(".wpjb-utilityNav__btn");
+    const filterJobs = () => {
+        console.log("filterJobs fired");
+        let industry = [];
+        let location = [];
+        let type = [];
+        let category = [];
+        let search = $("#wpjbSearchTextInput").val();
 
-    $printButton.on("click", function () {
-        console.log("print btn clicked!");
+        //add a check for search and filters
+        $clearSettingsBtn.addClass("wpjb-btn__clearSettings--visible");
 
-        const $content = $("#wpjb-card").html();
-        const $printWindow = window.open("", "_blank");
-        $printWindow.document.open();
-        $printWindow.document.write(
-            "<html><head><title>Print</title></head><body>" +
-                $content +
-                "</body></html>"
-        );
-        $printWindow.document.close();
-        $printWindow.print();
+        $(".wpjb-pagination").css("display", "none");
 
-        $printWindow.onafterprint = function () {
-            $printWindow.close();
-        };
-    });
+        $('input[name="wjb_bh_job_industry_tax[]"]:checked').each(function () {
+            industry.push($(this).val());
+        });
 
-    /** ******************* */
-    /** Form Label Opacity  */
-    /** ******************* */
+        $('input[name="wjb_bh_job_location_tax[]"]:checked').each(function () {
+            location.push($(this).val());
+        });
 
-    $("[id^='wpjb-contact__']").on("input", function () {
-        // const currentInputValue = $(this).val();
-        // console.log("Current input value:", currentInputValue);
+        $('input[name="wjb_bh_job_type_tax[]"]:checked').each(function () {
+            type.push($(this).val());
+        });
 
-        const $inputId = $(this).attr("id");
-        const $labelId = $("label[for='" + $inputId + "']").attr("id");
-        // console.log("input ID:", $inputId);
-        // console.log("Associated $label ID:", $labelId);
-        showLabel($labelId, this);
-    });
+        $('input[name="wjb_bh_job_category_tax[]"]:checked').each(function () {
+            category.push($(this).val());
+        });
 
-    function showLabel($labelId, $input) {
-        const $label = $("#" + $labelId);
-        const $inputVal = $($input).val().trim();
+        // screen loading classes
+        $(".wpjb-card").addClass("loader");
+        $(".wpjb-archive").addClass("disabled");
 
-        // console.log("Label element found:", $label.length > 0);
-        // console.log("Input value:", $inputVal);
-
-        if ($inputVal !== "") {
-            $label.css("opacity", "1");
-        } else {
-            $label.css("opacity", "0");
-        }
-    }
-
-    /** ******************* */
-    /** Upload Resume       */
-    /** ******************* */
-
-    const $dragArea = $(".wpjb-drag__fieldset");
-    const $dragDropText = $(".wpjb-drag__field-txt");
-    let $browseInput = $("#wpjb-contact__resume");
-    let $droppedFile = null;
-    //let $droppedFile;
-    const $droppedFileErrorSpan = $(".wpjb-drag__file-error");
-
-    // confirm resume is attached on browse option
-
-    $browseInput.on("change", function () {
-        console.log("file selected with browse:", this.files[0]);
-        if ($(this).prop("files").length > 0) {
-            $dragArea.html( `✓ ${this.files[0].name} attached!`);
-        }
-    });
-
-    // Drag and drop resume functionality
-
-    $dragArea.on("dragover", (event) => {
-        console.log("file dragged over $dragArea");
-        event.preventDefault();
-        $dragDropText.text("Release to Upload File");
-        $dragArea.addClass("active");
-    });
-
-    $dragArea.on("dragleave", (event) => {
-        console.log("file dragged left $dragArea");
-        event.preventDefault();
-        $dragDropText.text("Drag & Drop");
-        $dragArea.removeClass("active");
-    });
-
-    $dragArea.on("drop", (event) => {
-        console.log("file dropped");
-        event.preventDefault();
-        //$droppedFile = event.dataTransfer.files[0];
-        $droppedFile = event.originalEvent.dataTransfer.files[0];
-        console.log("droppedFile in drop event:", $droppedFile);
-
-        let $droppedFileType = $droppedFile.type;
-        console.log("droppedFileType:", $droppedFileType);
-
-        let $validExtensions = [
-            "application/pdf",
-            "application/doc",
-            "application/docx",
-            "application/txt",
-            "application/rtf",
-            "application/odt",
-            "application/html",
-            "application/text",
-        ];
-
-        if ($validExtensions.includes($droppedFileType)) {
-            console.log("valid file type");
-            $droppedFileErrorSpan.css("opacity", "0");
-            $dragArea.html(`✓ ${$droppedFile.name} attached!`);
-        } else {
-            console.log("invalid file type");
-            $droppedFileErrorSpan.css("opacity", "1");
-        }
-    });
-
-    /** ******************* */
-    /** Submit Resume       */
-    /** ******************* */
-
-    $("#wpjb-form__resume").submit(function (e) {
-        e.preventDefault();
-
-        console.log("Submit resume clicked!");
-        console.log("$droppedFile in submit:", $droppedFile);
-
-        const $formData = new FormData(this);
-        $formData.append("first_name", $("#wpjb-contact__firstName").val());
-        $formData.append("last_name", $("#wpjb-contact__lastName").val());
-        $formData.append("email", $("#wpjb-contact__email").val());
-        $formData.append("phone", $("#wpjb-contact__phone").val());
-        $formData.append("job_order_id", $("#job_order_id").val());
-        $formData.append("wp_post_id", $("#wp_post_id").val());
-
-        if ($browseInput[0].files.length > 0) {
-            $formData.append("resume", $browseInput[0].files[0]);
-        }
-
-        if ($droppedFile) {
-            $formData.append("resume", $droppedFile);
-            //console.log("droppedFile in if statement:", $droppedFile);
-        } else if ($browseInput[0].files.length > 0) {
-            $formData.append("resume", $browseInput[0].files[0]);
-        }
-
-        console.log("droppedFile:", $droppedFile);
-
-        sendResumeData($formData);
-    });
-
-    function sendResumeData($formData) {
         $.ajax({
-            url: "/wp-json/wp-job-board/v1/submit-resume",
+            url: wpjb_ajax.ajax_url,
             type: "POST",
-            data: $formData,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                console.log("Success:", data);
-                alert("Resume submitted successfully!");
-                MicroModal.close("modal-apply");
+            data: {
+                action: "filter_jobs",
+                industry: industry,
+                location: location,
+                type: type,
+                category: category,
+                search: search,
+                page: $currentPage,
             },
-            error: function (error) {
-                console.error("Error on submit resume:", error);
-                alert("Error submitting resume. Please try again.");
+
+            success: function (res) {
+                console.log("response data is:", res);
+                if (res && res.data && res.data.html !== undefined) {
+                    //timeout for testing purposes
+                    setTimeout(function () {
+                        $(".wpjb-card").removeClass("loader");
+                        $(".wpjb-archive").removeClass("disabled");
+                        $(".wpjb-results__bd").html(res.data.html);
+
+                        if (
+                            res.data &&
+                            res.data.max_num_pages &&
+                            res.data.current_page
+                        ) {
+                            updatePagination(
+                                res.data.max_num_pages,
+                                res.data.current_page
+                            );
+                        }
+
+                        if (res.data.count !== undefined) {
+                            $(".wpjb-results__title, .wpjb-results__title--small").text(
+                                res.data.count + " Open Positions"
+                            );
+                        }
+                    }, 700);
+                } else {
+                    $(".wpjb-results__bd").html(
+                        "<p>No jobs found or error loading jobs.</p>"
+                    );
+                }
             },
         });
-    }
+    };
+
+    $(".wpjb-facet__section__list").on(
+        "click",
+        'input[type="checkbox"]',
+        function () {
+            filterJobs();
+        }
+    );
+
+    $(".wpjb-pagination__filtered").on("click", "a", function (e) {
+        e.preventDefault();
+        const page = $(this).data("page");
+        $currentPage = page;
+        filterJobs();
+    });
 
     /** ******************* */
     /** Filter Pagination   */
@@ -325,108 +399,6 @@
             );
         }
     };
-
-    /** ******************* */
-    /** Filter Jobs         */
-    /** ******************* */
-
-    const filterJobs = () => {
-        console.log("filterJobs fired");
-        let industry = [];
-        let location = [];
-        let type = [];
-        let category = [];
-        let search = $("#wpjbSearchTextInput").val();
-
-        //add a check for search and filters
-        $clearSettingsBtn.addClass("wpjb-btn__clearSettings--visible");
-
-        $(".wpjb-pagination").css("display", "none");
-
-        $('input[name="wjb_bh_job_industry_tax[]"]:checked').each(function () {
-            industry.push($(this).val());
-        });
-
-        $('input[name="wjb_bh_job_location_tax[]"]:checked').each(function () {
-            location.push($(this).val());
-        });
-
-        $('input[name="wjb_bh_job_type_tax[]"]:checked').each(function () {
-            type.push($(this).val());
-        });
-
-        $('input[name="wjb_bh_job_category_tax[]"]:checked').each(function () {
-            category.push($(this).val());
-        });
-
-        // screen loading classes
-        $(".wpjb-card").addClass("loader");
-        $(".wpjb-archive").addClass("disabled");
-
-        console.log("$currentPage in Ajax:", $currentPage);
-
-        $.ajax({
-            url: wpjb_ajax.ajax_url,
-            type: "POST",
-            data: {
-                action: "filter_jobs",
-                industry: industry,
-                location: location,
-                type: type,
-                category: category,
-                search: search,
-                page: $currentPage,
-            },
-
-            success: function (res) {
-                console.log("response data is:", res);
-                if (res && res.data && res.data.html !== undefined) {
-                    //timeout for testing purposes
-                    setTimeout(function () {
-                        $(".wpjb-card").removeClass("loader");
-                        $(".wpjb-archive").removeClass("disabled");
-                        $(".wpjb-results__bd").html(res.data.html);
-
-                        if (
-                            res.data &&
-                            res.data.max_num_pages &&
-                            res.data.current_page
-                        ) {
-                            updatePagination(
-                                res.data.max_num_pages,
-                                res.data.current_page
-                            );
-                        }
-
-                        if (res.data.count !== undefined) {
-                            $(".wpjb-results__title, .wpjb-results__title--small").text(
-                                res.data.count + " Open Positions"
-                            );
-                        }
-                    }, 700);
-                } else {
-                    $(".wpjb-results__bd").html(
-                        "<p>No jobs found or error loading jobs.</p>"
-                    );
-                }
-            },
-        });
-    };
-
-    $(".wpjb-facet__section__list").on(
-        "click",
-        'input[type="checkbox"]',
-        function () {
-            filterJobs();
-        }
-    );
-
-    $(".wpjb-pagination__filtered").on("click", "a", function (e) {
-        e.preventDefault();
-        const page = $(this).data("page");
-        $currentPage = page;
-        filterJobs();
-    });
 
     /** ********************** */
     /** Store filtered results */

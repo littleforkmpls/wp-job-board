@@ -54,7 +54,7 @@
             <button class="wpjb-utilityNav__btn">
                 <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-envelope.svg'); ?>
             </button>
-            <button class="wpjb-utilityNav__btn">
+            <button class="wpjb-utilityNav__btn wpjb-btn__print">
                 <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-printer.svg'); ?>
             </button>
         </div>
