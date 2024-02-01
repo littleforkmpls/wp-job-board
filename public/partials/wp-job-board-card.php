@@ -51,9 +51,11 @@
     </div>
     <div class="wpjb-card__ft">
         <div class="wpjb-utilityNav">
-            <button class="wpjb-utilityNav__btn">
-                <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-envelope.svg'); ?>
-            </button>
+            <a href="mailto:?subject=<?php echo urlencode($job_title); ?>&amp;body=<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>">
+                <button class="wpjb-utilityNav__btn">
+                    <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-envelope.svg'); ?>
+                </button>
+            </a>
             <button class="wpjb-utilityNav__btn wpjb-btn__print">
                 <?php echo file_get_contents(plugin_dir_path(__DIR__) . 'images/fa-printer.svg'); ?>
             </button>
