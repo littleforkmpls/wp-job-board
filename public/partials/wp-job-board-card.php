@@ -42,7 +42,6 @@
             <span class="wpjb-card__meta-item__update">Updated <?php echo $job_date_modified; ?></span>
         </span>
     </div>
-    <!-- <hr class="wpjb-card__divider" /> -->
     <div class="wpjb-card__divider-top"></div>
     <div class="wpjb-card__bd">
         <div class="wpjb-userContent">
