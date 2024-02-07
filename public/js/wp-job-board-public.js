@@ -285,8 +285,7 @@
             success: function (res) {
                 console.log("response data is:", res);
                 if (res && res.data && res.data.html !== undefined) {
-                    //timeout for testing purposes
-                    setTimeout(function () {
+
                         $(".wpjb-card").removeClass("loader");
                         $(".wpjb-archive").removeClass("disabled");
                         $(".wpjb-results__bd").html(res.data.html);
@@ -307,7 +306,7 @@
                                 res.data.count + " Open Positions"
                             );
                         }
-                    }, 700);
+               
                 } else {
                     $(".wpjb-results__bd").html(
                         "<p>No jobs found or error loading jobs.</p>"
