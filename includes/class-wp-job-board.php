@@ -227,7 +227,9 @@ class WP_Job_Board
     private function start_session()
     {
         if (!session_id()) {
-            session_start();
+            session_start([
+                'read_and_close' => true,
+            ]);
         }
     }
 
