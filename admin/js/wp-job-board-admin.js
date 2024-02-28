@@ -31,7 +31,9 @@
                 ajaxOptionsArray.forEach((element) => {
                     let elementKey = element.split(':')[0].trim();
                     let elementValue = element.split(':')[1].trim();
-                    ajaxDataObject[elementKey] = elementValue;
+                    // NOTE: this will be trumped below if there is a form that is being submitted.
+                    // Revisit this if we are using the option to pass data as well as having a form.
+                    ajaxDataObject.data[elementKey] = elementValue;
                 });
             }
 

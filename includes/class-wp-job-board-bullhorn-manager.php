@@ -172,7 +172,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
             $bh_job_country_code    = !empty($job_order['address']['countryCode']) ? $job_order['address']['countryCode'] : '';
             $bh_job_location        = !empty($bh_job_state) ? $this->get_mapped_location($bh_job_state, $bh_job_country_code) : '';
             $bh_job_industry        = !empty($job_order['correlatedCustomText8']) ? $this->get_mapped_industry($job_order['correlatedCustomText8']) : '';
-            $bh_job_catgory         = !empty($job_order['publishedCategory']['name']) ? $job_order['publishedCategory']['name'] : '';
+            $bh_job_category        = !empty($job_order['publishedCategory']['name']) ? $job_order['publishedCategory']['name'] : '';
 
             if (!$bh_data) {
                 error_log('Problem encoding job(' . $bh_clean_title . '): ' . json_last_error_msg());
@@ -194,7 +194,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
                     'wjb_bh_job_type_tax' => $bh_job_employmentType,
                     'wjb_bh_job_location_tax' => $bh_job_location,
                     'wjb_bh_job_industry_tax' => $bh_job_industry,
-                    'wjb_bh_job_category_tax' => $bh_job_catgory,
+                    'wjb_bh_job_category_tax' => $bh_job_category,
                 )
             );
 
