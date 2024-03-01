@@ -16,16 +16,17 @@ class WP_Job_Board_Admin
      * The following are handled through the Settings API and are
      * client facing on the admin site.
      */
-    public const SETTINGS_GROUP        = 'wp_job_board_settings_group';
-    public const SETTINGS_GROUP_CRON   = 'wp_job_board_settings_group_cron';
-    public const SETTINGS_SECTION      = 'wp_job_board_settings_section';
-    public const SETTINGS_CRON_SECTION = 'wp_job_board_settings_cron_section';
-    public const SETTING_CLIENT_ID     = 'wp_job_board_client_id';
-    public const SETTING_CLIENT_SECRET = 'wp_job_board_client_secret';
-    public const SETTING_API_USERNAME  = 'wp_job_board_api_username';
-    public const SETTING_API_PASSWORD  = 'wp_job_board_api_password';
-    public const SETTING_ENABLE_CRON   = 'wp_job_board_enable_cron';
-    public const SETTING_CRON_CADENCE  = 'wp_job_board_cron_cadence';
+    public const SETTINGS_GROUP         = 'wp_job_board_settings_group';
+    public const SETTINGS_GROUP_CRON    = 'wp_job_board_settings_group_cron';
+    public const SETTINGS_SECTION       = 'wp_job_board_settings_section';
+    public const SETTINGS_CRON_SECTION  = 'wp_job_board_settings_cron_section';
+    public const SETTING_CLIENT_ID      = 'wp_job_board_client_id';
+    public const SETTING_CLIENT_SECRET  = 'wp_job_board_client_secret';
+    public const SETTING_API_USERNAME   = 'wp_job_board_api_username';
+    public const SETTING_API_PASSWORD   = 'wp_job_board_api_password';
+    public const SETTING_ENABLE_CRON    = 'wp_job_board_enable_cron';
+    public const SETTING_CRON_CADENCE   = 'wp_job_board_cron_cadence';
+    public const SETTING_PLUGIN_VERSION = 'wp_job_board_version';
 
     /**
      * The following are handled in an Options Object(the first const)
@@ -259,6 +260,10 @@ class WP_Job_Board_Admin
 
     public function add_cron_intervals($schedules)
     {
+        $schedules['5m'] = array(
+            'interval' => 300,
+            'display'  => esc_html__('Every 5 minutes'),
+        );
         $schedules['30m'] = array(
             'interval' => 1800,
             'display'  => esc_html__('Every 30 minutes'),
@@ -272,5 +277,13 @@ class WP_Job_Board_Admin
             'display'  => esc_html__('Every 120 minutes'),
         );
         return $schedules;
+    }
+
+    public function check_version() {
+        $storedVersion = get_option(self::SETTING_PLUGIN_VERSION);
+        if (!$storedVersion || $this->version !== $storedVersion) {
+            require_once plugin_dir_path(__FILE__) . '../includes/class-wp-job-board-activator.php';
+            WP_Job_Board_Activator::activate();
+        }
     }
 }

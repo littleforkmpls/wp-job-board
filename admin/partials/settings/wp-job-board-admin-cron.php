@@ -28,6 +28,7 @@ add_settings_field(
         'name'    => WP_Job_Board_Admin::SETTING_CRON_CADENCE,
         'choices' => array(
             ''     => 'Please select a cadence',
+            '5m'   => '5 Minutes',
             '30m'  => '30 Minutes',
             '60m'  => '60 Minutes',
             '120m' => '120 Minutes',

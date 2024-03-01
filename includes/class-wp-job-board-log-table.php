@@ -66,10 +66,10 @@ class WP_Job_Board_Log_Table extends WP_List_Table
         if (!empty($search)) {
             return $wpdb->get_results("
 SELECT * FROM wp_job_board_log
-WHERE bh_title LIKE '%{$search}%' OR bh_id LIKE '%{$search}%'
+WHERE action <> 'None' AND (bh_title LIKE '%{$search}%' OR bh_id LIKE '%{$search}%')
 ", ARRAY_A);
         } else {
-            return $wpdb->get_results("SELECT * FROM wp_job_board_log", ARRAY_A);
+            return $wpdb->get_results("SELECT * FROM wp_job_board_log WHERE action <> 'None'", ARRAY_A);
         }
     }
 

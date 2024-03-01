@@ -190,28 +190,43 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
                     'wjb_bh_updated' => 1,
                     'wjb_bh_id'      => $bh_job_id,
                 ),
-                'tax_input' => array(
-                    'wjb_bh_job_type_tax' => $bh_job_employmentType,
-                    'wjb_bh_job_location_tax' => $bh_job_location,
-                    'wjb_bh_job_industry_tax' => $bh_job_industry,
-                    'wjb_bh_job_category_tax' => $bh_job_category,
-                )
+//                We're moving these to wp_set_object_terms because of user issues during cron
+//                'tax_input' => array(
+//                    'wjb_bh_job_type_tax' => $bh_job_employmentType,
+//                    'wjb_bh_job_location_tax' => $bh_job_location,
+//                    'wjb_bh_job_industry_tax' => $bh_job_industry,
+//                    'wjb_bh_job_category_tax' => $bh_job_category,
+//                )
             );
 
             if (isset($existing_job_orders[$bh_job_id])) {
                 $post_data['ID'] = $existing_job_orders[$bh_job_id];
                 $post_bh_data    = get_post_meta($existing_job_orders[$bh_job_id], 'wjb_bh_data', true);
 
+                $string_diff = strcmp($bh_data, $post_bh_data);
+
                 // if our data is the same mark as updated and skip it.
-                if (!$force && $post_bh_data === $bh_data) {
+                if (!$force && $string_diff === 0) {
                     update_post_meta($existing_job_orders[$bh_job_id], 'wjb_bh_updated', 1);
+                    $log_data[] = array(
+                        'bh_id'  => $bh_job_id,
+                        'action' => 'None',
+                        'title'  => $bh_job_title,
+                        'time'   => time(),
+                        'delta'  => null,
+                    );
                     continue;
                 }
+                $incoming_data = $this->flattenJson($bh_data);
+                $our_data = $this->flattenJson($post_bh_data);
+                $data_diff = array_diff_assoc($our_data, $incoming_data);
+
                 $log_data[] = array(
                     'bh_id'  => $bh_job_id,
                     'action' => 'Updated' . ($force ? ' (Manually)' : ''),
                     'title'  => $bh_job_title,
                     'time'   => time(),
+                    'delta'  => json_encode($data_diff),
                 );
             } else {
                 $log_data[] = array(
@@ -219,10 +234,16 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
                     'action' => 'Created',
                     'title'  => $bh_job_title,
                     'time'   => time(),
+                    'delta'  => null,
                 );
             }
 
             $result = wp_insert_post($post_data, true);
+
+            wp_set_object_terms($result, $bh_job_employmentType, 'wjb_bh_job_type_tax');
+            wp_set_object_terms($result, $bh_job_location, 'wjb_bh_job_location_tax');
+            wp_set_object_terms($result, $bh_job_industry, 'wjb_bh_job_industry_tax');
+            wp_set_object_terms($result, $bh_job_category, 'wjb_bh_job_category_tax');
 
             $count++;
 
@@ -246,6 +267,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
                 'action' => 'Removed',
                 'title'  => $bh_data['title'],
                 'time'   => $time,
+                'delta'  => null,
             );
         }
         $result = $wpdb->get_results("UPDATE wp_posts SET post_status = 'trash' WHERE ID IN(SELECT post_id FROM wp_postmeta WHERE meta_key = 'wjb_bh_updated' AND meta_value = 0);");
@@ -514,7 +536,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
     private function save_logs($log_data)
     {
         global $wpdb;
-        $sql_start   = 'INSERT INTO wp_job_board_log (bh_id, bh_title, action, timestamp) values';
+        $sql_start   = 'INSERT INTO wp_job_board_log (bh_id, bh_title, action, timestamp, delta) values';
         $insert_data = '';
         $sql_end     = ';';
 
@@ -522,11 +544,12 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
             if ($index > 0 && ! empty($insert_data)) {
                 $insert_data .= ',';
             }
-            $insert_data .= $wpdb->prepare('(%d,%s,%s,%d)', array(
+            $insert_data .= $wpdb->prepare('(%d,%s,%s,%d,%s)', array(
                 $log_datum['bh_id'],
                 $log_datum['title'],
                 $log_datum['action'],
-                $log_datum['time']
+                $log_datum['time'],
+                $log_datum['delta']
             ));
 
             if ($index > 0 && $index % 20 === 0) {
@@ -951,5 +974,27 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
             return $this->temp_settings[$option_key];
         }
         return get_option($option_key, $default);
+    }
+
+    private function flattenJson($json, $prepend = null) {
+        if(is_array($json)) {
+            $array = $json;
+        } else {
+            $array = json_decode($json, true);
+        }
+        $return = [];
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $return = array_merge($return, $this->flattenJson($value, $key));
+            } else {
+                if ($prepend) {
+                    $newKey = $prepend . '-' . $key;
+                } else {
+                    $newKey = $key;
+                }
+                $return[$newKey] = $value;
+            }
+        }
+        return $return;
     }
 }

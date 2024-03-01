@@ -30,14 +30,23 @@ class WP_Job_Board_Activator
      */
     public static function activate()
     {
-        $sql = 'CREATE TABLE IF NOT EXISTS wp_job_board_log(
-    id    bigint unsigned auto_increment primary key,
-    bh_id    bigint unsigned not null,
-    bh_title varchar(255) not null,
-    action   varchar(255) not null,
-    timestamp bigint unsigned not null
-);';
+        global $wpdb;
+
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'job_board_log';
+
+        $sql = "CREATE TABLE $table_name (
+                id    bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                bh_id    bigint(20) UNSIGNED NOT NULL,
+                bh_title varchar(255) NOT NULL,
+                action   varchar(255) NOT NULL,
+                timestamp bigint(20) unsigned NOT NULL,
+                delta text NULL,
+                PRIMARY KEY  (id)
+                ) $charset_collate;";
+
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
         dbDelta($sql);
+        update_option(WP_Job_Board_Admin::SETTING_PLUGIN_VERSION, WP_JOB_BOARD_VERSION);
     }
 }
