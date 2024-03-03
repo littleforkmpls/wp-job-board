@@ -162,6 +162,10 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
         $count = 0;
 
         foreach ($jobs as $job_order) {
+
+            // remove the score so we don't accidentally update records we don't need to update.
+            unset($job_order['_score']);
+
             $bh_data   = json_encode($job_order);
 
             $bh_job_id              = $job_order['id'];
@@ -178,10 +182,19 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
                 error_log('Problem encoding job(' . $bh_clean_title . '): ' . json_last_error_msg());
             }
 
+            // Convert our MS timestamp to S timestamp
+            $datestamp = intval($job_order['dateLastModified']/1000);
+
+            $localDateTime = (new DateTime())->setTimestamp($datestamp);
+            $gmtDateTime = (new DateTime('now', new DateTimeZone('UTC')))->setTimestamp($datestamp);
+
+
             $post_data = array(
                 'post_title'     => $bh_job_title,
                 'post_name'      => $bh_clean_title,
                 'post_type'      => 'wjb_bh_job_order',
+                'post_date'      => $localDateTime->format('Y-m-d H:i:s'),
+                'post_date_gmt'  => $gmtDateTime->format('Y-m-d H:i:s'),
                 'post_content'   => '',
                 'post_status'    => 'publish',
                 'comment_status' => 'closed',
