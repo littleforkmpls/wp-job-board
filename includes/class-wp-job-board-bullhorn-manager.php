@@ -152,7 +152,13 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
                                 WHERE a.taxonomy LIKE 'wjb_bh_%';"));
         }
 
-        $existing_job_orders_result = $wpdb->get_results("SELECT post_id, meta_value FROM wp_postmeta WHERE meta_key = 'wjb_bh_id' AND meta_value IS NOT NULL");
+        $existing_job_orders_result = $wpdb->get_results("SELECT post_id, meta_value
+FROM $wpdb->postmeta pm
+    JOIN $wpdb->posts p ON pm.post_id = p.ID
+WHERE pm.meta_key = 'wjb_bh_id'
+    AND pm.meta_value IS NOT NULL
+    AND p.post_status = 'publish';");
+
         $existing_job_orders        = array();
 
         foreach ($existing_job_orders_result as $item) {
@@ -221,13 +227,13 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
                 // if our data is the same mark as updated and skip it.
                 if (!$force && $string_diff === 0) {
                     update_post_meta($existing_job_orders[$bh_job_id], 'wjb_bh_updated', 1);
-                    $log_data[] = array(
-                        'bh_id'  => $bh_job_id,
-                        'action' => 'None',
-                        'title'  => $bh_job_title,
-                        'time'   => time(),
-                        'delta'  => null,
-                    );
+//                    $log_data[] = array(
+//                        'bh_id'  => $bh_job_id,
+//                        'action' => 'None',
+//                        'title'  => $bh_job_title,
+//                        'time'   => time(),
+//                        'delta'  => null,
+//                    );
                     continue;
                 }
                 $incoming_data = $this->flattenJson($bh_data);
@@ -271,7 +277,15 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
         }
 
         // Trash our un-updated items
-        $result = $wpdb->get_results("SELECT pm2.meta_value FROM wp_postmeta pm1 JOIN wp_postmeta pm2 on pm1.post_id = pm2.post_id WHERE pm1.meta_key = 'wjb_bh_updated' AND pm1.meta_value = 0 AND pm2.meta_key = 'wjb_bh_data'");
+        $result = $wpdb->get_results("SELECT pm2.meta_value
+FROM $wpdb->postmeta pm1
+    JOIN $wpdb->postmeta pm2 on pm1.post_id = pm2.post_id
+    JOIN $wpdb->posts p on p.ID = pm1.post_id
+WHERE pm1.meta_key = 'wjb_bh_updated'
+  AND pm1.meta_value = 0
+  AND pm2.meta_key = 'wjb_bh_data'
+  AND p.post_status = 'publish'
+;");
         $time   = time();
         foreach ($result as $item) {
             $bh_data    = json_decode($item->meta_value, true);
@@ -283,10 +297,18 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
                 'delta'  => null,
             );
         }
-        $result = $wpdb->get_results("UPDATE wp_posts SET post_status = 'trash' WHERE ID IN(SELECT post_id FROM wp_postmeta WHERE meta_key = 'wjb_bh_updated' AND meta_value = 0);");
+        $result = $wpdb->get_results("UPDATE $wpdb->posts
+SET post_status = 'trash'
+WHERE ID IN(
+    SELECT post_id
+    FROM $wpdb->postmeta
+    WHERE meta_key = 'wjb_bh_updated' AND meta_value = 0
+    );");
 
         // mark everything as unupdated since we're done processing
-        $result = $wpdb->get_results("UPDATE wp_postmeta SET meta_value = 0 WHERE meta_key = 'wjb_bh_updated'");
+        $result = $wpdb->get_results("UPDATE $wpdb->postmeta
+SET meta_value = 0
+WHERE meta_key = 'wjb_bh_updated'");
 
         $this->save_logs($log_data);
 
@@ -549,7 +571,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
     private function save_logs($log_data)
     {
         global $wpdb;
-        $sql_start   = 'INSERT INTO wp_job_board_log (bh_id, bh_title, action, timestamp, delta) values';
+        $sql_start   = "INSERT INTO {$wpdb->prefix}job_board_log (bh_id, bh_title, action, timestamp, delta) values";
         $insert_data = '';
         $sql_end     = ';';
 
@@ -576,7 +598,7 @@ class WP_Job_Board_Bullhorn_Manager extends WP_Job_Board_API_Manager_Base
 
         $one_week_ago = (new DateTime())->sub(new DateInterval('P7D'))->getTimestamp();
 
-        $wpdb->query($wpdb->prepare('DELETE FROM wp_job_board_log WHERE timestamp < %d', $one_week_ago));
+        $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->prefix}job_board_log WHERE timestamp < %d", $one_week_ago));
     }
 
     public function submit_resume(): array
