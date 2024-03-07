@@ -14,6 +14,10 @@ function wpjb_archive($attr)
 {
     $html = '';
 
+    if (is_custom_template()) {
+        return 'Job Board Shortcodes are disabled for custom templates.';
+    }
+
     if (file_exists(plugin_dir_path(__DIR__) . 'public/pages/wp-job-board-archive.php')) {
         ob_start();
         include(plugin_dir_path(__DIR__) . 'public/pages/wp-job-board-archive.php');
@@ -33,6 +37,10 @@ add_shortcode('wpjb_archive', 'wpjb_archive');
  */
 function wpjb_single($attr)
 {
+    if (is_custom_template()) {
+        return 'Job Board Shortcodes are disabled for custom templates.';
+    }
+
     $html = '';
 
     if (file_exists(plugin_dir_path(__DIR__) . 'public/pages/wp-job-board-single.php')) {
