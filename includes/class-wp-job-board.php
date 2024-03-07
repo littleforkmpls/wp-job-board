@@ -217,8 +217,11 @@ class WP_Job_Board
     {
         $plugin_public = new WP_Job_Board_Public($this->get_wp_job_board(), $this->get_version());
 
-        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
-        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+        if (is_custom_template() !== true) {
+            $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
+            $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+        }
+
         $this->loader->add_action('init', $plugin_public, 'register_job_order_post_type');
         $this->loader->add_action('init', $plugin_public, 'register_job_order_taxonomies');
 
