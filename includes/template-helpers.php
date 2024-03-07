@@ -5,6 +5,24 @@
  */
 
 /**
+ * Helper for determining template type
+ *
+ * @since  0.2.6
+ * @return bool
+ */
+function is_custom_template()
+{
+    $is_custom = false;
+    $template = get_option(WP_Job_Board_Admin::SETTING_UI_TEMPLATE);
+
+    if ($template == 'custom') {
+        $is_custom = true;
+    }
+
+    return $is_custom;
+}
+
+/**
  * Helper for getting Job Meta Data
  *
  * @since  0.1.8
