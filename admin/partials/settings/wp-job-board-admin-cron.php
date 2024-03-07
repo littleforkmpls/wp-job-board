@@ -1,7 +1,7 @@
 <?php
 
 add_settings_section(
-    WP_Job_Board_Admin::SETTINGS_CRON_SECTION,
+    WP_Job_Board_Admin::SETTINGS_SECTION_CRON,
     '',
     false,
     WP_Job_Board_Admin::PAGE_SLUG
@@ -12,7 +12,7 @@ add_settings_field(
     __('Enable Cron', 'wp_job_board'),
     'render_checkbox_field',
     WP_Job_Board_Admin::PAGE_SLUG,
-    WP_Job_Board_Admin::SETTINGS_CRON_SECTION,
+    WP_Job_Board_Admin::SETTINGS_SECTION_CRON,
     array(
         'name' => WP_Job_Board_Admin::SETTING_ENABLE_CRON,
     )
@@ -23,7 +23,7 @@ add_settings_field(
     __('Cadence', 'wp_job_board'),
     'render_choice_field',
     WP_Job_Board_Admin::PAGE_SLUG,
-    WP_Job_Board_Admin::SETTINGS_CRON_SECTION,
+    WP_Job_Board_Admin::SETTINGS_SECTION_CRON,
     array(
         'name'    => WP_Job_Board_Admin::SETTING_CRON_CADENCE,
         'choices' => array(

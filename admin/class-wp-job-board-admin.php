@@ -19,12 +19,12 @@ class WP_Job_Board_Admin
     public const SETTINGS_GROUP         = 'wp_job_board_settings_group';
     public const SETTINGS_GROUP_CRON    = 'wp_job_board_settings_group_cron';
     public const SETTINGS_SECTION       = 'wp_job_board_settings_section';
-    public const SETTINGS_CRON_SECTION  = 'wp_job_board_settings_cron_section';
+    public const SETTINGS_SECTION_CRON  = 'wp_job_board_settings_section_cron';
     public const SETTING_CLIENT_ID      = 'wp_job_board_client_id';
     public const SETTING_CLIENT_SECRET  = 'wp_job_board_client_secret';
     public const SETTING_API_USERNAME   = 'wp_job_board_api_username';
     public const SETTING_API_PASSWORD   = 'wp_job_board_api_password';
-    public const SETTING_ENABLE_CRON    = 'wp_job_board_enable_cron';
+    public const SETTING_ENABLE_CRON    = 'wp_job_board_cron_enable';
     public const SETTING_CRON_CADENCE   = 'wp_job_board_cron_cadence';
     public const SETTING_PLUGIN_VERSION = 'wp_job_board_version';
 
