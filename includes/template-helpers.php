@@ -219,11 +219,46 @@ function render_choice_field($args)
     $name  = esc_attr($args['name']);
     $value = esc_attr(get_option($args['name'], '30m'));
 
-    $output = "<select name='{$name}'>";
+    $output = "<select name='{$name}' class='regular-text'>";
 
     foreach ($args['choices'] as $key => $choice) {
         $selected = $value === $key ? 'selected' : '';
         $output   .= "<option value='{$key}' {$selected}>{$choice}</option>";
+    }
+
+    $output .= '</select>';
+
+    echo $output;
+}
+
+/**
+ * Helper for rendering a dropdown field in the admin
+ * @param $args
+ *
+ * @return void
+ */
+function render_dropdown_field($args)
+{
+    $defaults = array(
+        'type'    => 'select',
+        'name'    => '',
+        'options' => array(),
+    );
+
+    $args = array_merge($defaults, $args);
+
+    if (empty($args['name']) || empty($args['options'])) {
+        return;
+    }
+
+    $name  = esc_attr($args['name']);
+    $value = esc_attr(get_option($args['name']));
+
+    $output = "<select name='{$name}' class='regular-text'>";
+
+    foreach ($args['options'] as $key => $option) {
+        $selected = $value === $key ? 'selected' : '';
+        $output   .= "<option value='{$key}' {$selected}>{$option}</option>";
     }
 
     $output .= '</select>';
