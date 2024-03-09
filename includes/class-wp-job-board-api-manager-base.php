@@ -62,12 +62,15 @@ class WP_Job_Board_API_Manager_Base
             }
         }
 
+        // Increasing timeout to way more than 5 seconds because reasons.
+        $args['timeout'] = 120;
+
         $response = $func($endpoint_url, $args);
         $code     = wp_remote_retrieve_response_code($response);
         $message  = wp_remote_retrieve_response_message($response);
 
         if ($response instanceof WP_Error) {
-            $this->throw_error("Could not reach {$endpoint_url} - {$code} - {$message}");
+            $this->throw_error("Could not reach {$endpoint_url} - {$response->get_error_code()} - {$response->get_error_message()}");
         }
 
         $body    = wp_remote_retrieve_body($response);
