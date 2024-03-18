@@ -11,7 +11,7 @@
  * Plugin Name:       WP Job Board
  * Plugin URI:        https://little-fork.com/
  * Description:       Aggregates and displays job listings from your ATS on your WordPress website
- * Version:           0.3.1
+ * Version:           0.3.2
  * Requires at least: 6.0
  * Requires PHP:      8.2
  * Author:            Little Fork
@@ -27,7 +27,7 @@ if (!defined('WPINC')) {
 /**
  * Currently plugin version.
  */
-define('WP_JOB_BOARD_VERSION', '0.3.1');
+define('WP_JOB_BOARD_VERSION', '0.3.2');
 
 /**
  * The code that runs during plugin activation.
