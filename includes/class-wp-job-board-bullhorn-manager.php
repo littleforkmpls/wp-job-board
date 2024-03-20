@@ -615,6 +615,11 @@ WHERE meta_key = 'wjb_bh_updated'");
             $this->throw_error('Must submit all data (First name, Last name, Phone number, Email address, and Resume');
         }
 
+        // files over 8 MB throw an error
+        if ($resume['size'] > (8 * 1024 * 1024)) {
+            $this->throw_error('Resumes must be smaller than 8MB');
+        }
+
         $acceptedTypes = [
             'application/pdf',
             'application/doc',
@@ -637,7 +642,6 @@ WHERE meta_key = 'wjb_bh_updated'");
         $file        = $this->add_file($resume, $candidate);
         $resume_data = $this->get_data_from_resume($resume);
         $updated     = $this->update_candidate_from_resume($candidate, $resume_data);
-
 
         return array();
     }
