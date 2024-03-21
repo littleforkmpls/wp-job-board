@@ -100,6 +100,12 @@ class WP_Job_Board_API_Manager_Base
         throw new Error("WP Job Board - {$class} - Message: {$message}");
     }
 
+    protected function display_error(string $message)
+    {
+        $class = $this::class;
+        throw new Error("{$message}");
+    }
+
     protected function get_mapped_location(string $state, string $country_code): string
     {
         $abbrev = strtoupper($state);

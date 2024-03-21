@@ -612,12 +612,7 @@ WHERE meta_key = 'wjb_bh_updated'");
         $resume       = $_FILES['resume'];
 
         if (empty($first_name) || empty($last_name) || empty($phone) || empty($email) || empty($resume)) {
-            $this->throw_error('Must submit all data (First name, Last name, Phone number, Email address, and Resume');
-        }
-
-        // files over 8 MB throw an error
-        if ($resume['size'] > (8 * 1024 * 1024)) {
-            $this->throw_error('Resumes must be smaller than 8MB');
+            $this->display_error('Please complete all required fields.');
         }
 
         $acceptedTypes = [
@@ -633,7 +628,12 @@ WHERE meta_key = 'wjb_bh_updated'");
 
         // accept=".html, .text, .txt, .pdf, .doc, .docx, .rft, .odt"
         if (empty($resume['type']) || !in_array($resume['type'], $acceptedTypes)) {
-            $this->throw_error('Must submit a valid file(.html, .text, .txt, .pdf, .doc, .docx, .rft, .odt) of your resume');
+            $this->display_error('Please submit resume in a supported file format.');
+        }
+
+        // files over 8 MB throw an error
+        if ($resume['size'] > (8 * 1024 * 1024)) {
+            $this->display_error('Please submit a resume that is smaller than 8MB.');
         }
 
         $job_order   = $this->get_job_order($wp_post_id, $job_order_id);
@@ -661,7 +661,7 @@ WHERE meta_key = 'wjb_bh_updated'");
         $meta = get_post_meta($wp_post_id, 'wjb_bh_data');
 
         if ($post->post_status !== 'publish') {
-            $this->throw_error('Job has been closed');
+            $this->display_error('This job is no longer accepting applications.');
         }
 
         if (!empty($meta[0])) {
@@ -689,7 +689,7 @@ WHERE meta_key = 'wjb_bh_updated'");
             );
 
             if (!isset($result['total']) || $result['total'] !== 1) {
-                $this->throw_error('Could not find Job Order');
+                $this->display_error('Error: Job not found.');
             }
 
             $data = $result['data'][0];
@@ -777,12 +777,13 @@ WHERE meta_key = 'wjb_bh_updated'");
 
         $url    = $this->get_url('{corp_token}entity/Candidate?BhRestToken={rest_token}', $tokens);
         $result = $this->call_api($url, array('body' => $body, 'method' => 'PUT'), 'post');
+
         if (!empty($result['errorMessage'])) {
-            $this->throw_error($result['errorMessage']);
+            $this->display_error($result['errorMessage']);
         }
 
         if (empty($result['data'])) {
-            $this->throw_error('Problem creating candidate');
+            $this->display_error('Could not create candidate record.');
         }
 
         $candidate       = $result['data'];
@@ -816,7 +817,7 @@ WHERE meta_key = 'wjb_bh_updated'");
         $result = $this->call_api($url, $args, 'post');
 
         if (empty($result['changedEntityType'])) {
-            $this->throw_error('Could not create job submission');
+            $this->display_error('Could not create job submission');
         }
 
         return $result;
@@ -879,7 +880,7 @@ WHERE meta_key = 'wjb_bh_updated'");
         $result = $this->call_api($url, $args, 'post');
 
         if (empty($result['fileId'])) {
-            $this->throw_error('Could not upload resume');
+            $this->display_error('Could not upload resume');
         }
 
         return $result;
