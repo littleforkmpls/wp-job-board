@@ -616,17 +616,22 @@ WHERE meta_key = 'wjb_bh_updated'");
         }
 
         $acceptedTypes = [
+            // pdf
             'application/pdf',
-            'application/doc',
-            'application/docx',
-            'application/txt',
+            // doc
+            'application/msword',
+            // docx
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            // txt
+            'text/plain',
+            // rtf
             'application/rtf',
-            'application/odt',
-            'application/html',
-            'application/text',
+            // odt
+            'application/vnd.oasis.opendocument.text',
+            // html
+            'text/html',
         ];
 
-        // accept=".html, .text, .txt, .pdf, .doc, .docx, .rft, .odt"
         if (empty($resume['type']) || !in_array($resume['type'], $acceptedTypes)) {
             $this->display_error('Please submit resume in a supported file format.');
         }
