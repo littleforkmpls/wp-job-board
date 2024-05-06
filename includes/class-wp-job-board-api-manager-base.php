@@ -198,7 +198,7 @@ class WP_Job_Board_API_Manager_Base
         '2' => 'Light Industrial',
         '4' => 'Skilled Trades',
         '6' => 'Marine',
-        '7' => 'Professional and Technical',
+        '7' => 'Infrastructure & Defense',
     );
 
 }
