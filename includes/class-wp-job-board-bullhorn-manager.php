@@ -980,6 +980,17 @@ WHERE meta_key = 'wjb_bh_updated'");
             if (!empty($resume_data['candidate']['address']['countryName'])) {
                 $body['address']['countryName'] = $resume_data['candidate']['address']['countryName'];
             }
+
+            // If we don't have all of these parts of the address unset it so we don't save partial garbage
+            if (
+                empty($body['address']['address1'])
+                || empty($body['address']['city'])
+                || empty($body['address']['state'])
+                || empty($body['address']['zip'])
+                || empty($body['address']['countryID'])
+            ) {
+                unset($body['address']);
+            }
         }
 
         if (empty($body)) {
